@@ -1,0 +1,45 @@
+﻿@model IEnumerable<DevCube.Models.SkilledProgrammer>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Programmer.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Programmer.LastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Skill.SkillsName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Programmer.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Programmer.LastName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Skill.SkillsName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.SkilledProgrammersID }) |
+            @Html.ActionLink("Details", "Details", new { id = item.SkilledProgrammersID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.SkilledProgrammersID })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DevCubeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Programmers">
+    <Key>
+      <PropertyRef Name="ProgrammersID" />
+    </Key>
+    <Property Name="ProgrammersID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SkilledProgrammers">
+    <Key>
+      <PropertyRef Name="SkilledProgrammersID" />
+    </Key>
+    <Property Name="SkilledProgrammersID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SkillsID" Type="int" />
+    <Property Name="ProgrammersID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Skills">
+    <Key>
+      <PropertyRef Name="SkillsID" />
+    </Key>
+    <Property Name="SkillsID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SkillsName" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__SkilledPr__Progr__4BAC3F29">
+    <End Role="Programmers" Type="Self.Programmers" Multiplicity="1" />
+    <End Role="SkilledProgrammers" Type="Self.SkilledProgrammers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Programmers">
+        <PropertyRef Name="ProgrammersID" />
+      </Principal>
+      <Dependent Role="SkilledProgrammers">
+        <PropertyRef Name="ProgrammersID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__SkilledPr__Skill__4AB81AF0">
+    <End Role="Skills" Type="Self.Skills" Multiplicity="0..1" />
+    <End Role="SkilledProgrammers" Type="Self.SkilledProgrammers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Skills">
+        <PropertyRef Name="SkillsID" />
+      </Principal>
+      <Dependent Role="SkilledProgrammers">
+        <PropertyRef Name="SkillsID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DevCubeModelStoreContainer">
+    <EntitySet Name="Programmers" EntityType="Self.Programmers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SkilledProgrammers" EntityType="Self.SkilledProgrammers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Skills" EntityType="Self.Skills" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__SkilledPr__Progr__4BAC3F29" Association="Self.FK__SkilledPr__Progr__4BAC3F29">
+      <End Role="Programmers" EntitySet="Programmers" />
+      <End Role="SkilledProgrammers" EntitySet="SkilledProgrammers" />
+    </AssociationSet>
+    <AssociationSet Name="FK__SkilledPr__Skill__4AB81AF0" Association="Self.FK__SkilledPr__Skill__4AB81AF0">
+      <End Role="Skills" EntitySet="Skills" />
+      <End Role="SkilledProgrammers" EntitySet="SkilledProgrammers" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="DevCubeModelStoreContainer" CdmEntityContainer="Entities">
+    <EntitySetMapping Name="Programmers">
+      <EntityTypeMapping TypeName="DevCubeModel.Programmer">
+        <MappingFragment StoreEntitySet="Programmers">
+          <ScalarProperty Name="ProgrammersID" ColumnName="ProgrammersID" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SkilledProgrammers">
+      <EntityTypeMapping TypeName="DevCubeModel.SkilledProgrammer">
+        <MappingFragment StoreEntitySet="SkilledProgrammers">
+          <ScalarProperty Name="SkilledProgrammersID" ColumnName="SkilledProgrammersID" />
+          <ScalarProperty Name="SkillsID" ColumnName="SkillsID" />
+          <ScalarProperty Name="ProgrammersID" ColumnName="ProgrammersID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Skills">
+      <EntityTypeMapping TypeName="DevCubeModel.Skill">
+        <MappingFragment StoreEntitySet="Skills">
+          <ScalarProperty Name="SkillsID" ColumnName="SkillsID" />
+          <ScalarProperty Name="SkillsName" ColumnName="SkillsName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

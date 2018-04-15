@@ -1,0 +1,49 @@
+﻿@model IEnumerable<DevCube.Models.SkilledProgrammer>
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>Dev-Cube</h1>
+    <p class="lead">Dev-Cube is an application for simplfying employee managment by providing listing with all the avaible employees and their skills. </p>
+    <p><a href="http://www.icygen.com/bg/" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+</div>
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Programmer.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Programmer.LastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Skill.SkillsName)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Programmer.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Programmer.LastName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Skill.SkillsName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.SkilledProgrammersID }) |
+            @Html.ActionLink("Details", "Details", new { id = item.SkilledProgrammersID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.SkilledProgrammersID })
+        </td>
+    </tr>
+    }
+
+</table>

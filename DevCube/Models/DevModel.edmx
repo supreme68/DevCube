@@ -1,0 +1,192 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DevCubeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Programmers">
+          <Key>
+            <PropertyRef Name="ProgrammersID" />
+          </Key>
+          <Property Name="ProgrammersID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SkilledProgrammers">
+          <Key>
+            <PropertyRef Name="SkilledProgrammersID" />
+          </Key>
+          <Property Name="SkilledProgrammersID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SkillsID" Type="int" />
+          <Property Name="ProgrammersID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Skills">
+          <Key>
+            <PropertyRef Name="SkillsID" />
+          </Key>
+          <Property Name="SkillsID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SkillsName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__SkilledPr__Progr__4BAC3F29">
+          <End Role="Programmers" Type="Self.Programmers" Multiplicity="1" />
+          <End Role="SkilledProgrammers" Type="Self.SkilledProgrammers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Programmers">
+              <PropertyRef Name="ProgrammersID" />
+            </Principal>
+            <Dependent Role="SkilledProgrammers">
+              <PropertyRef Name="ProgrammersID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SkilledPr__Skill__4AB81AF0">
+          <End Role="Skills" Type="Self.Skills" Multiplicity="0..1" />
+          <End Role="SkilledProgrammers" Type="Self.SkilledProgrammers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Skills">
+              <PropertyRef Name="SkillsID" />
+            </Principal>
+            <Dependent Role="SkilledProgrammers">
+              <PropertyRef Name="SkillsID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DevCubeModelStoreContainer">
+          <EntitySet Name="Programmers" EntityType="Self.Programmers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SkilledProgrammers" EntityType="Self.SkilledProgrammers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Skills" EntityType="Self.Skills" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__SkilledPr__Progr__4BAC3F29" Association="Self.FK__SkilledPr__Progr__4BAC3F29">
+            <End Role="Programmers" EntitySet="Programmers" />
+            <End Role="SkilledProgrammers" EntitySet="SkilledProgrammers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SkilledPr__Skill__4AB81AF0" Association="Self.FK__SkilledPr__Skill__4AB81AF0">
+            <End Role="Skills" EntitySet="Skills" />
+            <End Role="SkilledProgrammers" EntitySet="SkilledProgrammers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DevCubeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Programmer">
+          <Key>
+            <PropertyRef Name="ProgrammersID" />
+          </Key>
+          <Property Name="ProgrammersID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="SkilledProgrammers" Relationship="Self.FK__SkilledPr__Progr__4BAC3F29" FromRole="Programmers" ToRole="SkilledProgrammers" />
+        </EntityType>
+        <EntityType Name="SkilledProgrammer">
+          <Key>
+            <PropertyRef Name="SkilledProgrammersID" />
+          </Key>
+          <Property Name="SkilledProgrammersID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SkillsID" Type="Int32" />
+          <Property Name="ProgrammersID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Programmer" Relationship="Self.FK__SkilledPr__Progr__4BAC3F29" FromRole="SkilledProgrammers" ToRole="Programmers" />
+          <NavigationProperty Name="Skill" Relationship="Self.FK__SkilledPr__Skill__4AB81AF0" FromRole="SkilledProgrammers" ToRole="Skills" />
+        </EntityType>
+        <EntityType Name="Skill">
+          <Key>
+            <PropertyRef Name="SkillsID" />
+          </Key>
+          <Property Name="SkillsID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SkillsName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="SkilledProgrammers" Relationship="Self.FK__SkilledPr__Skill__4AB81AF0" FromRole="Skills" ToRole="SkilledProgrammers" />
+        </EntityType>
+        <Association Name="FK__SkilledPr__Progr__4BAC3F29">
+          <End Role="Programmers" Type="Self.Programmer" Multiplicity="1" />
+          <End Role="SkilledProgrammers" Type="Self.SkilledProgrammer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Programmers">
+              <PropertyRef Name="ProgrammersID" />
+            </Principal>
+            <Dependent Role="SkilledProgrammers">
+              <PropertyRef Name="ProgrammersID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SkilledPr__Skill__4AB81AF0">
+          <End Role="Skills" Type="Self.Skill" Multiplicity="0..1" />
+          <End Role="SkilledProgrammers" Type="Self.SkilledProgrammer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Skills">
+              <PropertyRef Name="SkillsID" />
+            </Principal>
+            <Dependent Role="SkilledProgrammers">
+              <PropertyRef Name="SkillsID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Programmers" EntityType="Self.Programmer" />
+          <EntitySet Name="SkilledProgrammers" EntityType="Self.SkilledProgrammer" />
+          <EntitySet Name="Skills" EntityType="Self.Skill" />
+          <AssociationSet Name="FK__SkilledPr__Progr__4BAC3F29" Association="Self.FK__SkilledPr__Progr__4BAC3F29">
+            <End Role="Programmers" EntitySet="Programmers" />
+            <End Role="SkilledProgrammers" EntitySet="SkilledProgrammers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SkilledPr__Skill__4AB81AF0" Association="Self.FK__SkilledPr__Skill__4AB81AF0">
+            <End Role="Skills" EntitySet="Skills" />
+            <End Role="SkilledProgrammers" EntitySet="SkilledProgrammers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DevCubeModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="Programmers">
+            <EntityTypeMapping TypeName="DevCubeModel.Programmer">
+              <MappingFragment StoreEntitySet="Programmers">
+                <ScalarProperty Name="ProgrammersID" ColumnName="ProgrammersID" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SkilledProgrammers">
+            <EntityTypeMapping TypeName="DevCubeModel.SkilledProgrammer">
+              <MappingFragment StoreEntitySet="SkilledProgrammers">
+                <ScalarProperty Name="SkilledProgrammersID" ColumnName="SkilledProgrammersID" />
+                <ScalarProperty Name="SkillsID" ColumnName="SkillsID" />
+                <ScalarProperty Name="ProgrammersID" ColumnName="ProgrammersID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Skills">
+            <EntityTypeMapping TypeName="DevCubeModel.Skill">
+              <MappingFragment StoreEntitySet="Skills">
+                <ScalarProperty Name="SkillsID" ColumnName="SkillsID" />
+                <ScalarProperty Name="SkillsName" ColumnName="SkillsName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
