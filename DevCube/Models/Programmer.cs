@@ -14,17 +14,10 @@ namespace DevCube.Models
     
     public partial class Programmer
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Programmer()
-        {
-            this.SkilledProgrammers = new HashSet<SkilledProgrammer>();
-        }
-    
-        public int ProgrammersID { get; set; }
+        public int ProgrammerID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SkilledProgrammer> SkilledProgrammers { get; set; }
+        public virtual Programmers_Skills Programmers_Skills { get; set; }
     }
 }

@@ -17,13 +17,13 @@ namespace DevCube.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Skill()
         {
-            this.SkilledProgrammers = new HashSet<SkilledProgrammer>();
+            this.Programmers_Skills = new HashSet<Programmers_Skills>();
         }
     
-        public int SkillsID { get; set; }
-        public string SkillsName { get; set; }
+        public int SkillID { get; set; }
+        public string Name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SkilledProgrammer> SkilledProgrammers { get; set; }
+        public virtual ICollection<Programmers_Skills> Programmers_Skills { get; set; }
     }
 }

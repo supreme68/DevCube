@@ -12,11 +12,10 @@ namespace DevCube.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class SkilledProgrammer
+    public partial class Programmers_Skills
     {
-        public int SkilledProgrammersID { get; set; }
-        public Nullable<int> SkillsID { get; set; }
-        public int ProgrammersID { get; set; }
+        public int ProgrammerID { get; set; }
+        public Nullable<int> SkillID { get; set; }
     
         public virtual Programmer Programmer { get; set; }
         public virtual Skill Skill { get; set; }

@@ -172,10 +172,12 @@
     <Compile Include="Models\Programmer.cs">
       <DependentUpon>DevModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Skill.cs">
+    <Compile Include="ViewModels\ProgrammerViewModel.cs" />
+    <Compile Include="ViewModels\Programmer_SkillViewModel.cs" />
+    <Compile Include="Models\Programmers_Skills.cs">
       <DependentUpon>DevModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\SkilledProgrammer.cs">
+    <Compile Include="Models\Skill.cs">
       <DependentUpon>DevModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -213,11 +215,9 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Home\Create.cshtml" />
+    <Content Include="Views\Home\CreateProgrammer.cshtml" />
     <Content Include="Views\Home\Delete.cshtml" />
-    <Content Include="Views\SkilledProgrammers\Details.cshtml" />
-    <Content Include="Views\Home\Edit.cshtml" />
-    <Content Include="Views\SkilledProgrammers\Index.cshtml" />
+    <Content Include="Views\Home\Update.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="fonts\" />
@@ -231,6 +231,7 @@
       <DependentUpon>DevModel.edmx</DependentUpon>
     </Content>
     <None Include="packages.config" />
+    <Content Include="Views\Home\CreateSkill.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

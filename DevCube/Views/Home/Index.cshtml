@@ -1,4 +1,4 @@
-﻿@model IEnumerable<DevCube.Models.SkilledProgrammer>
+﻿@model List<Programmers_Skills>
 
 @{
     ViewBag.Title = "Home Page";
@@ -10,39 +10,47 @@
     <p><a href="http://www.icygen.com/bg/" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
 </div>
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Add New Programmer", "CreateProgrammer") |
+    @Html.ActionLink("Add New Skill", "CreateSkill")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Programmer.FirstName)
+            <!--This is useless-->
+            First Name
         </th>
+
         <th>
-            @Html.DisplayNameFor(model => model.Programmer.LastName)
+            Last Name
         </th>
+
         <th>
-            @Html.DisplayNameFor(model => model.Skill.SkillsName)
+            Skills
         </th>
-        <th></th>
     </tr>
 
     @foreach (var item in Model)
     {
     <tr>
+
         <td>
             @Html.DisplayFor(modelItem => item.Programmer.FirstName)
         </td>
+
         <td>
             @Html.DisplayFor(modelItem => item.Programmer.LastName)
         </td>
+
         <td>
-            @Html.DisplayFor(modelItem => item.Skill.SkillsName)
-        </td>
+            @Html.DisplayFor(modelItem => item.Skill.Name)
+        </td>-
+
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.SkilledProgrammersID }) |
-            @Html.ActionLink("Details", "Details", new { id = item.SkilledProgrammersID }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.SkilledProgrammersID })
+            @Html.ActionLink("Edit", "Edit", new { id = item.ProgrammerID }) |
+            @Html.ActionLink("Details", "Details", new { id = item.ProgrammerID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.ProgrammerID })
         </td>
+
     </tr>
     }
 

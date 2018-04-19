@@ -4,26 +4,25 @@
     <EntitySetMapping Name="Programmers">
       <EntityTypeMapping TypeName="DevCubeModel.Programmer">
         <MappingFragment StoreEntitySet="Programmers">
-          <ScalarProperty Name="ProgrammersID" ColumnName="ProgrammersID" />
+          <ScalarProperty Name="ProgrammerID" ColumnName="ProgrammerID" />
           <ScalarProperty Name="FirstName" ColumnName="FirstName" />
           <ScalarProperty Name="LastName" ColumnName="LastName" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="SkilledProgrammers">
-      <EntityTypeMapping TypeName="DevCubeModel.SkilledProgrammer">
-        <MappingFragment StoreEntitySet="SkilledProgrammers">
-          <ScalarProperty Name="SkilledProgrammersID" ColumnName="SkilledProgrammersID" />
-          <ScalarProperty Name="SkillsID" ColumnName="SkillsID" />
-          <ScalarProperty Name="ProgrammersID" ColumnName="ProgrammersID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Skills">
       <EntityTypeMapping TypeName="DevCubeModel.Skill">
         <MappingFragment StoreEntitySet="Skills">
-          <ScalarProperty Name="SkillsID" ColumnName="SkillsID" />
-          <ScalarProperty Name="SkillsName" ColumnName="SkillsName" />
+          <ScalarProperty Name="SkillID" ColumnName="SkillID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Programmers_Skills">
+      <EntityTypeMapping TypeName="DevCubeModel.Programmers_Skills">
+        <MappingFragment StoreEntitySet="Programmers_Skills">
+          <ScalarProperty Name="ProgrammerID" ColumnName="ProgrammerID" />
+          <ScalarProperty Name="SkillID" ColumnName="SkillID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
