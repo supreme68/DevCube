@@ -4,6 +4,8 @@
     <EntitySetMapping Name="Programmers">
       <EntityTypeMapping TypeName="DevCubeModel.Programmer">
         <MappingFragment StoreEntitySet="Programmers">
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
           <ScalarProperty Name="ProgrammerID" ColumnName="ProgrammerID" />
           <ScalarProperty Name="FirstName" ColumnName="FirstName" />
           <ScalarProperty Name="LastName" ColumnName="LastName" />

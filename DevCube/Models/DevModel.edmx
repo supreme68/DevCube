@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="DevCubeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="DevCubeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Programmers">
           <Key>
             <PropertyRef Name="ProgrammerID" />
@@ -12,6 +12,8 @@
           <Property Name="ProgrammerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="PhoneNumber" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'DevCube.dbo.Programmers_Skills' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -29,7 +31,7 @@ warning 6002: The table/view 'DevCube.dbo.Programmers_Skills' does not have a pr
           <Property Name="SkillID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <Association Name="FK__SkilledPr__Progr__4BAC3F29">
+        <Association Name="FK_Programmers_Skills_Programmers">
           <End Role="Programmers" Type="Self.Programmers" Multiplicity="1" />
           <End Role="Programmers_Skills" Type="Self.Programmers_Skills" Multiplicity="0..1" />
           <ReferentialConstraint>
@@ -41,7 +43,7 @@ warning 6002: The table/view 'DevCube.dbo.Programmers_Skills' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__SkilledPr__Skill__4AB81AF0">
+        <Association Name="FK_Programmers_Skills_Skills">
           <End Role="Skills" Type="Self.Skills" Multiplicity="0..1" />
           <End Role="Programmers_Skills" Type="Self.Programmers_Skills" Multiplicity="*" />
           <ReferentialConstraint>
@@ -62,17 +64,16 @@ warning 6002: The table/view 'DevCube.dbo.Programmers_Skills' does not have a pr
     [Programmers_Skills].[SkillID] AS [SkillID]
     FROM [dbo].[Programmers_Skills] AS [Programmers_Skills]</DefiningQuery>
           </EntitySet>
-          <AssociationSet Name="FK__SkilledPr__Progr__4BAC3F29" Association="Self.FK__SkilledPr__Progr__4BAC3F29">
+          <AssociationSet Name="FK_Programmers_Skills_Programmers" Association="Self.FK_Programmers_Skills_Programmers">
             <End Role="Programmers" EntitySet="Programmers" />
             <End Role="Programmers_Skills" EntitySet="Programmers_Skills" />
           </AssociationSet>
-          <AssociationSet Name="FK__SkilledPr__Skill__4AB81AF0" Association="Self.FK__SkilledPr__Skill__4AB81AF0">
+          <AssociationSet Name="FK_Programmers_Skills_Skills" Association="Self.FK_Programmers_Skills_Skills">
             <End Role="Skills" EntitySet="Skills" />
             <End Role="Programmers_Skills" EntitySet="Programmers_Skills" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DevCubeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -84,6 +85,8 @@ warning 6002: The table/view 'DevCube.dbo.Programmers_Skills' does not have a pr
           <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Programmers_Skills" Relationship="Self.FK__SkilledPr__Progr__4BAC3F29" FromRole="Programmers" ToRole="Programmers_Skills" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="Int32" />
         </EntityType>
         <EntityType Name="Skill">
           <Key>
@@ -148,6 +151,8 @@ warning 6002: The table/view 'DevCube.dbo.Programmers_Skills' does not have a pr
           <EntitySetMapping Name="Programmers">
             <EntityTypeMapping TypeName="DevCubeModel.Programmer">
               <MappingFragment StoreEntitySet="Programmers">
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="ProgrammerID" ColumnName="ProgrammerID" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />

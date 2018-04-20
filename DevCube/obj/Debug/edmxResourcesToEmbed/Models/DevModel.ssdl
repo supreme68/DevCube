@@ -7,6 +7,8 @@
     <Property Name="ProgrammerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" />
+    <Property Name="PhoneNumber" Type="int" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'DevCube.dbo.Programmers_Skills' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -24,7 +26,7 @@ warning 6002: The table/view 'DevCube.dbo.Programmers_Skills' does not have a pr
     <Property Name="SkillID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
   </EntityType>
-  <Association Name="FK__SkilledPr__Progr__4BAC3F29">
+  <Association Name="FK_Programmers_Skills_Programmers">
     <End Role="Programmers" Type="Self.Programmers" Multiplicity="1" />
     <End Role="Programmers_Skills" Type="Self.Programmers_Skills" Multiplicity="0..1" />
     <ReferentialConstraint>
@@ -36,7 +38,7 @@ warning 6002: The table/view 'DevCube.dbo.Programmers_Skills' does not have a pr
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__SkilledPr__Skill__4AB81AF0">
+  <Association Name="FK_Programmers_Skills_Skills">
     <End Role="Skills" Type="Self.Skills" Multiplicity="0..1" />
     <End Role="Programmers_Skills" Type="Self.Programmers_Skills" Multiplicity="*" />
     <ReferentialConstraint>
@@ -57,11 +59,11 @@ warning 6002: The table/view 'DevCube.dbo.Programmers_Skills' does not have a pr
     [Programmers_Skills].[SkillID] AS [SkillID]
     FROM [dbo].[Programmers_Skills] AS [Programmers_Skills]</DefiningQuery>
     </EntitySet>
-    <AssociationSet Name="FK__SkilledPr__Progr__4BAC3F29" Association="Self.FK__SkilledPr__Progr__4BAC3F29">
+    <AssociationSet Name="FK_Programmers_Skills_Programmers" Association="Self.FK_Programmers_Skills_Programmers">
       <End Role="Programmers" EntitySet="Programmers" />
       <End Role="Programmers_Skills" EntitySet="Programmers_Skills" />
     </AssociationSet>
-    <AssociationSet Name="FK__SkilledPr__Skill__4AB81AF0" Association="Self.FK__SkilledPr__Skill__4AB81AF0">
+    <AssociationSet Name="FK_Programmers_Skills_Skills" Association="Self.FK_Programmers_Skills_Skills">
       <End Role="Skills" EntitySet="Skills" />
       <End Role="Programmers_Skills" EntitySet="Programmers_Skills" />
     </AssociationSet>

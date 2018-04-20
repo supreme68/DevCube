@@ -15,8 +15,15 @@ namespace DevCube.Controllers {
 
       public ActionResult Index()
       {
-      //Има ли друг варинат по който мога да ги добавя тези обекти към querry резултатът?
-      var Programmer_Skill = db.Programmers_Skills.Include(s => s.Programmer).Include(s => s.Skill);
+
+      var Programmer_Skill = db.Programmers_Skills.Include(s => s.Programmer)
+         .Include(s => s.Skill);
+
+      var ViewModel = new Programmer_SkillViewModel
+      {
+         FirstName = db.PProgrammers_Skills.Include(i => i.FirstName),
+         LastName = programmer.LastName,
+      };
 
       return View(Programmer_Skill.ToList());
       }

@@ -6,7 +6,7 @@
     <edmx:Diagrams>
       <Diagram DiagramId="a08387879a52406194e18a6253685207" Name="Diagram1">
         <EntityTypeShape EntityType="DevCubeModel.Programmer" Width="1.5" PointX="0.75" PointY="0.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DevCubeModel.Skill" Width="1.5" PointX="5.25" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DevCubeModel.Skill" Width="1.5" PointX="5.625" PointY="0.875" IsExpanded="true" />
         <EntityTypeShape EntityType="DevCubeModel.Programmers_Skills" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
         <AssociationConnector Association="DevCubeModel.FK__SkilledPr__Progr__4BAC3F29" ManuallyRouted="false" />
         <AssociationConnector Association="DevCubeModel.FK__SkilledPr__Skill__4AB81AF0" ManuallyRouted="false" />

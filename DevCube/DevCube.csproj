@@ -172,14 +172,13 @@
     <Compile Include="Models\Programmer.cs">
       <DependentUpon>DevModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\ProgrammerViewModel.cs" />
-    <Compile Include="ViewModels\Programmer_SkillViewModel.cs" />
     <Compile Include="Models\Programmers_Skills.cs">
       <DependentUpon>DevModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Skill.cs">
       <DependentUpon>DevModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\Programmer_SkillViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

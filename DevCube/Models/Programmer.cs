@@ -7,17 +7,17 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DevCube.Models
-{
-    using System;
-    using System.Collections.Generic;
-    
-    public partial class Programmer
-    {
-        public int ProgrammerID { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-    
-        public virtual Programmers_Skills Programmers_Skills { get; set; }
-    }
+namespace DevCube.Models {
+   using System;
+   using System.Collections.Generic;
+
+   public partial class Programmer {
+      public int ProgrammerID { get; set; }
+      public string FirstName { get; set; }
+      public string LastName { get; set; }
+      public string Email { get; set; }
+      public Nullable<int> PhoneNumber { get; set; }
+
+      public virtual Programmers_Skills Programmers_Skills { get; set; }
+   }
 }

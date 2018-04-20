@@ -8,6 +8,8 @@
     <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
     <NavigationProperty Name="Programmers_Skills" Relationship="Self.FK__SkilledPr__Progr__4BAC3F29" FromRole="Programmers" ToRole="Programmers_Skills" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumber" Type="Int32" />
   </EntityType>
   <EntityType Name="Skill">
     <Key>

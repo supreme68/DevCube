@@ -7,17 +7,15 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DevCube.Models
-{
-    using System;
-    using System.Collections.Generic;
-    
-    public partial class Programmers_Skills
-    {
-        public int ProgrammerID { get; set; }
-        public Nullable<int> SkillID { get; set; }
-    
-        public virtual Programmer Programmer { get; set; }
-        public virtual Skill Skill { get; set; }
-    }
+namespace DevCube.Models {
+   using System;
+   using System.Collections.Generic;
+
+   public partial class Programmers_Skills {
+      public int ProgrammerID { get; set; }
+      public Nullable<int> SkillID { get; set; }
+
+      public virtual Programmer Programmer { get; set; }
+      public virtual Skill Skill { get; set; }
+   }
 }
