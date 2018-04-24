@@ -1,4 +1,4 @@
-﻿@model List<Programmer_SkillViewModel>
+﻿@model List<ProgrammerModel>
 
 @{
     ViewBag.Title = "Home Page";
@@ -41,16 +41,20 @@
             @Html.DisplayFor(modelItem => item.LastName)
         </td>
 
-        @*<td>
-            @Html.DisplayFor(modelItem => item.Skill.Name)
-        </td>*@
+        <td>
+            @foreach (var skill in item.Skills)
+            {
+       
+                @Html.DisplayFor(modelItem => skill.Name) 
+            }
+        </td>
 
-        @*<td>
+        <td>
             @Html.ActionLink("Edit", "Edit", new { id = item.ProgrammerID }) |
             @Html.ActionLink("Details", "Details", new { id = item.ProgrammerID }) |
             @Html.ActionLink("Delete", "Delete", new { id = item.ProgrammerID })
-        </td>*@
-        s
+        </td>
+
     </tr>
     }
 

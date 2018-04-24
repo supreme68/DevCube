@@ -26,7 +26,7 @@ namespace DevCube.Models
         }
     
         public virtual DbSet<Programmer> Programmers { get; set; }
-        public virtual DbSet<Skill> Skills { get; set; }
         public virtual DbSet<Programmers_Skills> Programmers_Skills { get; set; }
+        public virtual DbSet<Skill> Skills { get; set; }
     }
 }

@@ -10,14 +10,13 @@
     <Property Name="Email" Type="nvarchar" MaxLength="50" />
     <Property Name="PhoneNumber" Type="int" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'DevCube.dbo.Programmers_Skills' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="Programmers_Skills">
     <Key>
-      <PropertyRef Name="ProgrammerID" />
+      <PropertyRef Name="Programmer_SkillsID" />
     </Key>
-    <Property Name="ProgrammerID" Type="int" Nullable="false" />
-    <Property Name="SkillID" Type="int" />
+    <Property Name="Programmer_SkillsID" Type="int" Nullable="false" />
+    <Property Name="ProgrammerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SkillID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Skills">
     <Key>
@@ -28,7 +27,7 @@ warning 6002: The table/view 'DevCube.dbo.Programmers_Skills' does not have a pr
   </EntityType>
   <Association Name="FK_Programmers_Skills_Programmers">
     <End Role="Programmers" Type="Self.Programmers" Multiplicity="1" />
-    <End Role="Programmers_Skills" Type="Self.Programmers_Skills" Multiplicity="0..1" />
+    <End Role="Programmers_Skills" Type="Self.Programmers_Skills" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Programmers">
         <PropertyRef Name="ProgrammerID" />
@@ -39,7 +38,7 @@ warning 6002: The table/view 'DevCube.dbo.Programmers_Skills' does not have a pr
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Programmers_Skills_Skills">
-    <End Role="Skills" Type="Self.Skills" Multiplicity="0..1" />
+    <End Role="Skills" Type="Self.Skills" Multiplicity="1" />
     <End Role="Programmers_Skills" Type="Self.Programmers_Skills" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Skills">
@@ -52,13 +51,8 @@ warning 6002: The table/view 'DevCube.dbo.Programmers_Skills' does not have a pr
   </Association>
   <EntityContainer Name="DevCubeModelStoreContainer">
     <EntitySet Name="Programmers" EntityType="Self.Programmers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Programmers_Skills" EntityType="Self.Programmers_Skills" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Skills" EntityType="Self.Skills" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Programmers_Skills" EntityType="Self.Programmers_Skills" store:Type="Tables" store:Schema="dbo">
-      <DefiningQuery>SELECT 
-    [Programmers_Skills].[ProgrammerID] AS [ProgrammerID], 
-    [Programmers_Skills].[SkillID] AS [SkillID]
-    FROM [dbo].[Programmers_Skills] AS [Programmers_Skills]</DefiningQuery>
-    </EntitySet>
     <AssociationSet Name="FK_Programmers_Skills_Programmers" Association="Self.FK_Programmers_Skills_Programmers">
       <End Role="Programmers" EntitySet="Programmers" />
       <End Role="Programmers_Skills" EntitySet="Programmers_Skills" />

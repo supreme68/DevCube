@@ -4,12 +4,12 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="a08387879a52406194e18a6253685207" Name="Diagram1">
+      <Diagram DiagramId="066aa3257da5479cb7f260fc0c950ed1" Name="Diagram1">
         <EntityTypeShape EntityType="DevCubeModel.Programmer" Width="1.5" PointX="0.75" PointY="0.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DevCubeModel.Skill" Width="1.5" PointX="5.625" PointY="0.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DevCubeModel.Programmers_Skills" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
-        <AssociationConnector Association="DevCubeModel.FK__SkilledPr__Progr__4BAC3F29" ManuallyRouted="false" />
-        <AssociationConnector Association="DevCubeModel.FK__SkilledPr__Skill__4AB81AF0" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="DevCubeModel.Programmers_Skills" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="DevCubeModel.Skill" Width="1.5" PointX="5.375" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="DevCubeModel.FK_Programmers_Skills_Programmers" ManuallyRouted="false" />
+        <AssociationConnector Association="DevCubeModel.FK_Programmers_Skills_Skills" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -7,21 +7,23 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DevCube.Models {
-   using System;
-   using System.Collections.Generic;
-
-   public partial class Skill {
-      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-      public Skill()
-      {
-      this.Programmers_Skills = new HashSet<Programmers_Skills>();
-      }
-
-      public int SkillID { get; set; }
-      public string Name { get; set; }
-
-      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-      public virtual ICollection<Programmers_Skills> Programmers_Skills { get; set; }
-   }
+namespace DevCube.Models
+{
+    using System;
+    using System.Collections.Generic;
+    
+    public partial class Skill
+    {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Skill()
+        {
+            this.Programmers_Skills = new HashSet<Programmers_Skills>();
+        }
+    
+        public int SkillID { get; set; }
+        public string Name { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Programmers_Skills> Programmers_Skills { get; set; }
+    }
 }

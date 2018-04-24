@@ -7,17 +7,26 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DevCube.Models {
-   using System;
-   using System.Collections.Generic;
-
-   public partial class Programmer {
-      public int ProgrammerID { get; set; }
-      public string FirstName { get; set; }
-      public string LastName { get; set; }
-      public string Email { get; set; }
-      public Nullable<int> PhoneNumber { get; set; }
-
-      public virtual Programmers_Skills Programmers_Skills { get; set; }
-   }
+namespace DevCube.Models
+{
+    using System;
+    using System.Collections.Generic;
+    
+    public partial class Programmer
+    {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Programmer()
+        {
+            this.Programmers_Skills = new HashSet<Programmers_Skills>();
+        }
+    
+        public int ProgrammerID { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
+        public Nullable<int> PhoneNumber { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Programmers_Skills> Programmers_Skills { get; set; }
+    }
 }

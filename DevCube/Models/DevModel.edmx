@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="DevCubeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="DevCubeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Programmers">
           <Key>
             <PropertyRef Name="ProgrammerID" />
@@ -15,14 +15,13 @@
           <Property Name="Email" Type="nvarchar" MaxLength="50" />
           <Property Name="PhoneNumber" Type="int" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'DevCube.dbo.Programmers_Skills' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Programmers_Skills">
           <Key>
-            <PropertyRef Name="ProgrammerID" />
+            <PropertyRef Name="Programmer_SkillsID" />
           </Key>
-          <Property Name="ProgrammerID" Type="int" Nullable="false" />
-          <Property Name="SkillID" Type="int" />
+          <Property Name="Programmer_SkillsID" Type="int" Nullable="false" />
+          <Property Name="ProgrammerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SkillID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Skills">
           <Key>
@@ -33,7 +32,7 @@ warning 6002: The table/view 'DevCube.dbo.Programmers_Skills' does not have a pr
         </EntityType>
         <Association Name="FK_Programmers_Skills_Programmers">
           <End Role="Programmers" Type="Self.Programmers" Multiplicity="1" />
-          <End Role="Programmers_Skills" Type="Self.Programmers_Skills" Multiplicity="0..1" />
+          <End Role="Programmers_Skills" Type="Self.Programmers_Skills" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Programmers">
               <PropertyRef Name="ProgrammerID" />
@@ -44,7 +43,7 @@ warning 6002: The table/view 'DevCube.dbo.Programmers_Skills' does not have a pr
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Programmers_Skills_Skills">
-          <End Role="Skills" Type="Self.Skills" Multiplicity="0..1" />
+          <End Role="Skills" Type="Self.Skills" Multiplicity="1" />
           <End Role="Programmers_Skills" Type="Self.Programmers_Skills" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Skills">
@@ -57,13 +56,8 @@ warning 6002: The table/view 'DevCube.dbo.Programmers_Skills' does not have a pr
         </Association>
         <EntityContainer Name="DevCubeModelStoreContainer">
           <EntitySet Name="Programmers" EntityType="Self.Programmers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Programmers_Skills" EntityType="Self.Programmers_Skills" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Skills" EntityType="Self.Skills" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Programmers_Skills" EntityType="Self.Programmers_Skills" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [Programmers_Skills].[ProgrammerID] AS [ProgrammerID], 
-    [Programmers_Skills].[SkillID] AS [SkillID]
-    FROM [dbo].[Programmers_Skills] AS [Programmers_Skills]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="FK_Programmers_Skills_Programmers" Association="Self.FK_Programmers_Skills_Programmers">
             <End Role="Programmers" EntitySet="Programmers" />
             <End Role="Programmers_Skills" EntitySet="Programmers_Skills" />
@@ -73,7 +67,8 @@ warning 6002: The table/view 'DevCube.dbo.Programmers_Skills' does not have a pr
             <End Role="Programmers_Skills" EntitySet="Programmers_Skills" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DevCubeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -84,9 +79,19 @@ warning 6002: The table/view 'DevCube.dbo.Programmers_Skills' does not have a pr
           <Property Name="ProgrammerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Programmers_Skills" Relationship="Self.FK__SkilledPr__Progr__4BAC3F29" FromRole="Programmers" ToRole="Programmers_Skills" />
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="PhoneNumber" Type="Int32" />
+          <NavigationProperty Name="Programmers_Skills" Relationship="Self.FK_Programmers_Skills_Programmers" FromRole="Programmers" ToRole="Programmers_Skills" />
+        </EntityType>
+        <EntityType Name="Programmers_Skills">
+          <Key>
+            <PropertyRef Name="Programmer_SkillsID" />
+          </Key>
+          <Property Name="Programmer_SkillsID" Type="Int32" Nullable="false" />
+          <Property Name="ProgrammerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SkillID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Programmer" Relationship="Self.FK_Programmers_Skills_Programmers" FromRole="Programmers_Skills" ToRole="Programmers" />
+          <NavigationProperty Name="Skill" Relationship="Self.FK_Programmers_Skills_Skills" FromRole="Programmers_Skills" ToRole="Skills" />
         </EntityType>
         <EntityType Name="Skill">
           <Key>
@@ -94,20 +99,11 @@ warning 6002: The table/view 'DevCube.dbo.Programmers_Skills' does not have a pr
           </Key>
           <Property Name="SkillID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Programmers_Skills" Relationship="Self.FK__SkilledPr__Skill__4AB81AF0" FromRole="Skills" ToRole="Programmers_Skills" />
+          <NavigationProperty Name="Programmers_Skills" Relationship="Self.FK_Programmers_Skills_Skills" FromRole="Skills" ToRole="Programmers_Skills" />
         </EntityType>
-        <EntityType Name="Programmers_Skills">
-          <Key>
-            <PropertyRef Name="ProgrammerID" />
-          </Key>
-          <Property Name="ProgrammerID" Type="Int32" Nullable="false" />
-          <Property Name="SkillID" Type="Int32" />
-          <NavigationProperty Name="Programmer" Relationship="Self.FK__SkilledPr__Progr__4BAC3F29" FromRole="Programmers_Skills" ToRole="Programmers" />
-          <NavigationProperty Name="Skill" Relationship="Self.FK__SkilledPr__Skill__4AB81AF0" FromRole="Programmers_Skills" ToRole="Skills" />
-        </EntityType>
-        <Association Name="FK__SkilledPr__Progr__4BAC3F29">
+        <Association Name="FK_Programmers_Skills_Programmers">
           <End Role="Programmers" Type="Self.Programmer" Multiplicity="1" />
-          <End Role="Programmers_Skills" Type="Self.Programmers_Skills" Multiplicity="0..1" />
+          <End Role="Programmers_Skills" Type="Self.Programmers_Skills" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Programmers">
               <PropertyRef Name="ProgrammerID" />
@@ -117,8 +113,8 @@ warning 6002: The table/view 'DevCube.dbo.Programmers_Skills' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__SkilledPr__Skill__4AB81AF0">
-          <End Role="Skills" Type="Self.Skill" Multiplicity="0..1" />
+        <Association Name="FK_Programmers_Skills_Skills">
+          <End Role="Skills" Type="Self.Skill" Multiplicity="1" />
           <End Role="Programmers_Skills" Type="Self.Programmers_Skills" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Skills">
@@ -131,13 +127,13 @@ warning 6002: The table/view 'DevCube.dbo.Programmers_Skills' does not have a pr
         </Association>
         <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Programmers" EntityType="Self.Programmer" />
-          <EntitySet Name="Skills" EntityType="Self.Skill" />
           <EntitySet Name="Programmers_Skills" EntityType="Self.Programmers_Skills" />
-          <AssociationSet Name="FK__SkilledPr__Progr__4BAC3F29" Association="Self.FK__SkilledPr__Progr__4BAC3F29">
+          <EntitySet Name="Skills" EntityType="Self.Skill" />
+          <AssociationSet Name="FK_Programmers_Skills_Programmers" Association="Self.FK_Programmers_Skills_Programmers">
             <End Role="Programmers" EntitySet="Programmers" />
             <End Role="Programmers_Skills" EntitySet="Programmers_Skills" />
           </AssociationSet>
-          <AssociationSet Name="FK__SkilledPr__Skill__4AB81AF0" Association="Self.FK__SkilledPr__Skill__4AB81AF0">
+          <AssociationSet Name="FK_Programmers_Skills_Skills" Association="Self.FK_Programmers_Skills_Skills">
             <End Role="Skills" EntitySet="Skills" />
             <End Role="Programmers_Skills" EntitySet="Programmers_Skills" />
           </AssociationSet>
@@ -151,11 +147,20 @@ warning 6002: The table/view 'DevCube.dbo.Programmers_Skills' does not have a pr
           <EntitySetMapping Name="Programmers">
             <EntityTypeMapping TypeName="DevCubeModel.Programmer">
               <MappingFragment StoreEntitySet="Programmers">
-                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="ProgrammerID" ColumnName="ProgrammerID" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Programmers_Skills">
+            <EntityTypeMapping TypeName="DevCubeModel.Programmers_Skills">
+              <MappingFragment StoreEntitySet="Programmers_Skills">
+                <ScalarProperty Name="Programmer_SkillsID" ColumnName="Programmer_SkillsID" />
+                <ScalarProperty Name="ProgrammerID" ColumnName="ProgrammerID" />
+                <ScalarProperty Name="SkillID" ColumnName="SkillID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -164,14 +169,6 @@ warning 6002: The table/view 'DevCube.dbo.Programmers_Skills' does not have a pr
               <MappingFragment StoreEntitySet="Skills">
                 <ScalarProperty Name="SkillID" ColumnName="SkillID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Programmers_Skills">
-            <EntityTypeMapping TypeName="DevCubeModel.Programmers_Skills">
-              <MappingFragment StoreEntitySet="Programmers_Skills">
-                <ScalarProperty Name="ProgrammerID" ColumnName="ProgrammerID" />
-                <ScalarProperty Name="SkillID" ColumnName="SkillID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

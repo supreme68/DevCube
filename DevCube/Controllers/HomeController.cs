@@ -8,114 +8,76 @@ using DevCube.Models;
 using DevCube.ViewModels;
 
 namespace DevCube.Controllers {
-   public class HomeController : Controller {
+  public class HomeController : Controller {
 
-      //Represents connection with DB
-      private Entities db = new Entities();
+    //Represents connection with DB
+    private Entities db = new Entities();
 
-      public ActionResult Index()
-      {
+    public ActionResult Index()
+    {
+    var programmer = (from p in db.Programmers
+                      select new ProgrammerModel
+                      {
+                        ProgrammerID = p.ProgrammerID,
+                        FirstName = p.FirstName,
+                        LastName = p.LastName,
+                        Email = p.Email,
+                        
+                        Skills = (from s in db.Skills
+                                  join ps in db.Programmers_Skills on s.SkillID equals ps.SkillID
+                                  where ps.ProgrammerID == p.ProgrammerID
+                                  select new SkillModel()
+                                  {
+                                    SkillID = s.SkillID,
+                                    Name = (" ") + s.Name 
+                                  }).ToList()
+                      }).ToList();
 
-      var Programmer_Skill = db.Programmers_Skills.Include(s => s.Programmer)
-         .Include(s => s.Skill);
+    return View(programmer);
+    }
 
-      var ViewModel = new Programmer_SkillViewModel
-      {
-         FirstName = db.PProgrammers_Skills.Include(i => i.FirstName),
-         LastName = programmer.LastName,
-      };
+    // GET: Programmers/Create
+    public ActionResult CreateProgrammer()
+    {
+    return View();
+    }
 
-      return View(Programmer_Skill.ToList());
-      }
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public ActionResult CreateProgrammer(Programmer programmer)
+    {
+    if (ModelState.IsValid)
+    {
+    db.Programmers.Add(programmer);
+    db.SaveChanges();
 
-      // GET: Programmers/Create
-      public ActionResult CreateProgrammer()
-      {
-      return View();
-      }
+    return RedirectToAction("Index");
+    }
 
-      [HttpPost]
-      [ValidateAntiForgeryToken]
-      public ActionResult CreateProgrammer(Programmer programmer)
-      {
-      if (ModelState.IsValid)
-      {
+    return View(programmer);
+    }
 
-      db.Programmers.Add(programmer);
-      db.SaveChanges();
+    // GET: Skills/Create
+    public ActionResult CreateSkill()
+    {
+    return View();
+    }
 
-      return RedirectToAction("Index");
-      }
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public ActionResult CreateSkill(Skill skill)
+    {
+    if (ModelState.IsValid)
+    {
+    db.Skills.Add(skill);
+    db.SaveChanges();
 
-      return View(programmer);
-      }
+    return RedirectToAction("Index");
+    }
 
-      // GET: Skills/Create
-      public ActionResult CreateSkill()
-      {
-      return View();
-      }
+    ViewBag.ProgrammerID = new SelectList(db.Programmers_Skills, "ProgrammerID", "ProgrammerID", skill.SkillID);
 
-      [HttpPost]
-      [ValidateAntiForgeryToken]
-      public ActionResult CreateSkill(Skill skill)
-      {
-      if (ModelState.IsValid)
-      {
-
-      db.Skills.Add(skill);
-      db.SaveChanges();
-
-      return RedirectToAction("Index");
-      }
-
-      ViewBag.ProgrammerID = new SelectList(db.Programmers_Skills, "ProgrammerID", "ProgrammerID", skill.SkillID);
-
-      return View(skill);
-      }
-   }
+    return View(skill);
+    }
+  }
 }
-
-
-
-
-
-//public ActionResult Create(Programmer programmer)
-//{
-
-//ViewBag.ProgrammerID = new SelectList(db.Programmers, "ProgrammersID", "FirstName");
-
-//var ViewModel = new Programmer_SkillViewModel 
-//{
-//   Programmer = db.Programmers,
-//   FirstName = programmer.FirstName,
-//   LastName = programmer.LastName,
-//};
-
-//var ViewModel = new SelectList(db.Programmers, "ProgrammersID", "FirstName");
-
-//   return View();
-
-//}
-
-//[HttpPost]
-//[ValidateAntiForgeryToken]
-//public ActionResult Create(Programmers_Skills Programmer_Skill)
-//{
-
-////Така ли трябва да е подредено
-//if (ModelState.IsValid)
-//{
-////Това не трябва ли да е навътре заради IF statement или така да си остане
-//db.Programmers_Skills.Add(Programmer_Skill);
-//db.SaveChanges();
-
-//return RedirectToAction("Index");
-//}
-
-//ViewBag.ProgrammerID = new SelectList(db.Programmers, "ProgrammersID", "FirstName", Programmer_Skill.ProgrammerID);
-//ViewBag.SkillsID = new SelectList(db.Skills, "SkillsID", "SkillsName", Programmer_Skill.SkillID);
-
-//return View(Programmer_Skill);
-
-//}
