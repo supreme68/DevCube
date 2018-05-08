@@ -1,4 +1,5 @@
-﻿@model List<ProgrammerModel>
+﻿@model IEnumerable<ProgrammerModel>
+
 
 @{
     ViewBag.Title = "Home Page";
@@ -31,31 +32,59 @@
 
     @foreach (var item in Model)
     {
-    <tr>
+        int i = 0;
+        <tr>
 
-        <td>
-            @Html.DisplayFor(modelItem => item.FirstName)
-        </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
 
-        <td>
-            @Html.DisplayFor(modelItem => item.LastName)
-        </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
 
-        <td>
-            @foreach (var skill in item.Skills)
-            {
-       
-                @Html.DisplayFor(modelItem => skill.Name) 
-            }
-        </td>
+            <td>
+                @foreach (var skill in item.Skills)
+                {
+                    i++;
 
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.ProgrammerID }) |
-            @Html.ActionLink("Details", "Details", new { id = item.ProgrammerID }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.ProgrammerID })
-        </td>
+                    string skillName = skill.Name + " ,";
 
-    </tr>
+                    if (i == item.Skills.Count)
+                    {
+                        skillName = skill.Name;
+                    }
+
+                    @Html.DisplayFor(modelItem => skillName)
+
+                }
+
+            </td>
+
+            <td>
+                @Html.ActionLink("Update", "Update", new { id = item.ProgrammerID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ProgrammerID })
+            </td>
+
+        </tr>
     }
 
 </table>
+
+
+@*string[] esketit = { skill.Name };
+
+    var halo = (from s in skill.Name
+                select s);
+
+    string kek = skill.Name+.Join("," , halo);*@
+
+
+
+
+
+@*//display array with the string and than choose the last string from it and trim it
+                        string halo = skill.Name + "," ;
+
+                        string kek = halo.Trim(',');
+    @Html.DisplayFor(modelItem => kek);*@

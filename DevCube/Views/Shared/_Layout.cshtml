@@ -5,19 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css")
-    @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
 
     <!--NavBar-->
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top">
-        @Html.ActionLink("Dev - Cube", "ComingSoon", "Home", null, new { @class = "navbar-brand" })
+        @Html.ActionLink("Dev - Cube", "Index", "Home", null, new { @class = "navbar-brand" })
         <ul class="navbar-nav">
             <li class="nav-item">
-                @Html.ActionLink("Home", "Home", "Home", null, new { @class = "nav-link" })
+                @Html.ActionLink("Home", "Index", "Home", null, new { @class = "nav-link" })
             </li>
             <li class="nav-item">
-                @Html.ActionLink("Technologies", "SimulatorCustom", "Simulator", null, new { @class = "nav-link" })
+                @Html.ActionLink("Technologies", "Technologies", "Home", null, new { @class = "nav-link" })
             </li>
         </ul>
     </nav>

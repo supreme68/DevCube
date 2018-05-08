@@ -1,0 +1,43 @@
+﻿@model IEnumerable<SkillModel>
+
+@{
+    ViewBag.Title = "Technologies";
+}
+
+<div class="jumbotron">
+    <h1>Technologies</h1>
+    <p class="lead">Delete or Add new technologies to the list </p>
+    <div class="alert alert-info">
+        <p >Note!!! </p>
+        <p>Deleted tecnologies will be removed from the programmer that knew them so choose wisely</p>
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Add New Skill", "CreateSkill")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Name
+        </th>
+
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+
+            <td>
+                @Html.ActionLink("Delete", "Delete", new { id = item.SkillID })
+            </td>
+
+        </tr>
+    }
+
+</table>
