@@ -3,7 +3,7 @@
 
 # User-specific files
 *.suo
-DevCube/*.user
+**/*.user
 *.userosscache
 *.sln.docstates
 
@@ -11,15 +11,15 @@ DevCube/*.user
 *.userprefs
 
 # Build results
-DevCube/[Dd]ebug/
-DevCube/[Dd]ebugPublic/
-DevCube/[Rr]elease/
-DevCube/[Rr]eleases/
+**/[Dd]ebug/
+**/[Dd]ebugPublic/
+**/[Rr]elease/
+**/[Rr]eleases/
 x64/
 x86/
 bld/
-DevCube/[Bb]in/
-DevCube/[Oo]bj/
+**/[Bb]in/
+**/[Oo]bj/
 [Ll]og/
 
 # Visual Studio 2015 cache/options directory
