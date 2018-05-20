@@ -4,8 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Data.Entity;
 using System.Web.Mvc;
-using DevCube.Data.Binder;
-using DevCube.Data.Modificator;
+using DevCube.Data;
+using DevCube.Data.Modificators;
 
 namespace DevCube.Website.Controllers
 {
@@ -14,7 +14,7 @@ namespace DevCube.Website.Controllers
 
         public ActionResult Index()
         {
-            return View(ProgrammerBinder.DisplayProgrammersWithSkills());
+            return View(ViewModelMapper.DisplayAllProgrammersWithSkills());
         }
 
         //// GET: Programmers/Create
@@ -44,18 +44,13 @@ namespace DevCube.Website.Controllers
         [HttpGet]
         public ActionResult Delete(int? id)
         {
-            if (id == null)
+
+            var programmer = ViewModelMapper.DisplayPorgrammerByIDWithSkills(id);
+
+            if (id == null || programmer.Count == 0)
             {
                 return HttpNotFound();
             }
-
-            var programmer = ProgrammerBinder.DisplayPorgrammersByIDWithSkills(id);
-
-            if (programmer.Count == 0)
-            {
-                return HttpNotFound();
-            }
-
 
             return View(programmer);
         }
@@ -64,17 +59,15 @@ namespace DevCube.Website.Controllers
         public ActionResult Delete(int id)
         {
             DeleteModificator.DeleteProgrammersAndSkillsByID(id);
-            DeleteModificator.DeleteProgrammerByID(id);
-
+            
             return RedirectToAction("Index");
         }
 
-        //[HttpGet]
-        //public ActionResult Update(int? id)
-        //{
-
-        //    return View(CRUD.UpdateGET(id));
-        //}
+        [HttpGet]
+        public ActionResult Update(int? id)
+        {
+            return View(ViewModelMapper.DisplayProgrammerByIDWithAllSKills(id));
+        }
 
         //[HttpGet]
         //public ActionResult CreateSkill()

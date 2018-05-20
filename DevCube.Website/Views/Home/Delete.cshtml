@@ -13,7 +13,7 @@
         {
             int i = 0;
             <dt>
-               Full Name
+                Full Name
             </dt>
 
             <dd>
@@ -47,8 +47,8 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <input type="submit" value="Delete" class="btn" /> |
+            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn" })
         </div>
     }
 </div>
