@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using DevCube.Data.DomainModels;
 using DevCube.ViewModels.Models;
 
-namespace DevCube.Data
+namespace DevCube.Data.ModelMappers
 {
-    public class ViewModelMapper
+    public class ProgrammerModelMapper
     {
         public static List<ProgrammerModel> DisplayAllProgrammersWithSkills()
         {
@@ -71,32 +71,56 @@ namespace DevCube.Data
         {
             var db = new Entities();
 
-            var skill = (from s in db.Skills
-                         join ps in db.Programmers_Skills on s.SkillID equals ps.SkillID
-                         where ps.ProgrammerID == id
-                         select s);
+            var GetSkillByProgrammerID = (from s in db.Skills
+                                          join ps in db.Programmers_Skills on s.SkillID equals ps.SkillID
+                                          where ps.ProgrammerID == id
+                                          select new SkillModel
+                                          {
+                                              SkillID = s.SkillID,
+                                              Name = s.Name,
+                                              IsChecked = true
+                                          }).ToList();
 
-            var programmer = (from p in db.Programmers
+            var GetAllSkills = (from s in db.Skills
+                                select new SkillModel
+                                {
+                                    SkillID = s.SkillID,
+                                    Name = s.Name,
+                                    IsChecked = false
+                                }).ToList();
+
+            var GetAllProgrammersByID = (from p in db.Programmers
+                                         where id == p.ProgrammerID
+                                         select p).ToList();
+
+            foreach (var item in GetAllSkills)
+            {
+                foreach (var skill in GetSkillByProgrammerID)
+                {
+                    if (skill.SkillID == item.SkillID)
+                    {
+                        item.IsChecked = true;
+                        break;
+                    }
+                }
+            }
+
+            var programmer = (from p in GetAllProgrammersByID
                               where id == p.ProgrammerID
                               select new ProgrammerModel
                               {
+                                  ProgrammerID = p.ProgrammerID,
                                   FirstName = p.FirstName,
                                   LastName = p.LastName,
 
-                                  Skills = (from s in db.Skills
-                                            from k in skill
-                                            where s.SkillID == k.SkillID
-                                            select new SkillModel
-                                            {
-
-                                                SkillID = s.SkillID,
-                                                Name = s.Name,
-                                                IsChecked = false
-                                            }).ToList()
+                                  Skills = (from s in GetAllSkills
+                                            select s).ToList()
                               }).ToList();
-         
-            return programmer;
 
+            return programmer;
         }
     }
 }
+
+
+

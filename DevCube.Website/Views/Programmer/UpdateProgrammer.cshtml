@@ -1,0 +1,52 @@
+﻿@model List<ProgrammerModel>
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        <h4>Programmer's known skills</h4>
+
+        <hr />
+        <div class="form-group">
+            @foreach (var item in Model)
+            {
+                <strong>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </strong>
+
+                <br />
+
+                foreach (var skills in item.Skills)
+                {
+                    @Html.CheckBoxFor(modelItem => skills.IsChecked)
+                    @Html.DisplayFor(modelItem => skills.Name)
+                    @Html.HiddenFor(modelItem => skills.SkillID)
+
+                    <br />
+                    }
+                }
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Save" class="btn btn-default" />
+        </div>
+
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "IndexProgrammer", null, new { @id = "button", @class = "btn btn-sm" })
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

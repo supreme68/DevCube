@@ -2,7 +2,7 @@
 
 
 @{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Programmers";
 }
 
 
@@ -10,15 +10,13 @@
     <h1>Dev-Cube<img src="~/Content/images/logo.png"></h1>
     <p class="lead">Dev-Cube is an application for simplifying employee managment by providing listing with all the avaible employees and their skills. </p>
     @*<p><a href="http://www.icygen.com/bg/" class="btn btn-lg" id="button">Learn more &raquo;</a></p>*@
-    @Html.ActionLink("Programmers", "Update", null, new { @id = "button", @class = "btn btn-lg" })
-
-    @Html.ActionLink("Skills", "Update", null, new { @id = "button", @class = "btn btn-lg" })
+    @Html.ActionLink("Skills", "IndexSkill", "Skill", null, new { @id = "button", @class = "btn btn-lg" })
 
 </div>
 
 <h2>Programmers</h2>
 <p>From here you can manage your programmers and their known skills</p>
-@Html.ActionLink("Add New Programmer", "Update", null, new { @id = "button", @class = "btn btn-sm" })
+@Html.ActionLink("Add New Programmer", "CreateProgrammer", null, new { @id = "button", @class = "btn btn-sm" })
 
 <div class="table-responsive">
     <table class="table table-dark  table-hover">
@@ -76,8 +74,8 @@
                 </td>
 
                 <td>
-                    @Html.ActionLink("Update", "Update", new { id = item.ProgrammerID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.ProgrammerID })
+                    @Html.ActionLink("Update", "UpdateProgrammer", new { id = item.ProgrammerID }) |
+                    @Html.ActionLink("Delete", "DeleteProgrammer", new { id = item.ProgrammerID })
                 </td>
 
             </tr>

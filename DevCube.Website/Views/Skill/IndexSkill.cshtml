@@ -1,0 +1,72 @@
+﻿@model List<SkillModel>
+
+
+@{
+    ViewBag.Title = "Skills";
+}
+
+<div class="jumbotron">
+    <h1>Dev-Cube<img src="~/Content/images/logo.png"></h1>
+    <p class="lead">Dev-Cube is an application for simplifying employee managment by providing listing with all the avaible employees and their skills. </p>
+    @Html.ActionLink("Programmers", "IndexProgrammer", "Programmer" , null, new { @id = "button", @class = "btn btn-lg" })
+</div>
+
+<h2>Skills</h2>
+<p>From here you can manage the skills that your programmers know </p>
+@Html.ActionLink("Add New Skill", "Update", null, new { @id = "button", @class = "btn btn-sm" })
+
+<div class="table-responsive">
+    <table class="table table-dark  table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th>
+                    Name
+                </th>
+
+                <th>
+                    Known BY
+                </th>
+
+                <th>
+                    Manage
+                </th>
+
+            </tr>
+        </thead>
+
+        @foreach (var item in Model)
+        {
+            int i = 0;
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+
+                <td>
+                    @foreach (var programmer in item.Programmers)
+                    {
+                        i++;
+
+                        string programmerName = programmer.FullName + " ,";
+
+                        if (i == item.Programmers.Count)
+                        {
+                            programmerName = programmer.FullName;
+                        }
+
+                        @Html.DisplayFor(modelItem => programmerName)
+
+                    }
+
+                </td>
+
+                <td>
+                    @Html.ActionLink("Update", "Update", new { id = item.SkillID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.SkillID })
+                </td>
+
+            </tr>
+        }
+    </table>
+</div>

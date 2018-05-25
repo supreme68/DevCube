@@ -74,8 +74,10 @@
       <DependentUpon>DevCubeContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Modificators\DeleteModificator.cs" />
+    <Compile Include="Modificators\UpdateModificator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModelMapper.cs" />
+    <Compile Include="ModelMappers\ProgrammerModelMapper.cs" />
+    <Compile Include="ModelMappers\SkillModelMapper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

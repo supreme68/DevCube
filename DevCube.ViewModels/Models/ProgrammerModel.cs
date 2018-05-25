@@ -10,6 +10,7 @@ namespace DevCube.ViewModels.Models
         public int ProgrammerID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string FullName { get { return FirstName + " " + LastName; } set { } }
         public List<SkillModel> Skills { get; set; }
     }
 }
