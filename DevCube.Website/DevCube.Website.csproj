@@ -160,6 +160,7 @@
   <ItemGroup>
     <Content Include="Content\images\logo.png" />
     <Content Include="Content\js\Site.js" />
+    <Content Include="Content\js\Update.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\css\Site.css" />

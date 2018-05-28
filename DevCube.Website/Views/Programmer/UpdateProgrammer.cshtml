@@ -11,35 +11,31 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-
         <h4>Programmer's known skills</h4>
-
         <hr />
-        <div class="form-group">
-            @foreach (var item in Model)
-            {
+
+        @foreach (var item in Model)
+        {
+            <div class="form-group">
                 <strong>
                     @Html.DisplayFor(modelItem => item.FirstName)
                     @Html.DisplayFor(modelItem => item.LastName)
+                    @Html.HiddenFor(modeItem => item.ProgrammerID)
                 </strong>
-
                 <br />
-
-                foreach (var skills in item.Skills)
+                @foreach (var skills in item.Skills)
                 {
                     @Html.CheckBoxFor(modelItem => skills.IsChecked)
                     @Html.DisplayFor(modelItem => skills.Name)
                     @Html.HiddenFor(modelItem => skills.SkillID)
-
                     <br />
-                    }
                 }
-        </div>
+            </div>
 
-        <div class="form-group">
-            <input type="submit" value="Save" class="btn btn-default" />
-        </div>
-
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        }
     </div>
 }
 
@@ -49,4 +45,5 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    @*@Scripts.Render("")*@
 }

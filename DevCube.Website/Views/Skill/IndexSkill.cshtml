@@ -48,11 +48,11 @@
                     {
                         i++;
 
-                        string programmerName = programmer.FullName + " ,";
+                        string programmerName = programmer.FirstName + " " + programmer.LastName + " ,";
 
                         if (i == item.Programmers.Count)
                         {
-                            programmerName = programmer.FullName;
+                            programmerName = programmer.FirstName + programmer.LastName;
                         }
 
                         @Html.DisplayFor(modelItem => programmerName)

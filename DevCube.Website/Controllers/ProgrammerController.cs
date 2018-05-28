@@ -23,7 +23,7 @@ namespace DevCube.Controllers
             return View();
         }
 
-        //UPDATE
+        //UPDATE   
         [HttpGet]
         public ActionResult UpdateProgrammer(int? id)
         {
@@ -38,11 +38,16 @@ namespace DevCube.Controllers
         }
 
         [HttpPost]
-        public ActionResult UpdateProgrammer(List<ProgrammerModel> selectedSkills)
+        public ActionResult UpdateProgrammer(List<ProgrammerModel> selectedSkills , int id)
         {
-            foreach (var item in selectedSkills.Select(item => item.FirstName))
+
+            foreach (var item in selectedSkills.Select(item => item.Skills))
             {
-                return HttpNotFound();
+                foreach (var skills in item.Where(skillItem => skillItem.IsChecked = true))
+                {
+                    //Add Modifier
+                }
+                break;
             }
 
             return RedirectToAction("IndexProgrammer");
@@ -65,8 +70,6 @@ namespace DevCube.Controllers
         [HttpPost]
         public ActionResult DeleteProgrammer(int id)
         {
-
-
             DeleteModificator.DeleteProgrammerAndSkills(id);
 
             return RedirectToAction("Index");
