@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ProgrammerModel>
+﻿@model ProgrammerModel
 @{
     ViewBag.Title = "Delete";
 }
@@ -9,38 +9,27 @@
 <div>
     <hr />
     <dl class="dl-horizontal">
-        @foreach (var item in Model)
-        {
-            int i = 0;
-            <dt>
-                Full Name
-            </dt>
+        <dt>
+            Full Name
+        </dt>
 
-            <dd>
-                @Html.DisplayFor(model => item.FirstName)
-                @Html.DisplayFor(model => item.LastName)
-            </dd>
+        <dd>
+            @Html.DisplayFor(modelItem => modelItem.FirstName)
+            @Html.DisplayFor(modelItem => modelItem.LastName)
+        </dd>
 
-            <dt>
-                Skills
-            </dt>
+        <dt>
+            Skills
+        </dt>
 
-            <dd>
-                @foreach (var skill in item.Skills)
-                {
-                    i++;
+        <dd>
+            @{var skillName = string.Join(",", Model.Skills.Select(n => n.Name)).ToList();}
+            @foreach (var skill in skillName)
+            {
+                @Html.DisplayFor(modelItem => skill)
+            }
+        </dd>
 
-                    string skillName = skill.Name + " ,";
-
-                    if (i == item.Skills.Count)
-                    {
-                        skillName = skill.Name;
-                    }
-
-                    @Html.DisplayFor(modelItem => skillName)
-                }
-            </dd>
-        }
     </dl>
     @using (Html.BeginForm())
     {

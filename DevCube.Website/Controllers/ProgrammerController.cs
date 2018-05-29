@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Diagnostics;
 using DevCube.Data.Modificators;
 using DevCube.Data.ModelMappers;
 using DevCube.ViewModels.Models;
@@ -14,7 +15,7 @@ namespace DevCube.Controllers
         //INDEX
         public ActionResult IndexProgrammer()
         {
-            return View(ProgrammerModelMapper.DisplayAllProgrammersWithSkills());
+            return View(ProgrammerModelMapper.DisplayAllProgrammersWithAllSkills());
         }
 
         //CREATE
@@ -29,7 +30,7 @@ namespace DevCube.Controllers
         {
             var programmer = ProgrammerModelMapper.DisplayProgrammerByIDWithAllSKills(id);
 
-            if (id == null || programmer.Count == 0)
+            if (id == null || programmer is null)
             {
                 return HttpNotFound();
             }
@@ -38,18 +39,12 @@ namespace DevCube.Controllers
         }
 
         [HttpPost]
-        public ActionResult UpdateProgrammer(List<ProgrammerModel> selectedSkills , int id)
+        public ActionResult UpdateProgrammer(List<int> SkillIDs, int id)
         {
-
-            foreach (var item in selectedSkills.Select(item => item.Skills))
+            foreach (var skill in SkillIDs)
             {
-                foreach (var skills in item.Where(skillItem => skillItem.IsChecked = true))
-                {
-                    //Add Modifier
-                }
-                break;
+              UpdateModificator.UpdateProgrammerAndSkills(skill ,id)
             }
-
             return RedirectToAction("IndexProgrammer");
         }
 
@@ -57,9 +52,9 @@ namespace DevCube.Controllers
         [HttpGet]
         public ActionResult DeleteProgrammer(int? id)
         {
-            var programmer = ProgrammerModelMapper.DisplayPorgrammerByIDWithSkills(id);
+            var programmer = ProgrammerModelMapper.DisplayPorgrammerByIDWithSkillIDs(id);
 
-            if (id == null || programmer.Count == 0)
+            if (id == null || programmer is null)
             {
                 return HttpNotFound();
             }
@@ -74,7 +69,5 @@ namespace DevCube.Controllers
 
             return RedirectToAction("Index");
         }
-
-
     }
 }

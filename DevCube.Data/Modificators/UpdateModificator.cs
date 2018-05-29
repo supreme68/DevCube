@@ -7,17 +7,22 @@ using DevCube.Data.DomainModels;
 
 namespace DevCube.Data.Modificators
 {
-    class UpdateModificator
+   public class UpdateModificator
     {
-        public static void UpdateProgrammer(int id)
+        public static void UpdateProgrammerAndSkills(int skillID ,int id)
         {
             var db = new Entities();
 
             var GetProgrammerByID = (from p in db.Programmers
                               where id == p.ProgrammerID
-                              select p).ToList();
+                              select p).FirstOrDefault();
+
+            var GetSkillById = (from s in db.Skills
+                                where skillID == s.SkillID
+                                select s).FirstOrDefault();
 
             
+
         }
     }
 }

@@ -10,7 +10,7 @@ namespace DevCube.Data.ModelMappers
 {
     public class ProgrammerModelMapper
     {
-        public static List<ProgrammerModel> DisplayAllProgrammersWithSkills()
+        public static List<ProgrammerModel> DisplayAllProgrammersWithAllSkills()
         {
             var db = new Entities();
 
@@ -33,19 +33,12 @@ namespace DevCube.Data.ModelMappers
                                              }).ToList()
                                }).ToList();
 
-
-
             return programmers;
         }
 
-        public static List<ProgrammerModel> DisplayPorgrammerByIDWithSkills(int? id)
+        public static ProgrammerModel DisplayPorgrammerByIDWithSkillIDs(int? id)
         {
             var db = new Entities();
-
-            var skill = (from s in db.Skills
-                         join ps in db.Programmers_Skills on s.SkillID equals ps.SkillID
-                         where ps.ProgrammerID == id
-                         select s).ToList();
 
             var programmer = (from p in db.Programmers
                               where id == p.ProgrammerID
@@ -62,12 +55,12 @@ namespace DevCube.Data.ModelMappers
                                                 SkillID = s.SkillID,
                                                 Name = (" ") + s.Name
                                             }).ToList()
-                              }).ToList();
+                              }).FirstOrDefault();
 
             return programmer;
         }
 
-        public static List<ProgrammerModel> DisplayProgrammerByIDWithAllSKills(int? id)
+        public static ProgrammerModel DisplayProgrammerByIDWithAllSKills(int? id)
         {
             var db = new Entities();
 
@@ -89,9 +82,6 @@ namespace DevCube.Data.ModelMappers
                                     IsChecked = false
                                 }).ToList();
 
-            var GetAllProgrammersByID = (from p in db.Programmers
-                                         where id == p.ProgrammerID
-                                         select p).ToList();
 
             foreach (var item in GetAllSkills)
             {
@@ -105,7 +95,11 @@ namespace DevCube.Data.ModelMappers
                 }
             }
 
-            var programmer = (from p in GetAllProgrammersByID
+            var GetProgrammerByID = (from p in db.Programmers
+                                     where id == p.ProgrammerID
+                                     select p).ToList();
+
+            var programmer = (from p in GetProgrammerByID
                               where id == p.ProgrammerID
                               select new ProgrammerModel
                               {
@@ -115,7 +109,7 @@ namespace DevCube.Data.ModelMappers
 
                                   Skills = (from s in GetAllSkills
                                             select s).ToList()
-                              }).ToList();
+                              }).SingleOrDefault();
 
             return programmer;
         }
