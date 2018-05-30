@@ -7,7 +7,7 @@
       <Diagram DiagramId="0620dacc47ed499a8852365a6c6da5ee" Name="Diagram1">
         <EntityTypeShape EntityType="DevCubeDomainModels.Programmer" Width="1.5" PointX="0.75" PointY="0.875" IsExpanded="true" />
         <EntityTypeShape EntityType="DevCubeDomainModels.Programmers_Skills" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="DevCubeDomainModels.Skill" Width="1.5" PointX="0.75" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DevCubeDomainModels.Skill" Width="1.5" PointX="5.875" PointY="1.125" IsExpanded="true" />
         <AssociationConnector Association="DevCubeDomainModels.FK_Programmers_Skills_Programmers" ManuallyRouted="false" />
         <AssociationConnector Association="DevCubeDomainModels.FK_Programmers_Skills_Skills" ManuallyRouted="false" />
       </Diagram>

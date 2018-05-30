@@ -43,7 +43,7 @@ namespace DevCube.Controllers
         {
             foreach (var skill in SkillIDs)
             {
-              UpdateModificator.UpdateProgrammerAndSkills(skill ,id)
+                UpdateModificator.UpdateProgrammerAndSkills(SkillIDs ,skill ,id);
             }
             return RedirectToAction("IndexProgrammer");
         }
@@ -67,7 +67,7 @@ namespace DevCube.Controllers
         {
             DeleteModificator.DeleteProgrammerAndSkills(id);
 
-            return RedirectToAction("Index");
+            return RedirectToAction("IndexProgrammer");
         }
     }
 }

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="DevCubeDomainModels.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="DevCubeDomainModels.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Programmers">
           <Key>
             <PropertyRef Name="ProgrammerID" />
@@ -12,8 +12,6 @@
           <Property Name="ProgrammerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Email" Type="nvarchar" MaxLength="50" />
-          <Property Name="PhoneNumber" Type="int" />
         </EntityType>
         <EntityType Name="Programmers_Skills">
           <Key>
@@ -21,7 +19,7 @@
           </Key>
           <Property Name="Programmer_SkillsID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ProgrammerID" Type="int" Nullable="false" />
-          <Property Name="SkillID" Type="int" />
+          <Property Name="SkillID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Skills">
           <Key>
@@ -43,7 +41,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Programmers_Skills_Skills">
-          <End Role="Skills" Type="Self.Skills" Multiplicity="0..1" />
+          <End Role="Skills" Type="Self.Skills" Multiplicity="1" />
           <End Role="Programmers_Skills" Type="Self.Programmers_Skills" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Skills">
@@ -67,8 +65,7 @@
             <End Role="Programmers_Skills" EntitySet="Programmers_Skills" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DevCubeDomainModels" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -79,8 +76,6 @@
           <Property Name="ProgrammerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="PhoneNumber" Type="Int32" />
           <NavigationProperty Name="Programmers_Skills" Relationship="Self.FK_Programmers_Skills_Programmers" FromRole="Programmers" ToRole="Programmers_Skills" />
         </EntityType>
         <EntityType Name="Programmers_Skills">
@@ -89,7 +84,7 @@
           </Key>
           <Property Name="Programmer_SkillsID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ProgrammerID" Type="Int32" Nullable="false" />
-          <Property Name="SkillID" Type="Int32" />
+          <Property Name="SkillID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Programmer" Relationship="Self.FK_Programmers_Skills_Programmers" FromRole="Programmers_Skills" ToRole="Programmers" />
           <NavigationProperty Name="Skill" Relationship="Self.FK_Programmers_Skills_Skills" FromRole="Programmers_Skills" ToRole="Skills" />
         </EntityType>
@@ -114,7 +109,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Programmers_Skills_Skills">
-          <End Role="Skills" Type="Self.Skill" Multiplicity="0..1" />
+          <End Role="Skills" Type="Self.Skill" Multiplicity="1" />
           <End Role="Programmers_Skills" Type="Self.Programmers_Skills" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Skills">
@@ -150,9 +145,7 @@
                 <ScalarProperty Name="ProgrammerID" ColumnName="ProgrammerID" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-              </MappingFragment>
+                </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Programmers_Skills">
