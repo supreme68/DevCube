@@ -41,10 +41,8 @@ namespace DevCube.Controllers
         [HttpPost]
         public ActionResult UpdateProgrammer(List<int> SkillIDs, int id)
         {
-            foreach (var skill in SkillIDs)
-            {
-                UpdateModificator.UpdateProgrammerAndSkills(SkillIDs ,skill ,id);
-            }
+            UpdateModificator.UpdateProgrammerAndSkills(SkillIDs, id);
+
             return RedirectToAction("IndexProgrammer");
         }
 
@@ -53,7 +51,7 @@ namespace DevCube.Controllers
         public ActionResult DeleteProgrammer(int? id)
         {
             var programmer = ProgrammerModelMapper.DisplayPorgrammerByIDWithSkillIDs(id);
-
+            
             if (id == null || programmer is null)
             {
                 return HttpNotFound();

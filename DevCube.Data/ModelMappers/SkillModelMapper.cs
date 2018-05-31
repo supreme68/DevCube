@@ -8,32 +8,34 @@ using DevCube.ViewModels.Models;
 
 namespace DevCube.Data.ModelMappers
 {
-   public class SkillModelMapper
+    public class SkillModelMapper
     {
         public static List<SkillModel> DisplayAllSkillsWithProgrammers()
         {
-            var db = new Entities();
+            using (var db = new Entities())
+            {
 
-            var skills = (from s in db.Skills
-                          orderby s.Name
-                          select new SkillModel
-                          {
-                              SkillID = s.SkillID,
-                              Name = s.Name,
+                var skills = (from s in db.Skills
+                              orderby s.Name
+                              select new SkillModel
+                              {
+                                  SkillID = s.SkillID,
+                                  Name = s.Name,
 
-                              Programmers = (from p in db.Programmers
-                                             join ps in db.Programmers_Skills on p.ProgrammerID equals ps.ProgrammerID
-                                             where ps.SkillID == s.SkillID
-                                             select new ProgrammerModel()
-                                             {
-                                                 ProgrammerID = p.ProgrammerID,
-                                                 FirstName = p.FirstName,
-                                                 LastName = p.LastName,
+                                  Programmers = (from p in db.Programmers
+                                                 join ps in db.Programmers_Skills on p.ProgrammerID equals ps.ProgrammerID
+                                                 where ps.SkillID == s.SkillID
+                                                 select new ProgrammerModel()
+                                                 {
+                                                     ProgrammerID = p.ProgrammerID,
+                                                     FirstName = p.FirstName,
+                                                     LastName = p.LastName,
 
-                                             }).ToList()
-                          }).ToList();
+                                                 }).ToList()
+                              }).ToList();
 
-            return skills;
+                return skills;
+            }
         }
     }
 }

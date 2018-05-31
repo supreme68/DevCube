@@ -12,30 +12,32 @@ namespace DevCube.Data.Modificators
         //This should have one instance to the context class
         public static void DeleteProgrammerAndSkills(int id)
         {
-            var db = new Entities();
-
-            var programmers_skills = (from s in db.Skills
-                                      join ps in db.Programmers_Skills on s.SkillID equals ps.SkillID
-                                      where id == ps.ProgrammerID
-                                      select ps).ToList();
-
-            var programmer = (from p in db.Programmers
-                              where id == p.ProgrammerID
-                              select p).ToList();
-
-            foreach (var ps in programmers_skills)
+            using (var db = new Entities())
             {
-                db.Programmers_Skills.Remove(ps);
-                db.SaveChanges();
-            }
 
-            foreach (var p in programmer)
-            {
-                db.Programmers.Remove(p);
-                db.SaveChanges();
-            }
+                var GetSkillsByProgrammerID = (from s in db.Skills
+                                          join ps in db.Programmers_Skills on s.SkillID equals ps.SkillID
+                                          where id == ps.ProgrammerID
+                                          select ps).ToList();
 
+                var GetProgrammerByID = (from p in db.Programmers
+                                  where id == p.ProgrammerID
+                                  select p).ToList();
+
+                foreach (var ps in GetSkillsByProgrammerID)
+                {
+                    db.Programmers_Skills.Remove(ps);
+                    db.SaveChanges();
+                }
+
+                foreach (var p in GetProgrammerByID)
+                {
+                    db.Programmers.Remove(p);
+                    db.SaveChanges();
+                }
+            }
         }
     }
 }
+
 
