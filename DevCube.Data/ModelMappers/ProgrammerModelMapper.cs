@@ -10,7 +10,8 @@ namespace DevCube.Data.ModelMappers
 {
     public class ProgrammerModelMapper
     {
-        public static List<ProgrammerModel> DisplayAllProgrammersWithAllSkills()
+        //Displays All Programmers And All of their Skills
+        public static List<ProgrammerModel> DisplayAllProgrammersWithTheirSkills()
         {
             using (var db = new Entities())
             {
@@ -37,7 +38,8 @@ namespace DevCube.Data.ModelMappers
             }
         }
 
-        public static ProgrammerModel DisplayPorgrammerByIDWithSkillIDs(int? id)
+        //Displays programmer by ID and his skills
+        public static ProgrammerModel DisplayPorgrammerByIDWithHisSkills(int? id)
         {
             using (var db = new Entities())
             {
@@ -62,7 +64,8 @@ namespace DevCube.Data.ModelMappers
             }
         }
 
-        public static ProgrammerModel DisplayProgrammerByIDWithAllSKills(int? id)
+        //Displays Programmer by ID and all avaible Skills
+        public static ProgrammerModel DisplayProgrammerByIDAndAllSKills(int? id)
         {
             using (var db = new Entities())
             {
@@ -117,8 +120,28 @@ namespace DevCube.Data.ModelMappers
                 return programmer;
             }
         }
+
+        //Display a single programmer and all skills
+        public static ProgrammerModel DisplayProgrammerAndAllSkills()
+        {
+            using (var db = new Entities())
+            {
+
+                var GetProgrammerAndSkills = (new ProgrammerModel
+                {
+                    Skills = (from s in db.Skills
+                              select new SkillModel
+                              {
+                                  Name = s.Name,
+                                  SkillID = s.SkillID
+                              }).ToList()
+                });
+
+                return GetProgrammerAndSkills;
+            }
+        }
+
     }
 }
-
 
 

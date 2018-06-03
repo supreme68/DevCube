@@ -1,76 +1,48 @@
-﻿@model List<ProgrammerModel>
+﻿@model ProgrammerModel
 
 @{
     ViewBag.Title = "Create - Programmer";
 }
 
-<h2>Add</h2>
+<h2>Add Programmer</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Programmer</h4>
         <hr />
-        @foreach (var item in Model)
-        {
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <div class="form-group">
-                <p>First Name</p>
-                <div class="col-md-10">
-                    @Html.EditorFor(modelItem => item.FirstName, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(modelItem => item.FirstName, "", new { @class = "text-danger" })
-                </div>
-            </div>
 
-            <div class="form-group">
-                <p>Last Name</p>
-                <div class="col-md-10">
-                    @Html.EditorFor(modelItem => item.LastName, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(modelItem => item.LastName, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        }
-        }
-
-        <h4>SkilledProgrammer</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            <div class="col-md-10">
-                @foreach (var item in Model)
-                {
-                    <strong>
-                        @Html.DisplayFor(modelItem => item.FirstName)
-                        @Html.DisplayFor(modelItem => item.LastName)
-                    </strong>
-                    <br />
-
-                    foreach (var skills in item.Skills)
-                    {
-
-                        @Html.CheckBoxFor(modelItem => skills.IsChecked)
-                        @Html.DisplayFor(modelItem => skills.Name)
-                        <br />
-                        @Html.HiddenFor(modelItem => skills.SkillID)
-                    }
-                }
-            </div>
+            <p>First Name</p>
+            @*<input type="text" name="programmer" value="@Model.FirstName" class="form-control" />*@
+            @Html.EditorFor(modelItem => modelItem.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(modelItem => modelItem.FirstName, "", new { @class = "text-danger" })
         </div>
 
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
+            <p>Last Name</p>
+            <input type="text" name="programmer" value="@Model.LastName" class="form-control"/>
+            @Html.EditorFor(modelItem => modelItem.LastName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(modelItem => modelItem.LastName, "", new { @class = "text-danger" })
+        </div>
+
+        <h4>Select Skills</h4>
+        <hr />
+        <div class="form-group">
+            @foreach (var skills in Model.Skills)
+            {
+                @skills.Name
+                <input type="checkbox" name="SkillIDs" value="@skills.SkillID" checked="@skills.IsChecked" />
+                <br />
+            }
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Create" class="btn btn-default" />
         </div>
     </div>
 }
-
 <div>
     @Html.ActionLink("Back to List", "IndexProgrammer")
 </div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}

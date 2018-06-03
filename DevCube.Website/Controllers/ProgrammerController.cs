@@ -15,11 +15,18 @@ namespace DevCube.Controllers
         //INDEX
         public ActionResult IndexProgrammer()
         {
-            return View(ProgrammerModelMapper.DisplayAllProgrammersWithAllSkills());
+            return View(ProgrammerModelMapper.DisplayAllProgrammersWithTheirSkills());
         }
 
         //CREATE
+        [HttpGet]
         public ActionResult CreateProgrammer()
+        {
+            return View(ProgrammerModelMapper.DisplayProgrammerAndAllSkills());
+        }
+
+        [HttpPost]
+        public ActionResult CreateProgrammer(ProgrammerModel programmer ,List<int> SkillIDs)
         {
             return View();
         }
@@ -28,7 +35,7 @@ namespace DevCube.Controllers
         [HttpGet]
         public ActionResult UpdateProgrammer(int? id)
         {
-            var programmer = ProgrammerModelMapper.DisplayProgrammerByIDWithAllSKills(id);
+            var programmer = ProgrammerModelMapper.DisplayProgrammerByIDAndAllSKills(id);
 
             if (id == null || programmer is null)
             {
@@ -50,8 +57,8 @@ namespace DevCube.Controllers
         [HttpGet]
         public ActionResult DeleteProgrammer(int? id)
         {
-            var programmer = ProgrammerModelMapper.DisplayPorgrammerByIDWithSkillIDs(id);
-            
+            var programmer = ProgrammerModelMapper.DisplayPorgrammerByIDWithHisSkills(id);
+
             if (id == null || programmer is null)
             {
                 return HttpNotFound();

@@ -4,8 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
-    @Styles.Render("//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css")
-    @Styles.Render("https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css")
+    @*@Styles.Render("//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css")*@
+    @*@Styles.Render("https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css")*@
     @Styles.Render("~/Content/css/Site.css")
 </head>
 <body>
@@ -25,6 +25,5 @@
     @Scripts.Render("https://code.jquery.com/jquery-3.3.1.min.js")
     @Scripts.Render("https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js")
     @Scripts.Render("~/Content/js/Site.js")
-    @RenderSection("scripts", required: false)
 </body>
 </html>

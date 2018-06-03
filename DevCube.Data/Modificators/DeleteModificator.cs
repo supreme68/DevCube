@@ -9,7 +9,7 @@ namespace DevCube.Data.Modificators
 {
     public class DeleteModificator
     {
-        //This should have one instance to the context class
+        //Deletes Programmer And All Of His Skills
         public static void DeleteProgrammerAndSkills(int id)
         {
             using (var db = new Entities())

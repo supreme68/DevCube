@@ -9,6 +9,7 @@ namespace DevCube.Data.Modificators
 {
     public class UpdateModificator
     {
+        //Updates Programmer With Skills And Deletes Uncheked Skills
         public static void UpdateProgrammerAndSkills(List<int> SkillIDs, int id)
         {
             using (var db = new Entities())
@@ -40,10 +41,10 @@ namespace DevCube.Data.Modificators
                             SkillID = skill
                         };
 
-                        //Delete every uncheked Skill
+                        //Check If Skill Is Uncheked And Delete The Uncheked Skill
                         if (!SkillIDs.Contains(programmer_skill.SkillID))
                         {
-                            if (programmer_skill.Programmer == null)
+                            if (programmer_skill.Skill == null)
                             {
                                 break;
                             }
@@ -53,7 +54,7 @@ namespace DevCube.Data.Modificators
                             db.SaveChanges();
                         }
 
-                        //Delete and Update every old Skill
+                        //Check If Skill Is Already Known By The Programmer 
                         else if (GetSkillIDsByProgrammerID.Contains(skill))
                         {
                             db.Programmers_Skills.Attach(programmer_skill);
@@ -63,7 +64,7 @@ namespace DevCube.Data.Modificators
                             db.Programmers_Skills.Add(programmer_skill);
                             db.SaveChanges();
                         }
-                        //Update new Skill
+                        //Update Skill If Its Not Known By the Programmer 
                         else
                         {
                             db.Programmers_Skills.Add(instance);

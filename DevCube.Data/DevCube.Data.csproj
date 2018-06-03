@@ -73,6 +73,7 @@
     <Compile Include="DomainModels\Skill.cs">
       <DependentUpon>DevCubeContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="Modificators\CreateModificator.cs" />
     <Compile Include="Modificators\DeleteModificator.cs" />
     <Compile Include="Modificators\UpdateModificator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
