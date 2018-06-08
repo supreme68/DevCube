@@ -1,10 +1,10 @@
 ﻿@model ProgrammerModel
+
 @{
     ViewBag.Title = "Edit";
 }
 
 <h2>Edit</h2>
-
 
 @using (Html.BeginForm())
 {
@@ -13,7 +13,6 @@
     <div class="form-horizontal">
         <h4>Programmer's known skills</h4>
         <hr />
-
 
         <div class="form-group">
             <strong>
@@ -26,7 +25,7 @@
             {
                 @skills.Name
                 <input type="checkbox" name="SkillIDs" value="@skills.SkillID" checked="@skills.IsChecked" />
-                    <br />
+                <br />
             }
         </div>
 
@@ -40,6 +39,3 @@
     @Html.ActionLink("Back to List", "IndexProgrammer", null, new { @id = "button", @class = "btn btn-sm" })
 </div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}

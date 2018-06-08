@@ -8,7 +8,7 @@
 <div class="jumbotron">
     <h1>Dev-Cube<img src="~/Content/images/logo.png"></h1>
     <p class="lead">Dev-Cube is an application for simplifying employee managment by providing listing with all the avaible employees and their skills. </p>
-    @Html.ActionLink("Programmers", "IndexProgrammer", "Programmer" , null, new { @id = "button", @class = "btn btn-lg" })
+    @Html.ActionLink("Programmers", "IndexProgrammer", "Programmer", null, new { @id = "button", @class = "btn btn-lg" })
 </div>
 
 <h2>Skills</h2>
@@ -24,7 +24,7 @@
                 </th>
 
                 <th>
-                    Known BY
+                    Known By
                 </th>
 
                 <th>
@@ -43,19 +43,25 @@
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
 
+
                 <td>
                     @foreach (var programmer in item.Programmers)
                     {
                         i++;
 
-                        string programmerName = programmer.FirstName + " " + programmer.LastName + " ,";
+                        string programmerFullName = String.Concat(programmer.FirstName, " ", programmer.LastName, ", ");
 
                         if (i == item.Programmers.Count)
                         {
-                            programmerName = programmer.FirstName + programmer.LastName;
+                            programmerFullName = String.Concat(programmer.FirstName, " ", programmer.LastName);
                         }
 
-                        @Html.DisplayFor(modelItem => programmerName)
+                        if (programmer.FirstName == null)
+                        {
+                            programmerFullName = "This skill is not known by any programmer";
+                        }
+
+                        @Html.DisplayFor(modelItem => programmerFullName)
 
                     }
 
