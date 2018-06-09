@@ -25,6 +25,7 @@ namespace DevCube.Data.ModelMappers
 
                                        Skills = (from s in db.Skills
                                                  join ps in db.Programmers_Skills on s.SkillID equals ps.SkillID
+                                                 orderby s.Name
                                                  where ps.ProgrammerID == p.ProgrammerID
                                                  select new SkillModel()
                                                  {
@@ -38,7 +39,7 @@ namespace DevCube.Data.ModelMappers
             }
         }
 
-        //Displays programmer by ID and his skills
+        //Displays Programmer by ID and his Skills
         public static ProgrammerModel DisplayPorgrammerByIDWithHisSkills(int? id)
         {
             using (var db = new Entities())

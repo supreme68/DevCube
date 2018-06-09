@@ -13,7 +13,7 @@
 
 <h2>Skills</h2>
 <p>From here you can manage the skills that your programmers know </p>
-@Html.ActionLink("Add New Skill", "Update", null, new { @id = "button", @class = "btn btn-sm" })
+@Html.ActionLink("Add New Skill", "CreateSkill", null, new { @id = "button", @class = "btn btn-sm" })
 
 <div class="table-responsive">
     <table class="table table-dark  table-hover">
@@ -68,8 +68,8 @@
                 </td>
 
                 <td>
-                    @Html.ActionLink("Update", "Update", new { id = item.SkillID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.SkillID })
+                    @Html.ActionLink("Update", "UpdateSkill", new { id = item.SkillID }) |
+                    @Html.ActionLink("Delete", "DeleteSkill", new { id = item.SkillID })
                 </td>
 
             </tr>

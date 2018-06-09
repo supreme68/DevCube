@@ -6,15 +6,67 @@ using System.Web.Mvc;
 using System.Diagnostics;
 using DevCube.Data.Modificators;
 using DevCube.Data.ModelMappers;
+using DevCube.ViewModels.Models;
 
 namespace DevCube.Controllers
 {
     public class SkillController : Controller
     {
-        // GET: Skill
+        //INDEX
         public ActionResult IndexSkill()
         {
-            return View(SkillModelMapper.DisplayAllSkillsWithProgrammers());
+            return View(SkillModelMapper.DisplayAllSkillsAndTheirProgrammers());
+        }
+
+        //CREATE
+        [HttpGet]
+        public ActionResult CreateSkill()
+        {
+            return View(SkillModelMapper.DisplaySkillAndAllProgrammers());
+        }
+
+        [HttpPost]
+        public ActionResult CreateSkill(SkillModel skill, List<int> ProgrammerIDs)
+        {
+            CreateModificator.CreateSkill(skill, ProgrammerIDs);
+
+            return RedirectToAction("IndexSkill");
+        }
+
+        [HttpGet]
+        public ActionResult UpdateSkill(int? id)
+        {
+
+            var skill = SkillModelMapper.DisplaySkillByIDWithAllProgrammers(id);
+
+            if (id == null || skill == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(skill);
+        }
+
+        //DELETE
+        [HttpGet]
+        public ActionResult DeleteSkill(int? id)
+        {
+            var skill = SkillModelMapper.DisplaySkillByIDWithItsProgrammers(id);
+
+            if (id == null || skill == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(skill);
+        }
+
+        [HttpPost]
+        public ActionResult DeleteSkill(int id)
+        {
+            DeleteModificator.DeleteSkill(id);
+
+            return RedirectToAction("IndexSkill");
         }
     }
 }

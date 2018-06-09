@@ -28,7 +28,7 @@ namespace DevCube.Controllers
         [HttpPost]
         public ActionResult CreateProgrammer(ProgrammerModel programmer, List<int> SkillIDs)
         {
-            CreateModificator.CreateProgrammerAndKnownSkills(programmer, SkillIDs);
+            CreateModificator.CreateProgrammer(programmer, SkillIDs);
 
             return RedirectToAction("IndexProgrammer");
         }
@@ -39,7 +39,7 @@ namespace DevCube.Controllers
         {
             var programmer = ProgrammerModelMapper.DisplayProgrammerByIDAndAllSKills(id);
 
-            if (id == null || programmer is null)
+            if (id == null || programmer == null)
             {
                 return HttpNotFound();
             }
@@ -50,7 +50,7 @@ namespace DevCube.Controllers
         [HttpPost]
         public ActionResult UpdateProgrammer(List<int> SkillIDs, int id)
         {
-            UpdateModificator.UpdateProgrammerAndSkills(SkillIDs, id);
+            UpdateModificator.UpdateProgrammer(SkillIDs, id);
 
             return RedirectToAction("IndexProgrammer");
         }
@@ -72,7 +72,7 @@ namespace DevCube.Controllers
         [HttpPost]
         public ActionResult DeleteProgrammer(int id)
         {
-            DeleteModificator.DeleteProgrammerAndSkills(id);
+            DeleteModificator.DeleteProgrammer(id);
 
             return RedirectToAction("IndexProgrammer"); ;
         }

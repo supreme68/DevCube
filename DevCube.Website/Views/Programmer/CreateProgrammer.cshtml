@@ -1,11 +1,13 @@
 ﻿@model ProgrammerModel
 
 @{
-    ViewBag.Title = "Create - Programmer";
+    ViewBag.Title = "Create";
 }
 
+<!--Title-->
 <h2>Add Programmer</h2>
 
+<!--Forms-->
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -13,6 +15,7 @@
     <div class="form-horizontal">
         <hr />
 
+        <!--Programmer Forms-->
         <div class="form-group">
             <p>First Name</p>
             @Html.EditorFor(modelItem => modelItem.FirstName, new { htmlAttributes = new { @class = "form-control" } })
@@ -27,15 +30,17 @@
 
         <h4>Select Skills</h4>
         <hr />
+
+        <!--Skill Forms-->
         <div class="form-group">
             @foreach (var skills in Model.Skills)
             {
-                @skills.Name
+                <label>@skills.Name</label>
                 <input type="checkbox" name="SkillIDs" value="@skills.SkillID" checked="@skills.IsChecked" />
                 <br />
             }
         </div>
-
+        <!--Submit-->
         <div class="form-group">
             <input type="submit" value="Create" class="btn btn-default" />
         </div>

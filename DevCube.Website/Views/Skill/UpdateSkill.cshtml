@@ -1,0 +1,47 @@
+﻿@model SkillModel
+@{
+    ViewBag.Title = "Update";
+}
+
+<!--Title-->
+<h2>Update</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <!--Forms-->
+    <div class="form-horizontal">
+        <h4>Programmers that know this skills</h4>
+        <hr />
+
+        <!--Skill Forms-->
+        <div class="form-group">
+            <strong>
+                @Html.DisplayFor(modelItem => modelItem.Name)
+                @Html.HiddenFor(modeItem => modeItem.SkillID)
+            </strong>
+            <br />
+
+            <!--Programmer Forms-->
+            @foreach (var programmers in Model.Programmers)
+            {
+                var FullName = String.Concat(programmers.FirstName, " ", programmers.LastName);
+
+                <label>@FullName</label>
+                <input type="checkbox" name="ProgrammerIDs" value="@programmers.ProgrammerID" checked="@programmers.IsChecked" />
+                <br />
+            }
+        </div>
+
+        <!--Submit-->
+        <div class="form-group">
+            <input type="submit" value="Save" class="btn btn-default" />
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "IndexSkill", null, new { @id = "button", @class = "btn btn-sm" })
+</div>
+

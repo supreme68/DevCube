@@ -19,6 +19,8 @@ namespace DevCube.ViewModels.Models
         [Range(3, 50)]
         public string LastName { get; set; }
 
+        public bool IsChecked { get; set; }
+
         public List<SkillModel> Skills { get; set; }
     }
 }

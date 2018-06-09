@@ -10,67 +10,55 @@ namespace DevCube.Data.Modificators
     public class UpdateModificator
     {
         //Updates Programmer With Skills And Deletes Uncheked Skills
-        public static void UpdateProgrammerAndSkills(List<int> SkillIDs, int id)
+        public static void UpdateProgrammer(List<int> SkillIDs, int id)
         {
             using (var db = new Entities())
             {
 
-                var GetProgrammerByID = (from p in db.Programmers
-                                         where id == p.ProgrammerID
-                                         select p).ToList();
-
                 var GetSkillsByProgrammerID = (from s in db.Skills
-                                               join ps in db.Programmers_Skills on s.SkillID equals ps.SkillID
-                                               where id == ps.ProgrammerID
-                                               select ps).ToList();
-
-                var GetSkillIDsByProgrammerID = (from s in db.Skills
                                                  join ps in db.Programmers_Skills on s.SkillID equals ps.SkillID
                                                  where id == ps.ProgrammerID
-                                                 select ps.SkillID).ToList();
-
+                                                 select ps).ToList();
 
                 foreach (var skill in SkillIDs)
                 {
-                    foreach (var programmer_skill in GetSkillsByProgrammerID)
-                    {
+                  
+                    var SelectSkill = GetSkillsByProgrammerID.Select(n => n).Where(n => n.SkillID == skill).FirstOrDefault();
 
+                    //Deletes and Updates Skill that already exist
+                    if (GetSkillsByProgrammerID.Select(n => n.SkillID).Contains(skill))
+                    {
+                        db.Programmers_Skills.Attach(SelectSkill);
+                        db.Programmers_Skills.Remove(SelectSkill);
+                        db.SaveChanges();
+
+                        db.Programmers_Skills.Add(SelectSkill);
+                        db.SaveChanges();
+                    }
+                    //Updates new Skills
+                    else
+                    {
                         var instance = new Programmers_Skills
                         {
                             ProgrammerID = id,
                             SkillID = skill
                         };
 
-                        //Check If Skill Is Uncheked And Delete The Uncheked Skill
-                        if (!SkillIDs.Contains(programmer_skill.SkillID))
-                        {
-                            if (programmer_skill.Skill == null)
-                            {
-                                break;
-                            }
+                        db.Programmers_Skills.Add(instance);
+                        db.SaveChanges();
+                    }
+                }
 
-                            db.Programmers_Skills.Attach(programmer_skill);
-                            db.Programmers_Skills.Remove(programmer_skill);
-                            db.SaveChanges();
-                        }
+                //Deletes Uncheked skills
+                foreach (var skill in GetSkillsByProgrammerID.Select(n => n.SkillID))
+                {
+                    var SelectSkill = GetSkillsByProgrammerID.Select(n => n).Where(n => n.SkillID == skill).FirstOrDefault();
 
-                        //Check If Skill Is Already Known By The Programmer 
-                        else if (GetSkillIDsByProgrammerID.Contains(skill))
-                        {
-                            db.Programmers_Skills.Attach(programmer_skill);
-                            db.Programmers_Skills.Remove(programmer_skill);
-                            db.SaveChanges();
-
-                            db.Programmers_Skills.Add(programmer_skill);
-                            db.SaveChanges();
-                        }
-                        //Update Skill If Its Not Known By the Programmer 
-                        else
-                        {
-                            db.Programmers_Skills.Add(instance);
-                            db.SaveChanges();
-                            break;
-                        }
+                    if (!SkillIDs.Contains(skill))
+                    {
+                        db.Programmers_Skills.Attach(SelectSkill);
+                        db.Programmers_Skills.Remove(SelectSkill);
+                        db.SaveChanges();
                     }
                 }
             }

@@ -10,11 +10,11 @@ namespace DevCube.Data.Modificators
 {
     public class CreateModificator
     {
-        public static void CreateProgrammerAndKnownSkills(ProgrammerModel programmer, List<int> SkillIDs)
+        public static void CreateProgrammer(ProgrammerModel programmer, List<int> SkillIDs)
         {
             using (var db = new Entities())
             {
-                //Adds Programmer to Database
+                //Adds Programmer to the Database
                 var programmerInstance = new Programmer
                 {
                     FirstName = programmer.FirstName,
@@ -30,12 +30,45 @@ namespace DevCube.Data.Modificators
 
 
                 //Attaches all Skills to the Programmer
-                foreach (var skill in SkillIDs)
+                foreach (var id in SkillIDs)
                 {
                     var programmerSkillInstance = new Programmers_Skills
                     {
                         ProgrammerID = GetLastProgrammerID,
-                        SkillID = skill
+                        SkillID = id
+                    };
+
+                    db.Programmers_Skills.Add(programmerSkillInstance);
+                    db.SaveChanges();
+                }
+            }
+        }
+
+        public static void CreateSkill(SkillModel skill, List<int> ProgrammerIDs)
+        {
+            using (var db = new Entities())
+            {
+                //Adds Skill to the Database
+                var skillInstance = new Skill
+                {
+                   Name = skill.Name
+                };
+
+                db.Skills.Add(skillInstance);
+                db.SaveChanges();
+
+                //Selects The last recorded skill's ID in the Database
+                var GetLastSkillID = (from s in db.Skills
+                                           select s.SkillID).ToList().Last();
+
+
+                //Attaches all Programmers to the Skill 
+                foreach (var id in ProgrammerIDs)
+                {
+                    var programmerSkillInstance = new Programmers_Skills
+                    {
+                        ProgrammerID = id,
+                        SkillID = GetLastSkillID
                     };
 
                     db.Programmers_Skills.Add(programmerSkillInstance);

@@ -1,4 +1,5 @@
-﻿@model ProgrammerModel
+﻿
+@model SkillModel
 
 @{
     ViewBag.Title = "Delete";
@@ -6,35 +7,42 @@
 
 <!-- Title-->
 <h2>Delete</h2>
-<h3>Are you sure you want to delete this programmer?</h3>
+<h3>Are you sure you want to delete this skill?</h3>
 
 <!--Forms-->
 <div>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            Full Name
+            Name
         </dt>
         <dd>
-            @Html.DisplayFor(modelItem => modelItem.FirstName)
-            @Html.DisplayFor(modelItem => modelItem.LastName)
+            @Html.DisplayFor(modelItem => modelItem.Name)
         </dd>
         <dt>
-            Skills
+            Known By
         </dt>
         <dd>
-            @{var skillName = string.Join(", ", Model.Skills.Select(n => n.Name)).ToList();}
-
-            @foreach (var skill in skillName)
+            @{int i = 0;}
+            @foreach (var programmer in Model.Programmers)
             {
-                @Html.DisplayFor(modelItem => skill)
+                i++;
+
+                var FullName = String.Concat(programmer.FirstName, " ", programmer.LastName, ", ");
+
+                if (i == Model.Programmers.Count())
+                {
+                    FullName = String.Concat(programmer.FirstName, " ", programmer.LastName);
+                }
+
+                @Html.DisplayFor(modeItem => FullName);
+                
             }
         </dd>
     </dl>
 
-    <!--Buttons-->
     <button class="btn btn-default" data-toggle="modal" data-target="#DeleteModal">Delete</button>
-    @Html.ActionLink("Back to List", "IndexProgrammer", null, new { @class = "btn" })
+    @Html.ActionLink("Back to List", "IndexSkill", null, new { @class = "btn" })
 </div>
 
 <!--Modal-->
@@ -50,7 +58,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    Are you sure you want to delete this programmer!
+                    Are you sure you want to delete this skill!
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
