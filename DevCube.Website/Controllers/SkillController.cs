@@ -33,6 +33,7 @@ namespace DevCube.Controllers
             return RedirectToAction("IndexSkill");
         }
 
+        //UPDATE
         [HttpGet]
         public ActionResult UpdateSkill(int? id)
         {
@@ -46,6 +47,15 @@ namespace DevCube.Controllers
 
             return View(skill);
         }
+
+        [HttpPost]
+        public ActionResult UpdateSkill(List<int> ProgrammerIDs, int id)
+        {
+            UpdateModificator.UpdateSkill(ProgrammerIDs, id);
+
+            return RedirectToAction("IndexSkill");
+        }
+
 
         //DELETE
         [HttpGet]

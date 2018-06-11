@@ -51,7 +51,7 @@ namespace DevCube.Data.Modificators
                 //Adds Skill to the Database
                 var skillInstance = new Skill
                 {
-                   Name = skill.Name
+                    Name = skill.Name
                 };
 
                 db.Skills.Add(skillInstance);
@@ -59,20 +59,23 @@ namespace DevCube.Data.Modificators
 
                 //Selects The last recorded skill's ID in the Database
                 var GetLastSkillID = (from s in db.Skills
-                                           select s.SkillID).ToList().Last();
+                                      select s.SkillID).ToList().Last();
 
 
                 //Attaches all Programmers to the Skill 
-                foreach (var id in ProgrammerIDs)
+                if (ProgrammerIDs != null)
                 {
-                    var programmerSkillInstance = new Programmers_Skills
+                    foreach (var id in ProgrammerIDs)
                     {
-                        ProgrammerID = id,
-                        SkillID = GetLastSkillID
-                    };
+                        var programmerSkillInstance = new Programmers_Skills
+                        {
+                            ProgrammerID = id,
+                            SkillID = GetLastSkillID
+                        };
 
-                    db.Programmers_Skills.Add(programmerSkillInstance);
-                    db.SaveChanges();
+                        db.Programmers_Skills.Add(programmerSkillInstance);
+                        db.SaveChanges();
+                    }
                 }
             }
         }

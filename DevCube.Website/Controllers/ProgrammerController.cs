@@ -28,9 +28,10 @@ namespace DevCube.Controllers
         [HttpPost]
         public ActionResult CreateProgrammer(ProgrammerModel programmer, List<int> SkillIDs)
         {
-            CreateModificator.CreateProgrammer(programmer, SkillIDs);
+        
+                CreateModificator.CreateProgrammer(programmer, SkillIDs);
 
-            return RedirectToAction("IndexProgrammer");
+                return RedirectToAction("IndexProgrammer");
         }
 
         //UPDATE   

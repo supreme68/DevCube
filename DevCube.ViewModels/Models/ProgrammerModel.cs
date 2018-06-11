@@ -11,11 +11,11 @@ namespace DevCube.ViewModels.Models
     {
         public int ProgrammerID { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "First name is required")]
         [Range(3 , 50)]
         public string FirstName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Last name is required")]
         [Range(3, 50)]
         public string LastName { get; set; }
 
