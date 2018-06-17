@@ -71,42 +71,42 @@ namespace DevCube.Data.ModelMappers
             using (var db = new Entities())
             {
 
-                var GetSkillByProgrammerID = (from s in db.Skills
-                                              join ps in db.Programmers_Skills on s.SkillID equals ps.SkillID
-                                              where ps.ProgrammerID == id
-                                              select new SkillModel
-                                              {
-                                                  SkillID = s.SkillID,
-                                                  Name = s.Name,
-                                                  IsChecked = true
-                                              }).ToList();
+                var programmerSkills = (from s in db.Skills
+                                        join ps in db.Programmers_Skills on s.SkillID equals ps.SkillID
+                                        where ps.ProgrammerID == id
+                                        select new SkillModel
+                                        {
+                                            SkillID = s.SkillID,
+                                            Name = s.Name,
+                                            IsChecked = true
+                                        }).ToList();
 
-                var GetAllSkills = (from s in db.Skills
-                                    select new SkillModel
-                                    {
-                                        SkillID = s.SkillID,
-                                        Name = s.Name,
-                                        IsChecked = false
-                                    }).ToList();
+                var allSkills = (from s in db.Skills
+                                 select new SkillModel
+                                 {
+                                     SkillID = s.SkillID,
+                                     Name = s.Name,
+                                     IsChecked = false,
+                                 }).ToList();
 
 
-                var GetProgrammerByID = (from p in db.Programmers
-                                         where id == p.ProgrammerID
-                                         select p).ToList();
+                var programmerID = (from p in db.Programmers
+                                    where id == p.ProgrammerID
+                                    select p).ToList();
 
-                foreach (var item in GetAllSkills)
+                foreach (var s in allSkills)
                 {
-                    foreach (var skill in GetSkillByProgrammerID)
+                    foreach (var skill in programmerSkills)
                     {
-                        if (skill.SkillID == item.SkillID)
+                        if (skill.SkillID == s.SkillID)
                         {
-                            item.IsChecked = true;
+                            s.IsChecked = true;
                             break;
                         }
                     }
                 }
 
-                var programmer = (from p in GetProgrammerByID
+                var programmer = (from p in programmerID
                                   where id == p.ProgrammerID
                                   select new ProgrammerModel
                                   {
@@ -114,7 +114,7 @@ namespace DevCube.Data.ModelMappers
                                       FirstName = p.FirstName,
                                       LastName = p.LastName,
 
-                                      Skills = (from s in GetAllSkills
+                                      Skills = (from s in allSkills
                                                 select s).ToList()
                                   }).SingleOrDefault();
 
@@ -128,7 +128,7 @@ namespace DevCube.Data.ModelMappers
             using (var db = new Entities())
             {
 
-                var GetProgrammerAndSkills = (new ProgrammerModel
+                var programmer = (new ProgrammerModel
                 {
                     Skills = (from s in db.Skills
                               select new SkillModel
@@ -138,7 +138,7 @@ namespace DevCube.Data.ModelMappers
                               }).ToList()
                 });
 
-                return GetProgrammerAndSkills;
+                return programmer;
             }
         }
 

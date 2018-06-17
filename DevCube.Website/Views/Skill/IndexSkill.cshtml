@@ -15,6 +15,7 @@
 <p>From here you can manage the skills that your programmers know </p>
 @Html.ActionLink("Add New Skill", "CreateSkill", null, new { @id = "button", @class = "btn btn-sm" })
 
+<!--Table-->
 <div class="table-responsive">
     <table class="table table-dark  table-hover">
         <thead class="thead-dark">
@@ -69,10 +70,38 @@
 
                 <td>
                     @Html.ActionLink("Update", "UpdateSkill", new { id = item.SkillID }) |
-                    @Html.ActionLink("Delete", "DeleteSkill", new { id = item.SkillID })
+                    <a data-id="@item.SkillID" class="delete-link" href="#" data-toggle="modal" data-target="#Modal">Delete</a>
                 </td>
 
             </tr>
         }
     </table>
 </div>
+
+<!--Modal-->
+<div class="modal fade" id="Modal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Woah There!</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this skill!
+                @Html.Hidden("id", "", new { @class = "hidden-id" })
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                <button id="delete-button" class="btn btn-default">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    let Url = '@Url.Action("DeleteSkill", "Skill")';
+</script>
+
+@Scripts.Render("~/Content/js/delete.js")

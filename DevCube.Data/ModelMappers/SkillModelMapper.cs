@@ -82,6 +82,7 @@ namespace DevCube.Data.ModelMappers
                                        ProgrammerID = p.ProgrammerID
                                    }).ToList()
                 });
+
                 return GetSkillAndProgrammers;
             }
         }
@@ -91,34 +92,33 @@ namespace DevCube.Data.ModelMappers
             using (var db = new Entities())
             {
 
-                var GeProgrammerBySkillID = (from p in db.Programmers
-                                             join ps in db.Programmers_Skills on p.ProgrammerID equals ps.ProgrammerID
-                                             where ps.SkillID == id
-                                             select new ProgrammerModel
-                                             {
-                                                 ProgrammerID = p.ProgrammerID,
-                                                 FirstName = p.FirstName,
-                                                 LastName = p.LastName,
-                                                 IsChecked = true
-                                             }).ToList();
+                var programmerSkills = (from p in db.Programmers
+                                        join ps in db.Programmers_Skills on p.ProgrammerID equals ps.ProgrammerID
+                                        where ps.SkillID == id
+                                        select new ProgrammerModel
+                                        {
+                                            ProgrammerID = p.ProgrammerID,
+                                            FirstName = p.FirstName,
+                                            LastName = p.LastName,
+                                            IsChecked = true
+                                        }).ToList();
 
-                var GetAllProgrammers = (from p in db.Programmers
-                                         select new ProgrammerModel
-                                         {
-                                             ProgrammerID = p.ProgrammerID,
-                                             FirstName = p.FirstName,
-                                             LastName = p.LastName,
-                                             IsChecked = false
-                                         }).ToList();
+                var allProgrammers = (from p in db.Programmers
+                                      select new ProgrammerModel
+                                      {
+                                          ProgrammerID = p.ProgrammerID,
+                                          FirstName = p.FirstName,
+                                          LastName = p.LastName,
+                                          IsChecked = false
+                                      }).ToList();
 
+                var skillID = (from s in db.Skills
+                               where id == s.SkillID
+                               select s).ToList();
 
-                var GetSkillByID = (from s in db.Skills
-                                    where id == s.SkillID
-                                    select s).ToList();
-
-                foreach (var item in GetAllProgrammers)
+                foreach (var item in allProgrammers)
                 {
-                    foreach (var programmer in GeProgrammerBySkillID)
+                    foreach (var programmer in programmerSkills)
                     {
                         if (programmer.ProgrammerID == item.ProgrammerID)
                         {
@@ -128,14 +128,14 @@ namespace DevCube.Data.ModelMappers
                     }
                 }
 
-                var skill = (from s in GetSkillByID
+                var skill = (from s in skillID
                              where id == s.SkillID
                              select new SkillModel
                              {
                                  SkillID = s.SkillID,
                                  Name = s.Name,
 
-                                 Programmers = (from p in GetAllProgrammers
+                                 Programmers = (from p in allProgrammers
                                                 select p).ToList()
                              }).SingleOrDefault();
 

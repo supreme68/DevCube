@@ -56,27 +56,13 @@ namespace DevCube.Controllers
             return RedirectToAction("IndexSkill");
         }
 
-
         //DELETE
-        [HttpGet]
-        public ActionResult DeleteSkill(int? id)
-        {
-            var skill = SkillModelMapper.DisplaySkillByIDWithItsProgrammers(id);
-
-            if (id == null || skill == null)
-            {
-                return HttpNotFound();
-            }
-
-            return View(skill);
-        }
-
         [HttpPost]
         public ActionResult DeleteSkill(int id)
         {
             DeleteModificator.DeleteSkill(id);
 
-            return RedirectToAction("IndexSkill");
+            return Json("");
         }
     }
 }

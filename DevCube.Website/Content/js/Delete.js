@@ -1,14 +1,24 @@
 ﻿$(document).ready(function () {
-    $("#DeleteButton").click(function () {
+    "use strict";
+
+    $(".delete-link").click(function () {
+        let id = $(this).attr("data-id").valueOf();
+
+        $(".hidden-id").val(id);
+    });
+
+    $("#delete-button").click(function () {
+        let id = $(".hidden-id").val();
+
+        let customUrl = Url + "/" +  id.toString();
+
         $.ajax({
             type: "POST",
-            data: URL,
-            url: URL,
-            success: function (data) {
-                window.location.href = data;
-            },
-            error: function () {
-                console.log("error");
+            url: customUrl,
+            dataType: "json",
+            data: id,
+            success: function (succes) {
+                location.reload();
             }
         });
     });

@@ -15,7 +15,6 @@
         <h4>Programmers that know this skills</h4>
         <hr />
 
-        <!--Skill Forms-->
         <div class="form-group">
             <strong>
                 @Html.DisplayFor(modelItem => modelItem.Name)
@@ -23,7 +22,6 @@
             </strong>
             <br />
 
-            <!--Programmer Forms-->
             @foreach (var programmers in Model.Programmers)
             {
                 var FullName = String.Concat(programmers.FirstName, " ", programmers.LastName);

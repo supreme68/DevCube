@@ -4,12 +4,14 @@
     ViewBag.Title = "Update";
 }
 
+<!--Title-->
 <h2>Update</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
+    <!--Forms-->
     <div class="form-horizontal">
         <h4>Programmer's known skills</h4>
         <hr />
@@ -21,14 +23,16 @@
                 @Html.HiddenFor(modeItem => modeItem.ProgrammerID)
             </strong>
             <br />
+
             @foreach (var skills in Model.Skills)
             {
-                @skills.Name
+                @Html.DisplayFor(modelItem => skills.Name)
                 <input type="checkbox" name="SkillIDs" value="@skills.SkillID" checked="@skills.IsChecked" />
                 <br />
             }
         </div>
 
+        <!--Submit-->
         <div class="form-group">
             <input type="submit" value="Save" class="btn btn-default" />
         </div>

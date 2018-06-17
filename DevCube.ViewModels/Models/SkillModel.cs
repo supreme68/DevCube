@@ -11,7 +11,7 @@ namespace DevCube.ViewModels.Models
         public int SkillID { get; set; }
 
         [Required]
-        [Range(3 ,50)]
+        [StringLength(50, MinimumLength = 3, ErrorMessage = "Name should be between 3 and 50 characters")]
         public string Name { get; set; }
 
         public bool IsChecked { get; set; }

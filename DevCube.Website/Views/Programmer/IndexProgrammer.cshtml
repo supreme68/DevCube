@@ -5,24 +5,26 @@
     ViewBag.Title = "Programmers";
 }
 
-
+<!--Jumbotron-->
 <div class="jumbotron">
     <h1>Dev-Cube<img src="~/Content/images/logo.png"></h1>
     <p class="lead">Dev-Cube is an application for simplifying employee managment by providing listing with all the avaible employees and their skills. </p>
     @Html.ActionLink("Skills", "IndexSkill", "Skill", null, new { @id = "button", @class = "btn btn-lg" })
-
 </div>
 
+<!--Title-->
 <h2>Programmers</h2>
+
+<!--Create Link-->
 <p>From here you can manage your programmers and their known skills</p>
 @Html.ActionLink("Add New Programmer", "CreateProgrammer", null, new { @id = "button", @class = "btn btn-sm" })
 
+<!--Table-->
 <div class="table-responsive">
     <table class="table table-dark  table-hover">
         <thead class="thead-dark">
             <tr>
                 <th>
-                    <!--This is useless-->
                     First Name
                 </th>
 
@@ -67,19 +69,45 @@
                         }
 
                         @Html.DisplayFor(modelItem => skillName)
-
                     }
 
                 </td>
 
                 <td>
                     @Html.ActionLink("Update", "UpdateProgrammer", new { id = item.ProgrammerID }) |
-                    @Html.ActionLink("Delete", "DeleteProgrammer", new { id = item.ProgrammerID })
+                    <a data-id="@item.ProgrammerID" class="delete-link" href="#" data-toggle="modal" data-target="#Modal">Delete</a>
                 </td>
 
             </tr>
         }
-
     </table>
 
 </div>
+
+<!--Modal-->
+<div class="modal fade" id="Modal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Woah There!</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this programmer!
+                @Html.Hidden("id" ,"", new { @class = "hidden-id" })
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                <button id="delete-button" class="btn btn-default" >Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    let Url = '@Url.Action("DeleteProgrammer", "Programmer")';
+</script>
+
+@Scripts.Render("~/Content/js/delete.js")

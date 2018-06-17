@@ -14,27 +14,29 @@ namespace DevCube.Data.Modificators
         {
             using (var db = new Entities())
             {
+                var programmers_skills = (from s in db.Skills
+                                          join ps in db.Programmers_Skills on s.SkillID equals ps.SkillID
+                                          where id == ps.ProgrammerID
+                                          select ps).ToList();
 
-                var GetSkillsByProgrammerID = (from s in db.Skills
-                                               join ps in db.Programmers_Skills on s.SkillID equals ps.SkillID
-                                               where id == ps.ProgrammerID
-                                               select ps).ToList();
+                var programmer = (from p in db.Programmers
+                                  where id == p.ProgrammerID
+                                  select p).ToList();
 
-                var GetProgrammerByID = (from p in db.Programmers
-                                         where id == p.ProgrammerID
-                                         select p).ToList();
-
-                foreach (var ps in GetSkillsByProgrammerID)
+                //Removes programmer from Programmers_Skills table
+                foreach (var ps in programmers_skills)
                 {
                     db.Programmers_Skills.Remove(ps);
-                    db.SaveChanges();
                 }
 
-                foreach (var p in GetProgrammerByID)
+                //Removes programmer from Programmers table
+                foreach (var p in programmer)
                 {
                     db.Programmers.Remove(p);
-                    db.SaveChanges();
                 }
+
+                db.SaveChanges();
+
             }
         }
 
@@ -43,27 +45,28 @@ namespace DevCube.Data.Modificators
         {
             using (var db = new Entities())
             {
+                var programmers_skills = (from p in db.Programmers
+                                          join ps in db.Programmers_Skills on p.ProgrammerID equals ps.ProgrammerID
+                                          where id == ps.SkillID
+                                          select ps).ToList();
 
-                var GetProgrammersBySkillID = (from p in db.Programmers
-                                               join ps in db.Programmers_Skills on p.ProgrammerID equals ps.ProgrammerID
-                                               where id == ps.SkillID
-                                               select ps).ToList();
+                var skill = (from s in db.Skills
+                             where id == s.SkillID
+                             select s).ToList();
 
-                var GetSkillByID = (from s in db.Skills
-                                    where id == s.SkillID
-                                    select s).ToList();
-
-                foreach (var ps in GetProgrammersBySkillID)
+                //Removes Skill from Programmers_Skills table
+                foreach (var ps in programmers_skills)
                 {
                     db.Programmers_Skills.Remove(ps);
-                    db.SaveChanges();
                 }
 
-                foreach (var s in GetSkillByID)
+                //Removes Skill from Skills table
+                foreach (var s in skill)
                 {
                     db.Skills.Remove(s);
-                    db.SaveChanges();
                 }
+
+                db.SaveChanges();
             }
         }
     }
