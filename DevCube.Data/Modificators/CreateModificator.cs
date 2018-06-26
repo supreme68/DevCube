@@ -24,15 +24,18 @@ namespace DevCube.Data.Modificators
                 db.Programmers.Add(programmerInstance);
 
                 //Adds Programmer to Programmers_Skills table
-                foreach (var id in skillIDs)
+                if (skillIDs != null)
                 {
-                    var programmerSkillInstance = new Programmers_Skills
+                    foreach (var id in skillIDs)
                     {
-                        ProgrammerID = programmerInstance.ProgrammerID,
-                        SkillID = id
-                    };
+                        var programmerSkillInstance = new Programmers_Skills
+                        {
+                            ProgrammerID = programmerInstance.ProgrammerID,
+                            SkillID = id
+                        };
 
-                    db.Programmers_Skills.Add(programmerSkillInstance);
+                        db.Programmers_Skills.Add(programmerSkillInstance);
+                    }
                 }
 
                 db.SaveChanges();

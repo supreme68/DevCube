@@ -2,13 +2,13 @@
     "use strict";
 
     $(".delete-link").click(function () {
-        let id = $(this).attr("data-id").valueOf();
+        let id = $(this).attr("data-field").valueOf();
 
-        $(".hidden-id").val(id);
+        $(".hidden-field").val(id);
     });
 
     $("#delete-button").click(function () {
-        let id = $(".hidden-id").val();
+        let id = $(".hidden-field").val();
 
         let customUrl = Url + "/" +  id.toString();
 

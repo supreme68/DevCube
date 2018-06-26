@@ -170,6 +170,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\images\logo.png" />
     <Content Include="Content\js\delete.js" />
+    <Content Include="Content\js\JavaScript.js" />
     <Content Include="Content\js\scroll_arrow.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
