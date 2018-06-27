@@ -26,12 +26,14 @@ namespace DevCube.Data.Modificators
                 //Removes programmer from Programmers_Skills table
                 foreach (var ps in programmers_skills)
                 {
+                    db.Programmers_Skills.Attach(ps);
                     db.Programmers_Skills.Remove(ps);
                 }
 
                 //Removes programmer from Programmers table
                 foreach (var p in programmer)
                 {
+                    db.Programmers.Attach(p);
                     db.Programmers.Remove(p);
                 }
 

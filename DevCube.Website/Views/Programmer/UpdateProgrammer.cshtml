@@ -17,16 +17,22 @@
         <hr />
 
         <div class="form-group">
-            <strong>
-                @Html.DisplayFor(modelItem => modelItem.FirstName)
-                @Html.DisplayFor(modelItem => modelItem.LastName)
-                @Html.HiddenFor(modeItem => modeItem.ProgrammerID)
-            </strong>
+            @Html.HiddenFor(modelItem => modelItem.ProgrammerID);
+
+            <label><strong>First Name:</strong></label>
+            @Html.EditorFor(modelItem => modelItem.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(modelItem => modelItem.FirstName, "", new { @class = "text-danger" })
             <br />
+            
+            <label><strong>Last Name:</strong></label>
+            @Html.EditorFor(modelItem => modelItem.LastName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(modelItem => modelItem.LastName, "", new { @class = "text-danger" })
+            <br />
+
 
             @foreach (var skills in Model.Skills)
             {
-                @Html.DisplayFor(modelItem => skills.Name)
+                @skills.Name
                 <input type="checkbox" name="SkillIDs" value="@skills.SkillID" checked="@skills.IsChecked" />
                 <br />
             }

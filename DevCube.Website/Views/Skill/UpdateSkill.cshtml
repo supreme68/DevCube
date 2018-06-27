@@ -16,10 +16,11 @@
         <hr />
 
         <div class="form-group">
-            <strong>
-                @Html.DisplayFor(modelItem => modelItem.Name)
-                @Html.HiddenFor(modeItem => modeItem.SkillID)
-            </strong>
+            @Html.HiddenFor(modeItem => modeItem.SkillID)
+
+            <label><strong>Name:</strong></label>
+            @Html.EditorFor(modelItem => modelItem.Name, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(modelItem => modelItem.Name, "", new { @class = "text-danger" })
             <br />
 
             @foreach (var programmers in Model.Programmers)

@@ -26,9 +26,9 @@ namespace DevCube.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateSkill(SkillModel skill, List<int> ProgrammerIDs)
+        public ActionResult CreateSkill(SkillModel skill, List<int> programmerIDs)
         {
-            CreateModificator.CreateSkill(skill, ProgrammerIDs);
+            CreateModificator.CreateSkill(skill, programmerIDs);
 
             return RedirectToAction("IndexSkill");
         }
@@ -49,11 +49,18 @@ namespace DevCube.Controllers
         }
 
         [HttpPost]
-        public ActionResult UpdateSkill(List<int> ProgrammerIDs, int id)
+        public ActionResult UpdateSkill(SkillModel skill, List<int> programmerIDs)
         {
-            UpdateModificator.UpdateSkill(ProgrammerIDs, id);
+            if (ModelState.IsValid)
+            {
+                UpdateModificator.UpdateSkill(skill, programmerIDs);
 
-            return RedirectToAction("IndexSkill");
+                return RedirectToAction("IndexSkill");
+            }
+            else
+            {
+                return View(SkillModelMapper.DisplaySkillByIDWithAllProgrammers(skill.SkillID));
+            }
         }
 
         //DELETE

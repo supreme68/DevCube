@@ -41,11 +41,16 @@
             <tr>
 
                 <td>
-                    @Html.DisplayFor(modelItem => item.Name)
+                    @item.Name
                 </td>
 
 
                 <td>
+                    @if (item.Programmers.Count == 0)
+                    {
+                        <span><strong>This skill is not known by anybody</strong></span>
+                    }
+
                     @foreach (var programmer in item.Programmers)
                     {
                         i++;
@@ -62,7 +67,7 @@
                             programmerFullName = "This skill is not known by any programmer";
                         }
 
-                        @Html.DisplayFor(modelItem => programmerFullName)
+                        @programmerFullName
 
                     }
 

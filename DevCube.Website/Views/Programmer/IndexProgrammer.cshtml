@@ -49,14 +49,19 @@
             <tr>
 
                 <td>
-                    @Html.DisplayFor(modelItem => item.FirstName)
+                    @item.FirstName
                 </td>
 
                 <td>
-                    @Html.DisplayFor(modelItem => item.LastName)
+                    @item.LastName
                 </td>
 
-                <td class="cell-skills">
+                <td>
+                    @if (item.Skills.Count == 0)
+                    {
+                       <span><strong>This "programmer" doesnt know any skill</strong></span>
+                    }
+
                     @foreach (var skill in item.Skills)
                     {
                         i++;
@@ -68,7 +73,7 @@
                             skillName = skill.Name;
                         }
 
-                        @Html.DisplayFor(modelItem => skillName)
+                        @skillName
                     }
 
                 </td>
@@ -112,4 +117,3 @@
 </script>
 
 @Scripts.Render("~/Content/js/delete.js")
-@Scripts.Render("~/Content/js/JavaScript.js")

@@ -12,37 +12,38 @@
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <hr />
+<div class="form-horizontal">
+    <hr />
 
-        <!--Skill Forms-->
-        <div class="form-group">
-            <p>Name</p>
-            @Html.EditorFor(modelItem => modelItem.Name, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(modelItem => modelItem.Name, "", new { @class = "text-danger" })
-        </div>
-
-        <h4>Select programmers that know the skill</h4>
-        <div class="alert alert-info"><strong>Note:</strong> You can leave the skill without being known by anonyone</div>
-        <hr />
-
-        <!--Programmer Forms-->
-        <div class="form-group">
-            @foreach (var programmers in Model.Programmers)
-            {
-                var FullName = String.Concat(programmers.FirstName, " ", programmers.LastName);
-
-                <label>@FullName</label>
-                <input type="checkbox" name="ProgrammerIDs" value="@programmers.ProgrammerID" checked="@programmers.IsChecked" />
-                <br />
-            }
-        </div>
-
-        <!--Submit-->
-        <div class="form-group">
-            <input type="submit" value="Create" class="btn btn-default" />
-        </div>
+    <!--Skill Forms-->
+    <div class="form-group">
+        <p>Name</p>
+        @Html.EditorFor(modelItem => modelItem.Name, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(modelItem => modelItem.Name, "", new { @class = "text-danger" })
     </div>
+    <h4>Select programmers that know the skill</h4>
+
+    <!--Note-->
+    <div class="alert alert-info"><strong>Note:</strong> You can leave the skill without being known by anonyone</div>
+    <hr />
+
+    <!--Programmer Forms-->
+    <div class="form-group">
+        @foreach (var programmers in Model.Programmers)
+        {
+            var FullName = String.Concat(programmers.FirstName, " ", programmers.LastName);
+
+            <label>@FullName</label>
+            <input type="checkbox" name="ProgrammerIDs" value="@programmers.ProgrammerID" checked="@programmers.IsChecked" />
+            <br />
+        }
+    </div>
+
+    <!--Submit-->
+    <div class="form-group">
+        <input type="submit" value="Create" class="btn btn-default" />
+    </div>
+</div>
 }
 <div>
     @Html.ActionLink("Back to List", "IndexSkill")

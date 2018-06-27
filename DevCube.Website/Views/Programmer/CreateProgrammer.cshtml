@@ -12,40 +12,43 @@
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <hr />
+<div class="form-horizontal">
+    <hr />
 
-        <!--Programmer Forms-->
-        <div class="form-group">
-            <p>First Name</p>
-            @Html.EditorFor(modelItem => modelItem.FirstName, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(modelItem => modelItem.FirstName, "", new { @class = "text-danger" })
-        </div>
-
-        <div class="form-group">
-            <p>Last Name</p>
-            @Html.EditorFor(modelItem => modelItem.LastName, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(modelItem => modelItem.LastName, "", new { @class = "text-danger" })
-        </div>
-
-        <h4>Select Skills</h4>
-        <hr />
-
-        <!--Skill Forms-->
-        <div class="form-group">
-            @foreach (var skills in Model.Skills)
-            {
-                <label>@skills.Name</label>
-                <input type="checkbox" name="SkillIDs" value="@skills.SkillID" checked="@skills.IsChecked" />
-                <br />
-            }
-        </div>
-        
-        <!--Submit-->
-        <div class="form-group">
-            <input type="submit" value="Create" class="btn btn-default" />
-        </div>
+    <!--Programmer Forms-->
+    <div class="form-group">
+        <p>First Name</p>
+        @Html.EditorFor(modelItem => modelItem.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(modelItem => modelItem.FirstName, "", new { @class = "text-danger" })
     </div>
+
+    <div class="form-group">
+        <p>Last Name</p>
+        @Html.EditorFor(modelItem => modelItem.LastName, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(modelItem => modelItem.LastName, "", new { @class = "text-danger" })
+    </div>
+
+    <h4>Select Skills</h4>
+
+    <!--Note-->
+    <div class="alert alert-info"><strong>Note:</strong> You can leave the programmer without knowing any skill</div>
+    <hr />
+
+    <!--Skill Forms-->
+    <div class="form-group">
+        @foreach (var skills in Model.Skills)
+        {
+            <label>@skills.Name</label>
+            <input type="checkbox" name="SkillIDs" value="@skills.SkillID" checked="@skills.IsChecked" />
+            <br />
+        }
+    </div>
+
+    <!--Submit-->
+    <div class="form-group">
+        <input type="submit" value="Create" class="btn btn-default" />
+    </div>
+</div>
 }
 <div>
     @Html.ActionLink("Back to List", "IndexProgrammer")

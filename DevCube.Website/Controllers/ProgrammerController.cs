@@ -26,13 +26,13 @@ namespace DevCube.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateProgrammer(ProgrammerModel programmer, List<int> SkillIDs)
+        public ActionResult CreateProgrammer(ProgrammerModel programmer, List<int> skillIDs)
         {
 
             if (ModelState.IsValid)
             {
 
-                CreateModificator.CreateProgrammer(programmer, SkillIDs);
+                CreateModificator.CreateProgrammer(programmer, skillIDs);
 
                 return RedirectToAction("IndexProgrammer");
             }
@@ -57,11 +57,21 @@ namespace DevCube.Controllers
         }
 
         [HttpPost]
-        public ActionResult UpdateProgrammer(List<int> SkillIDs, int id)
+        public ActionResult UpdateProgrammer(ProgrammerModel programmer, List<int> skillIDs)
         {
-            UpdateModificator.UpdateProgrammer(SkillIDs, id);
 
-            return RedirectToAction("IndexProgrammer");
+            if (ModelState.IsValid)
+            {
+                UpdateModificator.UpdateProgrammer(programmer, skillIDs);
+
+                return RedirectToAction("IndexProgrammer");
+            }
+            else
+            {
+                return View(ProgrammerModelMapper.DisplayProgrammerByIDAndAllSKills(programmer.ProgrammerID));
+            }
+
+
         }
 
         //DELETE
@@ -70,7 +80,6 @@ namespace DevCube.Controllers
         {
             DeleteModificator.DeleteProgrammer(id);
 
-           
             return Json("");
         }
     }

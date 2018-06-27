@@ -4,21 +4,35 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DevCube.Data.DomainModels;
+using DevCube.ViewModels.Models;
 
 namespace DevCube.Data.Modificators
 {
     public class UpdateModificator
     {
         //Updates Programmer With Skills And Deletes Uncheked Skills
-        public static void UpdateProgrammer(List<int> skillIDs, int programmerID)
+        public static void UpdateProgrammer(ProgrammerModel programmer, List<int> skillIDs)
         {
             using (var db = new Entities())
             {
 
                 var programmer_skills = (from s in db.Skills
                                          join ps in db.Programmers_Skills on s.SkillID equals ps.SkillID
-                                         where programmerID == ps.ProgrammerID
+                                         where programmer.ProgrammerID == ps.ProgrammerID
                                          select ps).ToList();
+
+                var programmerTemp = (from p in db.Programmers
+                                      where programmer.ProgrammerID == p.ProgrammerID
+                                      select p).FirstOrDefault();
+
+                //Updates Programmer name
+                programmerTemp.FirstName = programmer.FirstName;
+                programmerTemp.LastName = programmer.LastName;
+
+                if (skillIDs == null)
+                {
+                    skillIDs = new List<int>();
+                }
 
                 foreach (var skill in skillIDs)
                 {
@@ -40,7 +54,7 @@ namespace DevCube.Data.Modificators
                     {
                         var newSkill = new Programmers_Skills
                         {
-                            ProgrammerID = programmerID,
+                            ProgrammerID = programmer.ProgrammerID,
                             SkillID = skill,
 
                         };
@@ -56,7 +70,7 @@ namespace DevCube.Data.Modificators
                     //Deletes Uncheked skills
                     if (!skillIDs.Contains(skill))
                     {
-                        db.Programmers_Skills.Attach(uncheckedSkill);
+                        //db.Programmers_Skills.Attach(uncheckedSkill);
                         db.Programmers_Skills.Remove(uncheckedSkill);
                     }
                 }
@@ -64,21 +78,26 @@ namespace DevCube.Data.Modificators
                 db.SaveChanges();
             }
         }
-
         //Updates Skill With Programmers And Deletes Uncheked Programmers
-        public static void UpdateSkill(List<int> ProgrammerIDs, int id)
+        public static void UpdateSkill(SkillModel skill, List<int> programmerIDs)
         {
             using (var db = new Entities())
             {
 
                 var programmers_skills = (from p in db.Programmers
                                           join ps in db.Programmers_Skills on p.ProgrammerID equals ps.ProgrammerID
-                                          where id == ps.SkillID
+                                          where skill.SkillID == ps.SkillID
                                           select ps).ToList();
 
-                foreach (var programmer in ProgrammerIDs)
-                {
+                var skillTemp = (from s in db.Skills
+                                 where skill.SkillID == s.SkillID
+                                 select s).FirstOrDefault();
 
+                //Updates Skill name
+                skillTemp.Name = skill.Name;
+
+                foreach (var programmer in programmerIDs)
+                {
                     var oldProgrammer = programmers_skills.Where(n => n.ProgrammerID == programmer).FirstOrDefault();
 
                     //Deletes and Updates Programmers old Skill to Programmer
@@ -96,7 +115,7 @@ namespace DevCube.Data.Modificators
                         var newProgrammer = new Programmers_Skills
                         {
                             ProgrammerID = programmer,
-                            SkillID = id
+                            SkillID = skill.SkillID
                         };
 
                         db.Programmers_Skills.Add(newProgrammer);
@@ -108,7 +127,7 @@ namespace DevCube.Data.Modificators
                     var unchekedProgrammer = programmers_skills.Where(n => n.ProgrammerID == programmer).FirstOrDefault();
 
                     //Deletes Uncheked Skills
-                    if (!ProgrammerIDs.Contains(programmer))
+                    if (!programmerIDs.Contains(programmer))
                     {
                         db.Programmers_Skills.Attach(unchekedProgrammer);
                         db.Programmers_Skills.Remove(unchekedProgrammer);
