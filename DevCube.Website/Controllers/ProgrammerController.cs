@@ -4,8 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Diagnostics;
-using DevCube.Data.Modificators;
-using DevCube.Data.ModelMappers;
+using DevCube.Data;
 using DevCube.ViewModels.Models;
 
 namespace DevCube.Controllers
@@ -15,30 +14,46 @@ namespace DevCube.Controllers
         //INDEX
         public ActionResult IndexProgrammer()
         {
-            return View(ProgrammerModelMapper.DisplayAllProgrammersWithTheirSkills());
+            var programmers = ProgrammerData.SelectAllProgrammers()
+                .OrderBy(x => x.FirstName).ToList();
+
+            return View(programmers);
         }
 
         //CREATE
         [HttpGet]
         public ActionResult CreateProgrammer()
         {
-            return View(ProgrammerModelMapper.DisplayProgrammerAndAllSkills());
+            var skills = SkillData.SelectAllSkills();
+
+            var programmerInstance = new ProgrammerModel
+            {
+                Skills = skills
+            };
+
+            return View(programmerInstance);
         }
 
         [HttpPost]
         public ActionResult CreateProgrammer(ProgrammerModel programmer, List<int> skillIDs)
         {
+            var skills = SkillData.SelectAllSkills();
+
+            var programmerInstance = new ProgrammerModel
+            {
+                Skills = skills
+            };
 
             if (ModelState.IsValid)
             {
 
-                CreateModificator.CreateProgrammer(programmer, skillIDs);
+                ProgrammerData.CreateProgrammer(programmer, skillIDs);
 
                 return RedirectToAction("IndexProgrammer");
             }
             else
             {
-                return View(ProgrammerModelMapper.DisplayProgrammerAndAllSkills());
+                return View(programmerInstance);
             }
         }
 
@@ -46,12 +61,29 @@ namespace DevCube.Controllers
         [HttpGet]
         public ActionResult UpdateProgrammer(int? id)
         {
-            var programmer = ProgrammerModelMapper.DisplayProgrammerByIDAndAllSKills(id);
+            var programmer = ProgrammerData.SelectProgrammerByID(id);
+            var allSkills = SkillData.SelectAllSkills();
+
 
             if (id == null || programmer == null)
             {
                 return HttpNotFound();
             }
+
+            //Sets known Skills to be checked and the unknown Skill uncheked
+            foreach (var s in allSkills)
+            {
+                foreach (var p in programmer.Skills)
+                {
+                    if (s.SkillID == p.SkillID)
+                    {
+                        s.IsChecked = true;
+                        break;
+                    }
+                }
+            }
+
+            programmer.Skills = allSkills;
 
             return View(programmer);
         }
@@ -59,26 +91,42 @@ namespace DevCube.Controllers
         [HttpPost]
         public ActionResult UpdateProgrammer(ProgrammerModel programmer, List<int> skillIDs)
         {
+            var programmerTemp = ProgrammerData.SelectProgrammerByID(programmer.ProgrammerID);
+            var allSkills = SkillData.SelectAllSkills();
 
             if (ModelState.IsValid)
             {
-                UpdateModificator.UpdateProgrammer(programmer, skillIDs);
+                ProgrammerData.UpdateProgrammer(programmer, skillIDs);
 
                 return RedirectToAction("IndexProgrammer");
             }
             else
             {
-                return View(ProgrammerModelMapper.DisplayProgrammerByIDAndAllSKills(programmer.ProgrammerID));
+
+                //Sets known Skills to be checked and the unknown Skill uncheked
+                foreach (var s in allSkills)
+                {
+                    foreach (var p in programmer.Skills)
+                    {
+                        if (s.SkillID == p.SkillID)
+                        {
+                            s.IsChecked = true;
+                            break;
+                        }
+                    }
+                }
+
+                programmerTemp.Skills = allSkills;
+
+                return View(programmerTemp);
             }
-
-
         }
 
         //DELETE
         [HttpPost]
         public ActionResult DeleteProgrammer(int id)
         {
-            DeleteModificator.DeleteProgrammer(id);
+            ProgrammerData.DeleteProgrammer(id);
 
             return Json("");
         }
