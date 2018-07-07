@@ -45,22 +45,22 @@ namespace DevCube.Data
             using (var db = new Entities())
             {
                 var programmers = (from p in db.Programmers
-                                  select new ProgrammerModel
-                                  {
-                                      FirstName = p.FirstName,
-                                      LastName = p.LastName,
-                                      IsChecked = false,
-                                      ProgrammerID = p.ProgrammerID,
+                                   select new ProgrammerModel
+                                   {
+                                       FirstName = p.FirstName,
+                                       LastName = p.LastName,
+                                       IsChecked = false,
+                                       ProgrammerID = p.ProgrammerID,
 
-                                      Skills = (from s in db.Skills
-                                                join ps in db.Programmers_Skills on s.SkillID equals ps.SkillID
-                                                where ps.ProgrammerID == p.ProgrammerID
-                                                select new SkillModel()
-                                                {
-                                                    SkillID = s.SkillID,
-                                                    Name = s.Name
-                                                }).ToList()
-                                  }).ToList();
+                                       Skills = (from s in db.Skills
+                                                 join ps in db.Programmers_Skills on s.SkillID equals ps.SkillID
+                                                 where ps.ProgrammerID == p.ProgrammerID
+                                                 select new SkillModel()
+                                                 {
+                                                     SkillID = s.SkillID,
+                                                     Name = s.Name
+                                                 }).ToList()
+                                   }).ToList();
 
                 return programmers;
             }

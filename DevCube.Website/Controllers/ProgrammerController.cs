@@ -59,27 +59,19 @@ namespace DevCube.Controllers
 
         //UPDATE   
         [HttpGet]
+        [HandleError]
         public ActionResult UpdateProgrammer(int? id)
         {
             var programmer = ProgrammerData.SelectProgrammerByID(id);
             var allSkills = SkillData.SelectAllSkills();
-
-
-            if (id == null || programmer == null)
-            {
-                return HttpNotFound();
-            }
+            var programmerSkills = programmer.Skills.Select(s => s.SkillID).ToList();
 
             //Sets known Skills to be checked and the unknown Skill uncheked
             foreach (var s in allSkills)
             {
-                foreach (var p in programmer.Skills)
+                if (programmerSkills.Contains(s.SkillID))
                 {
-                    if (s.SkillID == p.SkillID)
-                    {
-                        s.IsChecked = true;
-                        break;
-                    }
+                    s.IsChecked = true;
                 }
             }
 
@@ -93,6 +85,7 @@ namespace DevCube.Controllers
         {
             var programmerTemp = ProgrammerData.SelectProgrammerByID(programmer.ProgrammerID);
             var allSkills = SkillData.SelectAllSkills();
+            var programmerSkills = programmerTemp.Skills.Select(s => s.SkillID).ToList();
 
             if (ModelState.IsValid)
             {
@@ -100,26 +93,20 @@ namespace DevCube.Controllers
 
                 return RedirectToAction("IndexProgrammer");
             }
-            else
+
+            //Sets known Skills to be checked and the unknown Skill uncheked
+            foreach (var s in allSkills)
             {
-
-                //Sets known Skills to be checked and the unknown Skill uncheked
-                foreach (var s in allSkills)
+                if (programmerSkills.Contains(s.SkillID))
                 {
-                    foreach (var p in programmer.Skills)
-                    {
-                        if (s.SkillID == p.SkillID)
-                        {
-                            s.IsChecked = true;
-                            break;
-                        }
-                    }
+                    s.IsChecked = true;
                 }
-
-                programmerTemp.Skills = allSkills;
-
-                return View(programmerTemp);
             }
+
+            programmerTemp.Skills = allSkills;
+
+            return View(programmerTemp);
+
         }
 
         //DELETE

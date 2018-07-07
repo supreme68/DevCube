@@ -1,0 +1,33 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Oops!!!</title>
+    @Styles.Render("//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css")
+    @Styles.Render("https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css")
+    @Styles.Render("~/Content/css/error.css")
+</head>
+<body>
+
+    <div class="container body-content center-block">
+        <div class="center-block">
+            <div class="jumbotron">
+                <img src="~/Content/images/sad-face.png" />
+                <h1> Ooops, something went wrong!!!</h1>
+                @Html.ActionLink("Go back Home", "IndexProgrammer", "Programmer", null, new { @id = "button", @class = "btn btn-lg" })
+
+            </div>
+        </div>
+    </div>
+
+    @Scripts.Render("https://code.jquery.com/jquery-3.3.1.min.js")
+    @Scripts.Render("https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js")
+    @Scripts.Render("https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js")
+    @Scripts.Render("~/Content/js/scroll_arrow.js")
+</body>
+</html>

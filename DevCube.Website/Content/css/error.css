@@ -1,0 +1,24 @@
+body {
+    background-color: #bfff00;
+}
+
+.jumbotron {
+    background-color: #bfff00;
+    margin-top: 20vh;
+    margin-left: 10vw;
+}
+
+    .jumbotron > img {
+        margin-left: 20%;
+    }
+
+
+.btn {
+    background-color: #f611ec;
+    color: #fafafa;
+}
+
+    .btn:hover {
+        background-color: #a32cc4;
+        color: #fafafa;
+    }

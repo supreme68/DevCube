@@ -59,26 +59,19 @@ namespace DevCube.Controllers
 
         //UPDATE
         [HttpGet]
+        [HandleError]
         public ActionResult UpdateSkill(int? id)
         {
             var skill = SkillData.SelectSkillByID(id);
             var allProgrammers = ProgrammerData.SelectAllProgrammers();
+            var skillProgrammers = skill.Programmers.Select(p => p.ProgrammerID).ToList();
 
-            if (id == null || skill == null)
-            {
-                return HttpNotFound();
-            }
-
-            //Sets Programmers thet know the Skill to be checked and the those who doesnt uncheked
+            //Sets Programmers thet know the Skill to be checked and the those who doesnt unchekeds
             foreach (var p in allProgrammers)
             {
-                foreach (var s in skill.Programmers)
+                if (skillProgrammers.Contains(p.ProgrammerID))
                 {
-                    if (s.ProgrammerID == p.ProgrammerID)
-                    {
-                        p.IsChecked = true;
-                        break;
-                    }
+                    p.IsChecked = true;
                 }
             }
 
@@ -92,6 +85,7 @@ namespace DevCube.Controllers
         {
             var skillTemp = SkillData.SelectSkillByID(skill.SkillID);
             var allProgrammers = ProgrammerData.SelectAllProgrammers();
+            var skillProgrammers = skillTemp.Programmers.Select(p => p.ProgrammerID).ToList();
 
             if (ModelState.IsValid)
             {
@@ -99,26 +93,19 @@ namespace DevCube.Controllers
 
                 return RedirectToAction("IndexSkill");
             }
-            else
+
+            //Sets Programmers thet know the Skill to be checked and the those who doesnt uncheked
+            foreach (var p in allProgrammers)
             {
-
-                //Sets Programmers thet know the Skill to be checked and the those who doesnt uncheked
-                foreach (var p in allProgrammers)
+                if (skillProgrammers.Contains(p.ProgrammerID))
                 {
-                    foreach (var s in skill.Programmers)
-                    {
-                        if (s.ProgrammerID == p.ProgrammerID)
-                        {
-                            p.IsChecked = true;
-                            break;
-                        }
-                    }
+                    p.IsChecked = true;
                 }
-
-                skillTemp.Programmers = allProgrammers;
-
-                return View(skillTemp);
             }
+
+            skillTemp.Programmers = allProgrammers;
+
+            return View(skillTemp);
         }
 
         //DELETE
