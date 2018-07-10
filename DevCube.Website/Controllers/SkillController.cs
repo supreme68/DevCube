@@ -12,12 +12,40 @@ namespace DevCube.Controllers
     public class SkillController : Controller
     {
         //INDEX
+        [HttpGet]
         public ActionResult IndexSkill()
         {
             var skills = SkillData.SelectAllSkills()
                 .OrderBy(x => x.Name).ToList();
 
             return View(skills);
+        }
+
+        [HttpPost]
+        public ActionResult IndexSkill(string searchBy, string filter)
+        {
+            if (String.IsNullOrEmpty(filter))
+            {
+                var skills = SkillData.SelectAllSkills()
+             .OrderBy(x => x.Name).ToList();
+
+                return View(skills);
+            }
+
+            if (searchBy == "Name")
+            {
+                var filteredSkillsByName = SkillData.SelectAllSkillsByName(filter)
+                       .OrderBy(x => x.Name).ToList();
+
+                return View(filteredSkillsByName);
+            }
+            else
+            {
+                var filteredSkillsByProgrammerName = SkillData.SelectAllSkillsByProgrammerName(filter)
+                .OrderBy(x => x.Name).ToList();
+
+                return View(filteredSkillsByProgrammerName);
+            }
         }
 
         //CREATE
@@ -49,7 +77,6 @@ namespace DevCube.Controllers
                 SkillData.CreateSkill(skill, programmerIDs);
 
                 return RedirectToAction("IndexSkill");
-
             }
             else
             {

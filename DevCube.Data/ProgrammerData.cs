@@ -27,6 +27,7 @@ namespace DevCube.Data
 
                                       Skills = (from s in db.Skills
                                                 join ps in db.Programmers_Skills on s.SkillID equals ps.SkillID
+                                                orderby s.Name
                                                 where ps.ProgrammerID == p.ProgrammerID
                                                 select new SkillModel()
                                                 {
@@ -39,7 +40,7 @@ namespace DevCube.Data
             }
         }
 
-        //Selects all Programmers and their skills
+        //Selects all Programmers and their Skills
         public static List<ProgrammerModel> SelectAllProgrammers()
         {
             using (var db = new Entities())
@@ -54,6 +55,7 @@ namespace DevCube.Data
 
                                        Skills = (from s in db.Skills
                                                  join ps in db.Programmers_Skills on s.SkillID equals ps.SkillID
+                                                 orderby s.Name
                                                  where ps.ProgrammerID == p.ProgrammerID
                                                  select new SkillModel()
                                                  {
@@ -63,6 +65,85 @@ namespace DevCube.Data
                                    }).ToList();
 
                 return programmers;
+            }
+        }
+
+        //Selects all Programmers by name and their Skills
+        public static List<ProgrammerModel> SelectAllProgrammersByName(string name)
+        {
+            using (var db = new Entities())
+            {
+                var programmers = (from p in db.Programmers
+                                   where p.FirstName.Contains(name) || p.FirstName.StartsWith(name) || p.LastName.Contains(name) || p.LastName.StartsWith(name)
+                                   select new ProgrammerModel
+                                   {
+                                       FirstName = p.FirstName,
+                                       LastName = p.LastName,
+                                       IsChecked = false,
+                                       ProgrammerID = p.ProgrammerID,
+
+                                       Skills = (from s in db.Skills
+                                                 join ps in db.Programmers_Skills on s.SkillID equals ps.SkillID
+                                                 orderby s.Name
+                                                 where ps.ProgrammerID == p.ProgrammerID
+                                                 select new SkillModel()
+                                                 {
+                                                     SkillID = s.SkillID,
+                                                     Name = s.Name
+                                                 }).ToList()
+                                   }).ToList();
+
+                return programmers;
+            }
+        }
+
+        //Selects all Programmers and their Skills by name
+        public static List<ProgrammerModel> SelectAllProgrammersBySkillName(string name)
+        {
+            using (var db = new Entities())
+            {
+                var programmers = (from p in db.Programmers
+                                   select new ProgrammerModel
+                                   {
+                                       FirstName = p.FirstName,
+                                       LastName = p.LastName,
+                                       IsChecked = false,
+                                       ProgrammerID = p.ProgrammerID,
+
+                                       Skills = (from s in db.Skills
+                                                 join ps in db.Programmers_Skills on s.SkillID equals ps.SkillID
+                                                 orderby s.Name
+                                                 where ps.ProgrammerID == p.ProgrammerID
+                                                 select new SkillModel()
+                                                 {
+                                                     SkillID = s.SkillID,
+                                                     Name = s.Name
+                                                 }).ToList()
+                                   }).ToList();
+
+                var selectedSkill = (from s in db.Skills
+                                     where s.Name == name
+                                     select new SkillModel()
+                                     {
+                                         SkillID = s.SkillID,
+                                         Name = s.Name
+                                     }).FirstOrDefault();
+
+
+                var filteredProgrammers = new List<ProgrammerModel>();
+
+                foreach (var programmer in programmers)
+                {
+                    foreach (var skill in programmer.Skills)
+                    {
+                        if (skill.Name.ToLower().Contains(name.ToLower()))
+                        {
+                            filteredProgrammers.Add(programmer);
+                        }
+                    }
+                }
+
+                return filteredProgrammers;
             }
         }
 

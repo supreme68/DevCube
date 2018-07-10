@@ -8,6 +8,23 @@
         color: #fafafa;
     }
 
+#search-form {
+    float: right;
+}
+
+
+#search-form_label {
+    font-size: 19px;
+}
+
+#search-form_select {
+    background-color: #e9ecef;
+}
+
+#alert-container {
+    margin-top: 1%;
+}
+
 #arrow {
     position: fixed;
     bottom: 21px;

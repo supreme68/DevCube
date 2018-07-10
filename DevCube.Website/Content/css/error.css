@@ -4,14 +4,9 @@ body {
 
 .jumbotron {
     background-color: #bfff00;
-    margin-top: 20vh;
-    margin-left: 10vw;
+    margin: 20vh;
+    position: relative;
 }
-
-    .jumbotron > img {
-        margin-left: 20%;
-    }
-
 
 .btn {
     background-color: #f611ec;

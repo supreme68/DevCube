@@ -161,19 +161,20 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap-grid - Copy.css" />
-    <Content Include="Content\bootstrap-grid.css" />
-    <Content Include="Content\bootstrap-grid.min - Copy.css" />
-    <Content Include="Content\bootstrap-grid.min.css" />
-    <Content Include="Content\bootstrap-reboot.css" />
-    <Content Include="Content\bootstrap-reboot.min.css" />
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\bootstrap\bootstrap-grid - Copy.css" />
+    <Content Include="Content\bootstrap\bootstrap-grid.css" />
+    <Content Include="Content\bootstrap\bootstrap-grid.min - Copy.css" />
+    <Content Include="Content\bootstrap\bootstrap-grid.min.css" />
+    <Content Include="Content\bootstrap\bootstrap-reboot.css" />
+    <Content Include="Content\bootstrap\bootstrap-reboot.min.css" />
+    <Content Include="Content\bootstrap\bootstrap.css" />
+    <Content Include="Content\bootstrap\bootstrap.min.css" />
     <Content Include="Content\css\error.css" />
     <Content Include="Content\images\logo.png" />
     <Content Include="Content\images\sad-face.png" />
     <Content Include="Content\js\delete.js" />
     <Content Include="Content\js\scroll_arrow.js" />
+    <Content Include="Content\js\search.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\css\layout.css" />
@@ -184,8 +185,8 @@
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Content\bootstrap-grid.css - Copy.map" />
-    <Content Include="Content\bootstrap-grid.min.css - Copy.map" />
+    <Content Include="Content\bootstrap\bootstrap-grid.css - Copy.map" />
+    <Content Include="Content\bootstrap\bootstrap-grid.min.css - Copy.map" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -199,12 +200,12 @@
     <Content Include="Views\Programmer\UpdateProgrammer.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap.min.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-reboot.min.css.map" />
-    <Content Include="Content\bootstrap-reboot.css.map" />
-    <Content Include="Content\bootstrap-grid.min.css.map" />
-    <Content Include="Content\bootstrap-grid.css.map" />
+    <Content Include="Content\bootstrap\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap\bootstrap.css.map" />
+    <Content Include="Content\bootstrap\bootstrap-reboot.min.css.map" />
+    <Content Include="Content\bootstrap\bootstrap-reboot.css.map" />
+    <Content Include="Content\bootstrap\bootstrap-grid.min.css.map" />
+    <Content Include="Content\bootstrap\bootstrap-grid.css.map" />
     <None Include="packages.config" />
     <None Include="Properties\packages.config" />
     <Content Include="Web.config" />

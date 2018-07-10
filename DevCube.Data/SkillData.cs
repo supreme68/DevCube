@@ -41,10 +41,36 @@ namespace DevCube.Data
         {
             using (var db = new Entities())
             {
-
-
                 var skills = (from s in db.Skills
-                              orderby s.Name
+                              select new SkillModel
+                              {
+                                  SkillID = s.SkillID,
+                                  Name = s.Name,
+                                  IsChecked = false,
+
+                                  Programmers = (from p in db.Programmers
+                                                 join ps in db.Programmers_Skills on p.ProgrammerID equals ps.ProgrammerID
+                                                 where ps.SkillID == s.SkillID
+                                                 select new ProgrammerModel()
+                                                 {
+                                                     ProgrammerID = p.ProgrammerID,
+                                                     FirstName = p.FirstName,
+                                                     LastName = p.LastName,
+
+                                                 }).ToList()
+                              }).ToList();
+
+                return skills;
+            }
+        }
+
+        //Selects all Programmers by name and their Skills
+        public static List<SkillModel> SelectAllSkillsByName(string name)
+        {
+            using (var db = new Entities())
+            {
+                var skills = (from s in db.Skills
+                              where s.Name.Contains(name)
                               select new SkillModel
                               {
                                   SkillID = s.SkillID,
@@ -65,6 +91,57 @@ namespace DevCube.Data
                               }).ToList();
 
                 return skills;
+            }
+        }
+
+        //Selects all Programmers and their Skills by name
+        public static List<SkillModel> SelectAllSkillsByProgrammerName(string name)
+        {
+            using (var db = new Entities())
+            {
+                var skills = (from s in db.Skills
+                              select new SkillModel
+                              {
+                                  SkillID = s.SkillID,
+                                  Name = s.Name,
+                                  IsChecked = false,
+
+                                  Programmers = (from p in db.Programmers
+                                                 join ps in db.Programmers_Skills on p.ProgrammerID equals ps.ProgrammerID
+                                                 orderby p.FirstName
+                                                 where ps.SkillID == s.SkillID
+                                                 select new ProgrammerModel()
+                                                 {
+                                                     ProgrammerID = p.ProgrammerID,
+                                                     FirstName = p.FirstName,
+                                                     LastName = p.LastName,
+
+                                                 }).ToList()
+                              }).ToList();
+
+                var selectedProgrammer = (from p in db.Programmers
+                                          where p.FirstName == name || p.LastName == name
+                                          select new ProgrammerModel()
+                                          {
+                                              FirstName = p.FirstName,
+                                              LastName = p.LastName,
+                                              ProgrammerID = p.ProgrammerID
+                                          }).FirstOrDefault();
+
+                var filteredSkills = new List<SkillModel>();
+
+                foreach (var skill in skills)
+                {
+                    foreach (var programmer in skill.Programmers)
+                    {
+                        if (programmer.FirstName.ToLower().Contains(name.ToLower()))
+                        {
+                            filteredSkills.Add(skill);
+                        }
+                    }
+                }
+
+                return filteredSkills;
             }
         }
 

@@ -4,8 +4,9 @@
     $(".delete-link").click(function () {
         let id = $(this).attr("data-id").valueOf();
 
-        //Sets the selected id value to the hidden field inside the Modal 
-         $(".hidden-field").val(id);
+        let setIdToHiddenField = (function() {
+            $(".hidden-field").val(id);
+        })();
     });
 
     $("#delete-button").click(function () {

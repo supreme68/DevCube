@@ -12,12 +12,40 @@ namespace DevCube.Controllers
     public class ProgrammerController : Controller
     {
         //INDEX
+        [HttpGet]
         public ActionResult IndexProgrammer()
         {
             var programmers = ProgrammerData.SelectAllProgrammers()
                 .OrderBy(x => x.FirstName).ToList();
 
             return View(programmers);
+        }
+
+        [HttpPost]
+        public ActionResult IndexProgrammer(string searchBy, string filter)
+        {
+            if (String.IsNullOrEmpty(filter))
+            {
+                var programmers = ProgrammerData.SelectAllProgrammers()
+              .OrderBy(x => x.FirstName).ToList();
+
+                return View(programmers);
+            }
+
+            if (searchBy == "Name")
+            {
+                var filteredProgrammersByName = ProgrammerData.SelectAllProgrammersByName(filter)
+                       .OrderBy(x => x.FirstName).ToList();
+
+                return View(filteredProgrammersByName);
+            }
+            else
+            {
+                var filteredProgrammersBySkillName = ProgrammerData.SelectAllProgrammersBySkillName(filter)
+                .OrderBy(x => x.FirstName).ToList();
+
+                return View(filteredProgrammersBySkillName);
+            }
         }
 
         //CREATE

@@ -5,13 +5,37 @@
     ViewBag.Title = "Skills";
 }
 
+<!--Jumbotron-->
 <div class="jumbotron">
     <h1>Dev-Cube<img src="~/Content/images/logo.png"></h1>
     <p class="lead">Dev-Cube is an application for simplifying employee managment by providing listing with all the avaible employees and their skills. </p>
     @Html.ActionLink("Programmers", "IndexProgrammer", "Programmer", null, new { @id = "button", @class = "btn btn-lg" })
+    @Html.ActionLink("Get back", "IndexSkill", "Skill", null, new { @id = "button", @class = "btn btn-lg" })
 </div>
 
+<!--Search Field-->
+@using (Html.BeginForm())
+{
+    <div id="search-form">
+        <label id="search-form_label" for="search-form_select"><strong>Search by:</strong></label>
+        <div class="form-row">
+            <div class="form-group">
+                <select id="search-form_select" class="form-control" name="searchBy">
+                    <option>Name</option>
+                    <option>Programmer</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <input id="search-form_input" class="form-control" type="text" name="filter" placeholder="Search..." />
+            </div>
+        </div>
+    </div>
+
+}
+<!--Title-->
 <h2>Skills</h2>
+
+<!--Create Link-->
 <p>From here you can manage the skills that your programmers know </p>
 @Html.ActionLink("Add New Skill", "CreateSkill", null, new { @id = "button", @class = "btn btn-sm" })
 
@@ -19,20 +43,29 @@
 <div class="table-responsive">
     <table class="table table-dark  table-hover">
         <thead class="thead-dark">
-            <tr>
-                <th>
-                    Name
-                </th>
+            @if (Model.Count != 0)
+            {
+                <tr>
+                    <th>
+                        Name
+                    </th>
 
-                <th>
-                    Known By
-                </th>
+                    <th>
+                        Known By
+                    </th>
 
-                <th>
-                    Manage
-                </th>
+                    <th>
+                        Manage
+                    </th>
 
-            </tr>
+                </tr>
+            }
+            else
+            {
+                <div id="alert-container">
+                    <div class="alert alert-danger"><strong>Hmmmm, seems we cant find what you are looking for, try typing something else in the search box</strong></div>
+                </div>
+            }
         </thead>
 
         @foreach (var item in Model)
