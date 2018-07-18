@@ -17,20 +17,32 @@
 @using (Html.BeginForm())
 {
     <div id="search-form">
-        <label id="search-form_label" for="search-form_select"><strong>Search by:</strong></label>
-        <div class="form-row">
-            <div class="form-group">
-                <select id="search-form_select" class="form-control" name="searchBy">
-                    <option>Name</option>
-                    <option>Skill</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <input id="search-form_input" class="form-control" type="text" name="filter" placeholder="Search..." />
+        <div class="form-group">
+            <div class="container">
+                <div class="row">
+                    <div class="col-5">
+                        <label id="search-form_input_name" for="search-form_input_name"><strong>Search by Name</strong></label>
+                    </div>
+                    <div class="col-7">
+                        <input id="search-form_input_name" class="form-control" type="text" name="Name" placeholder="Search..." />
+                    </div>
+                </div>
             </div>
         </div>
+        <div class="form-group">
+            <div class="container">
+                <div class="row">
+                    <div class="col-5">
+                        <label id="search-form_input_skillName" for="search-form_input"><strong>Search by Skill</strong></label>
+                    </div>
+                    <div class="col-7">
+                        <input id="search-form_input_ame" class="form-control" type="text" name="SkillName" placeholder="Search..." />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <input id="search-form_submitButton" class="btn btn-md" type="submit" />
     </div>
-
 }
 <!--Title-->
 <h2>Programmers</h2>

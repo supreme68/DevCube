@@ -12,13 +12,9 @@
     float: right;
 }
 
-
-#search-form_label {
-    font-size: 19px;
-}
-
-#search-form_select {
-    background-color: #e9ecef;
+#search-form_submitButton {
+    float: right;
+    margin-bottom: 2%;
 }
 
 #alert-container {

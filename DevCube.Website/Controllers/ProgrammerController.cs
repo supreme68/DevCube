@@ -22,30 +22,12 @@ namespace DevCube.Controllers
         }
 
         [HttpPost]
-        public ActionResult IndexProgrammer(string searchBy, string filter)
+        public ActionResult IndexProgrammer(string name, string skillName)
         {
-            if (String.IsNullOrEmpty(filter))
-            {
-                var programmers = ProgrammerData.SelectAllProgrammers()
-              .OrderBy(x => x.FirstName).ToList();
+            var programmers = ProgrammerData.SelectAllProgrammers(name, skillName)
+                   .OrderBy(x => x.FirstName).ToList();
 
-                return View(programmers);
-            }
-
-            if (searchBy == "Name")
-            {
-                var filteredProgrammersByName = ProgrammerData.SelectAllProgrammersByName(filter)
-                       .OrderBy(x => x.FirstName).ToList();
-
-                return View(filteredProgrammersByName);
-            }
-            else
-            {
-                var filteredProgrammersBySkillName = ProgrammerData.SelectAllProgrammersBySkillName(filter)
-                .OrderBy(x => x.FirstName).ToList();
-
-                return View(filteredProgrammersBySkillName);
-            }
+            return View(programmers);
         }
 
         //CREATE

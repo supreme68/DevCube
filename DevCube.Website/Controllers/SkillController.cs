@@ -27,7 +27,7 @@ namespace DevCube.Controllers
             if (String.IsNullOrEmpty(filter))
             {
                 var skills = SkillData.SelectAllSkills()
-             .OrderBy(x => x.Name).ToList();
+                    .OrderBy(x => x.Name).ToList();
 
                 return View(skills);
             }
@@ -35,14 +35,14 @@ namespace DevCube.Controllers
             if (searchBy == "Name")
             {
                 var filteredSkillsByName = SkillData.SelectAllSkillsByName(filter)
-                       .OrderBy(x => x.Name).ToList();
+                    .OrderBy(x => x.Name).ToList();
 
                 return View(filteredSkillsByName);
             }
             else
             {
                 var filteredSkillsByProgrammerName = SkillData.SelectAllSkillsByProgrammerName(filter)
-                .OrderBy(x => x.Name).ToList();
+                    .OrderBy(x => x.Name).ToList();
 
                 return View(filteredSkillsByProgrammerName);
             }
