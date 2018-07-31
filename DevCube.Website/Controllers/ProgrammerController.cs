@@ -5,7 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using System.Diagnostics;
 using DevCube.Data;
-using DevCube.ViewModels.Models;
+using DevCube.Models;
+using DevCube.Website.ViewModels;
 
 namespace DevCube.Controllers
 {
@@ -34,36 +35,42 @@ namespace DevCube.Controllers
         [HttpGet]
         public ActionResult CreateProgrammer()
         {
-            var skills = SkillData.SelectAllSkills();
-
-            var programmerInstance = new ProgrammerModel
+            var programmerModelInstance = (new ProgrammerViewModel()
             {
-                Skills = skills
-            };
+                Skills = (from s in SkillData.SelectAllSkills()
+                          select new SkillViewModel()
+                          {
+                              SkillID = s.SkillID,
+                              Name = s.Name,
+                          }).ToList()
+            });
 
-            return View(programmerInstance);
+            return View(programmerModelInstance);
         }
 
         [HttpPost]
-        public ActionResult CreateProgrammer(ProgrammerModel programmer, List<int> skillIDs)
+        public ActionResult CreateProgrammer(ProgrammerViewModel programmer, List<int> skillIDs)
         {
-            var skills = SkillData.SelectAllSkills();
-
-            var programmerInstance = new ProgrammerModel
-            {
-                Skills = skills
-            };
-
             if (ModelState.IsValid)
             {
 
-                ProgrammerData.CreateProgrammer(programmer, skillIDs);
+                ProgrammerData.CreateProgrammer(programmer.FirstName, programmer.LastName, skillIDs);
 
                 return RedirectToAction("IndexProgrammer");
             }
             else
             {
-                return View(programmerInstance);
+                var programmerModelInstance = (new ProgrammerViewModel()
+                {
+                    Skills = (from s in SkillData.SelectAllSkills()
+                              select new SkillViewModel()
+                              {
+                                  SkillID = s.SkillID,
+                                  Name = s.Name,
+                              }).ToList()
+                });
+
+                return View(programmerModelInstance);
             }
         }
 
@@ -72,12 +79,27 @@ namespace DevCube.Controllers
         [HandleError]
         public ActionResult UpdateProgrammer(int? id)
         {
-            var programmer = ProgrammerData.SelectProgrammerByID(id);
-            var allSkills = SkillData.SelectAllSkills();
-            var programmerSkills = programmer.Skills.Select(s => s.SkillID).ToList();
+            var programmerData = ProgrammerData.SelectProgrammerByID(id);
+
+            var programmerSkills = programmerData.Skills.Select(s => s.SkillID).ToList();
+
+            var skills = (from s in SkillData.SelectAllSkills()
+                          select new SkillViewModel()
+                          {
+                              SkillID = s.SkillID,
+                              Name = s.Name,
+                              IsChecked = false
+                          }).ToList();
+
+            var programmer = new UpdateProgrammerViewModel()
+            {
+                ProgrammerID = programmerData.ProgrammerID,
+                FirstName = programmerData.FirstName,
+                LastName = programmerData.LastName,
+            };
 
             //Sets known Skills to be checked and the unknown Skill uncheked
-            foreach (var s in allSkills)
+            foreach (var s in skills)
             {
                 if (programmerSkills.Contains(s.SkillID))
                 {
@@ -85,38 +107,61 @@ namespace DevCube.Controllers
                 }
             }
 
-            programmer.Skills = allSkills;
+            programmer.Skills = skills;
 
             return View(programmer);
         }
 
         [HttpPost]
-        public ActionResult UpdateProgrammer(ProgrammerModel programmer, List<int> skillIDs)
+        public ActionResult UpdateProgrammer(UpdateProgrammerViewModel programmerViewModel, List<int> skillIDs)
         {
-            var programmerTemp = ProgrammerData.SelectProgrammerByID(programmer.ProgrammerID);
-            var allSkills = SkillData.SelectAllSkills();
-            var programmerSkills = programmerTemp.Skills.Select(s => s.SkillID).ToList();
-
             if (ModelState.IsValid)
             {
-                ProgrammerData.UpdateProgrammer(programmer, skillIDs);
+                var programmerModel = new ProgrammerModel()
+                {
+                    ProgrammerID = programmerViewModel.ProgrammerID,
+                    FirstName = programmerViewModel.FirstName,
+                    LastName = programmerViewModel.LastName
+                };
+
+                ProgrammerData.UpdateProgrammer(programmerModel, skillIDs);
 
                 return RedirectToAction("IndexProgrammer");
             }
-
-            //Sets known Skills to be checked and the unknown Skill uncheked
-            foreach (var s in allSkills)
+            else
             {
-                if (programmerSkills.Contains(s.SkillID))
+                var programmerData = ProgrammerData.SelectProgrammerByID(programmerViewModel.ProgrammerID);
+
+                var programmerSkills = programmerData.Skills.Select(s => s.SkillID).ToList();
+
+                var programmer = new UpdateProgrammerViewModel()
                 {
-                    s.IsChecked = true;
+                    ProgrammerID = programmerData.ProgrammerID,
+                    FirstName = programmerData.FirstName,
+                    LastName = programmerData.LastName
+                };
+
+                var allSkills = (from s in SkillData.SelectAllSkills()
+                                 select new SkillViewModel()
+                                 {
+                                     SkillID = s.SkillID,
+                                     Name = s.Name,
+                                     IsChecked = false
+                                 }).ToList();
+
+                //Sets known Skills to be checked and the unknown Skill uncheked
+                foreach (var s in allSkills)
+                {
+                    if (programmerSkills.Contains(s.SkillID))
+                    {
+                        s.IsChecked = true;
+                    }
                 }
+
+                programmer.Skills = allSkills;
+
+                return View(programmer);
             }
-
-            programmerTemp.Skills = allSkills;
-
-            return View(programmerTemp);
-
         }
 
         //DELETE

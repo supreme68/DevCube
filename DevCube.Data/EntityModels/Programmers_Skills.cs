@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DevCube.Data.DataModels
+namespace DevCube.Data.EntityModels
 {
     using System;
     using System.Collections.Generic;

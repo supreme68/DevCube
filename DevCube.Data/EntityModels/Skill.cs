@@ -7,22 +7,21 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DevCube.Data.DataModels
+namespace DevCube.Data.EntityModels
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Programmer
+    public partial class Skill
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Programmer()
+        public Skill()
         {
             this.Programmers_Skills = new HashSet<Programmers_Skills>();
         }
     
-        public int ProgrammerID { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public int SkillID { get; set; }
+        public string Name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Programmers_Skills> Programmers_Skills { get; set; }

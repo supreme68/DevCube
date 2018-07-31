@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DevCube.Data.DataModels;
-using DevCube.ViewModels.Models;
+using DevCube.Data.EntityModels;
+using DevCube.Models;
 
 namespace DevCube.Data
 {
     public class ProgrammerData
     {
-
         //Selects a signle Programmer By ID with his Skills
         public static ProgrammerModel SelectProgrammerByID(int? id)
         {
@@ -18,11 +17,11 @@ namespace DevCube.Data
             {
                 var programmer = (from p in db.Programmers
                                   where id == p.ProgrammerID
-                                  select new ProgrammerModel
+                                  select new ProgrammerModel()
                                   {
                                       FirstName = p.FirstName,
                                       LastName = p.LastName,
-                                      IsChecked = false,
+                                      //IsChecked = false,
                                       ProgrammerID = p.ProgrammerID,
 
                                       Skills = (from s in db.Skills
@@ -58,7 +57,6 @@ namespace DevCube.Data
                                                           {
                                                               FirstName = p.FirstName,
                                                               LastName = p.LastName,
-                                                              IsChecked = false,
                                                               ProgrammerID = p.ProgrammerID,
 
                                                               Skills = (from s in db.Skills
@@ -80,7 +78,6 @@ namespace DevCube.Data
                                    {
                                        FirstName = p.FirstName,
                                        LastName = p.LastName,
-                                       IsChecked = false,
                                        ProgrammerID = p.ProgrammerID,
 
                                        Skills = (from s in db.Skills
@@ -92,27 +89,26 @@ namespace DevCube.Data
                                                      SkillID = s.SkillID,
                                                      Name = s.Name
                                                  }).ToList()
-                                   }).ToList();
+                                   });
+
                 if (name != "")
                 {
-                    var filteredProgrammersByName = programmers.Where(p => p.FirstName.ToLower().Contains(name.ToLower())).ToList();
-
-                    return filteredProgrammersByName;
+                    programmers = programmers.Where(p => p.FirstName.ToLower().Contains(name.ToLower()));
                 }
 
-                return programmers;
+                return programmers.ToList();
             }
         }
 
         //Creates Programmer and attaches selected Skills
-        public static void CreateProgrammer(ProgrammerModel programmer, List<int> skillIDs)
+        public static void CreateProgrammer(string firstName, string lastName, List<int> skillIDs)
         {
             using (var db = new Entities())
             {
                 var programmerInstance = new Programmer
                 {
-                    FirstName = programmer.FirstName,
-                    LastName = programmer.LastName
+                    FirstName = firstName,
+                    LastName = lastName
                 };
 
                 //Adds Programmer to Programmer table

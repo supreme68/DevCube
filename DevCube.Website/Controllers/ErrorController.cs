@@ -10,11 +10,16 @@ namespace DevCube.Controllers
     {
         public ActionResult NotFoundError()
         {
+            Response.StatusCode = 404;
+
             return View();
         }
 
         public ActionResult DefaultError()
         {
+            Response.StatusCode = 500;
+
+
             return View();
         }
     }

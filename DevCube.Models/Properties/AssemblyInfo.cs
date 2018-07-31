@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("DevCube.Bind")]
+[assembly: AssemblyTitle("DevCube.Models")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("DevCube.Bind")]
+[assembly: AssemblyProduct("DevCube.Models")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("b0d4bed0-3169-4aa7-a3d8-f9cb5976d4fe")]
+[assembly: Guid("e7407dcf-440f-4b96-a438-b94a0c3b4ff3")]
 
 // Version information for an assembly consists of the following four values:
 //

@@ -2,17 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using System.Configuration;
 using System.ComponentModel.DataAnnotations;
+using DevCube.Website.Validators;
 
-namespace DevCube.ViewModels.Models
+namespace DevCube.Website.ViewModels
 {
-    public class ProgrammerModel
+    public class ProgrammerViewModel
     {
         public int ProgrammerID { get; set; }
 
         [Required(ErrorMessage = "First name is required")]
         [StringLength(50, MinimumLength = 3, ErrorMessage = "First Name should be between 3 and 50 characters")]
+        [DuplicateNameValidator(ErrorMessage = "this guy already exists")]
         public string FirstName { get; set; }
 
         [Required(ErrorMessage = "Last name is required")]
@@ -21,6 +22,6 @@ namespace DevCube.ViewModels.Models
 
         public bool IsChecked { get; set; }
 
-        public List<SkillModel> Skills { get; set; }
+        public List<SkillViewModel> Skills { get; set; }
     }
 }

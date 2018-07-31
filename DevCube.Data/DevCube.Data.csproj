@@ -49,28 +49,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataModels\DevCubeContext.Context.cs">
+    <Compile Include="EntityModels\DevCubeContext.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DevCubeContext.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataModels\DevCubeContext.cs">
+    <Compile Include="EntityModels\DevCubeContext.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DevCubeContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataModels\DevCubeContext.Designer.cs">
+    <Compile Include="EntityModels\DevCubeContext.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DevCubeContext.edmx</DependentUpon>
     </Compile>
-    <Compile Include="DataModels\Programmer.cs">
+    <Compile Include="EntityModels\Programmer.cs">
       <DependentUpon>DevCubeContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataModels\Programmers_Skills.cs">
+    <Compile Include="EntityModels\Programmers_Skills.cs">
       <DependentUpon>DevCubeContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataModels\Skill.cs">
+    <Compile Include="EntityModels\Skill.cs">
       <DependentUpon>DevCubeContext.tt</DependentUpon>
     </Compile>
     <Compile Include="ProgrammerData.cs" />
@@ -82,33 +82,34 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <EntityDeploy Include="DataModels\DevCubeContext.edmx">
+    <EntityDeploy Include="EntityModels\DevCubeContext.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>DevCubeContext.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="DataModels\DevCubeContext.edmx.diagram">
+    <None Include="EntityModels\DevCubeContext.edmx.diagram">
       <DependentUpon>DevCubeContext.edmx</DependentUpon>
     </None>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DevCube.ViewModels\DevCube.ViewModels.csproj">
-      <Project>{b0d4bed0-3169-4aa7-a3d8-f9cb5976d4fe}</Project>
-      <Name>DevCube.ViewModels</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="DataModels\DevCubeContext.Context.tt">
+    <Content Include="EntityModels\DevCubeContext.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>DevCubeContext.edmx</DependentUpon>
       <LastGenOutput>DevCubeContext.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="DataModels\DevCubeContext.tt">
+    <Content Include="EntityModels\DevCubeContext.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>DevCubeContext.edmx</DependentUpon>
       <LastGenOutput>DevCubeContext.cs</LastGenOutput>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\DevCube.Models\DevCube.Models.csproj">
+      <Project>{e7407dcf-440f-4b96-a438-b94a0c3b4ff3}</Project>
+      <Name>DevCube.Models</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
