@@ -16,6 +16,6 @@ namespace DevCube.Website.ViewModels
 
         public bool IsChecked { get; set; }
 
-        public List<ProgrammerViewModel> Programmers { get; set; }
+        public List<CreateProgrammerViewModel> Programmers { get; set; }
     }
 }

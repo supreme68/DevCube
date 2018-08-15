@@ -23,7 +23,7 @@ namespace DevCube.Website.Validators
 
             if (value != null)
             {
-                if (type == typeof(ProgrammerViewModel))
+                if (type == typeof(CreateProgrammerViewModel))
                 {
 
                     PropertyInfo property = type.GetProperty("LastName");
@@ -37,7 +37,7 @@ namespace DevCube.Website.Validators
                                       select p.FirstName).FirstOrDefault();
                 }
 
-                if (type == typeof(SkillViewModel))
+                if (type == typeof(CreateSkillViewModel))
                 {
                     var allSkills = SkillData.SelectAllSkills();
 

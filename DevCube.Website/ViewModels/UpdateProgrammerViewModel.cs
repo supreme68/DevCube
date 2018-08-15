@@ -20,6 +20,6 @@ namespace DevCube.Website.ViewModels
 
         public bool IsChecked { get; set; }
 
-        public List<SkillViewModel> Skills { get; set; }
+        public List<CreateSkillViewModel> Skills { get; set; }
     }
 }

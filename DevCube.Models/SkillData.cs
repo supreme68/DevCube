@@ -38,29 +38,37 @@ namespace DevCube.Data
 
         public static List<SkillModel> SelectAllSkills(string name = "", string programmerName = "")
         {
-            if (name.Length == 0)
-            {
-                name = null;
-            }
-
-            if (programmerName.Length == 0)
-            {
-                programmerName = null;
-            }
-
             using (var db = new Entities())
             {
-                int? programmerID = null;
-
-                if (programmerID != null)
+                if (programmerName != "")
                 {
-                    (from s in db.Programmers
-                     where s.FirstName.ToLower().Contains(programmerName.ToLower())
-                     select s.ProgrammerID).FirstOrDefault();
+                    var programmerId = (from s in db.Programmers
+                                        where s.FirstName.ToLower().Contains(programmerName.ToLower())
+                                        select s.ProgrammerID).FirstOrDefault();
+
+                    var filteredSkillsByProgrammerName = (from s in db.Skills
+                                                          join ps in db.Programmers_Skills on s.SkillID equals ps.SkillID
+                                                          where name != "" ? programmerId == ps.ProgrammerID && s.Name.ToLower().Contains(name.ToLower()) : programmerId == ps.ProgrammerID
+                                                          select new SkillModel
+                                                          {
+                                                              SkillID = s.SkillID,
+                                                              Name = s.Name,
+
+                                                              Programmers = (from p in db.Programmers
+                                                                             join ps in db.Programmers_Skills on p.ProgrammerID equals ps.ProgrammerID
+                                                                             where s.SkillID == ps.SkillID
+                                                                             select new ProgrammerModel()
+                                                                             {
+                                                                                 FirstName = p.FirstName,
+                                                                                 LastName = p.LastName,
+                                                                                 ProgrammerID = p.ProgrammerID
+                                                                             }).ToList()
+                                                          }).ToList();
+
+                    return filteredSkillsByProgrammerName;
                 }
 
                 var skills = (from s in db.Skills
-                              where (name == null || s.Name.Contains(name)) && (programmerID == null || s.Programmers_Skills.Where(ps => ps.ProgrammerID == programmerID).Any())
                               select new SkillModel
                               {
                                   Name = s.Name,
@@ -77,18 +85,23 @@ namespace DevCube.Data
                                                  }).ToList()
                               });
 
+                if (name != "")
+                {
+                    skills = skills.Where(s => s.Name.ToLower().Contains(name.ToLower()));
+                }
+
                 return skills.ToList();
             }
         }
 
         //Creates Skill and attaches selected Programmers
-        public static void CreateSkill(string name, List<int> programmerIDs)
+        public static void CreateSkill(SkillModel skill, List<int> programmerIDs)
         {
             using (var db = new Entities())
             {
                 var skillInstance = new Skill
                 {
-                    Name = name
+                    Name = skill.Name
                 };
 
                 //Adds Skill to Skill table

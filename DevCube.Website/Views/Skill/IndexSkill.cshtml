@@ -1,6 +1,5 @@
 ﻿@model List<SkillModel>
 
-
 @{
     ViewBag.Title = "Skills";
 }
@@ -13,8 +12,7 @@
     @Html.ActionLink("Get back", "IndexSkill", "Skill", null, new { @id = "button", @class = "btn btn-lg" })
 </div>
 
-<!--Search Field-->
-<!--Search Field-->
+<!--Search Fields-->
 @using (Html.BeginForm())
 {
     <div id="search-form">
@@ -46,23 +44,6 @@
     </div>
 }
 
-@*@using (Html.BeginForm())
-    {
-        <div id="search-form">
-            <label id="search-form_label" for="search-form_select"><strong>Search by:</strong></label>
-            <div class="form-row">
-                <div class="form-group">
-                    <select id="search-form_select" class="form-control" name="searchBy">
-                        <option>Name</option>
-                        <option>Programmer</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <input id="search-form_input" class="form-control" type="text" name="filter" placeholder="Search..." />
-                </div>
-            </div>
-        </div>
-    }*@
 <!--Title-->
 <h2>Skills</h2>
 
@@ -146,6 +127,9 @@
         }
     </table>
 </div>
+
+<!--Pagination-->
+
 
 <!--Modal-->
 <div class="modal fade" id="Modal" aria-hidden="true">

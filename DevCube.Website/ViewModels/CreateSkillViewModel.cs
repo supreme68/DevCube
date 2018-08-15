@@ -7,7 +7,7 @@ using DevCube.Website.Validators;
 
 namespace DevCube.Website.ViewModels
 {
-    public class SkillViewModel
+    public class CreateSkillViewModel
     {
         public int SkillID { get; set; }
 
@@ -18,6 +18,6 @@ namespace DevCube.Website.ViewModels
 
         public bool IsChecked { get; set; }
 
-        public List<ProgrammerViewModel> Programmers { get; set; }
+        public List<CreateProgrammerViewModel> Programmers { get; set; }
     }
 }

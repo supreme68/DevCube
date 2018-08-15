@@ -19,7 +19,26 @@ namespace DevCube.Controllers
             var programmers = ProgrammerData.SelectAllProgrammers()
                 .OrderBy(x => x.FirstName).ToList();
 
-            return View(programmers);
+            var programmerViewModelInstance = (from p in programmers
+                                               select new IndexProgrammerViewModel()
+                                               {
+                                                   ProgrammerID = p.ProgrammerID,
+                                                   FirstName = p.FirstName,
+                                                   LastName = p.LastName,
+
+                                                   Skills = (from s in p.Skills
+                                                             select new IndexSkillViewModel()
+                                                             {
+                                                                 SkillID = s.SkillID,
+                                                                 Name = s.Name
+                                                             }).ToList()
+                                               }).ToList();
+
+            ViewData["programmerNameSearchField"] = null;
+
+            ViewData["skillNameSearchField"] = null;
+
+            return View(programmerViewModelInstance);
         }
 
         [HttpPost]
@@ -28,17 +47,36 @@ namespace DevCube.Controllers
             var programmers = ProgrammerData.SelectAllProgrammers(name, skillName)
                    .OrderBy(x => x.FirstName).ToList();
 
-            return View(programmers);
+            var programmerViewModelInstance = (from p in programmers
+                                               select new IndexProgrammerViewModel()
+                                               {
+                                                   ProgrammerID = p.ProgrammerID,
+                                                   FirstName = p.FirstName,
+                                                   LastName = p.LastName,
+
+                                                   Skills = (from s in p.Skills
+                                                             select new IndexSkillViewModel()
+                                                             {
+                                                                 SkillID = s.SkillID,
+                                                                 Name = s.Name
+                                                             }).ToList()
+                                               }).ToList();
+
+            ViewData["programmerNameSearchField"] = name;
+
+            ViewData["skillNameSearchField"] = skillName;
+
+            return View(programmerViewModelInstance);
         }
 
         //CREATE
         [HttpGet]
         public ActionResult CreateProgrammer()
         {
-            var programmerModelInstance = (new ProgrammerViewModel()
+            var programmerModelInstance = (new CreateProgrammerViewModel()
             {
                 Skills = (from s in SkillData.SelectAllSkills()
-                          select new SkillViewModel()
+                          select new CreateSkillViewModel()
                           {
                               SkillID = s.SkillID,
                               Name = s.Name,
@@ -49,7 +87,7 @@ namespace DevCube.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateProgrammer(ProgrammerViewModel programmer, List<int> skillIDs)
+        public ActionResult CreateProgrammer(CreateProgrammerViewModel programmer, List<int> skillIDs)
         {
             if (ModelState.IsValid)
             {
@@ -60,10 +98,10 @@ namespace DevCube.Controllers
             }
             else
             {
-                var programmerModelInstance = (new ProgrammerViewModel()
+                var programmerModelInstance = (new CreateProgrammerViewModel()
                 {
                     Skills = (from s in SkillData.SelectAllSkills()
-                              select new SkillViewModel()
+                              select new CreateSkillViewModel()
                               {
                                   SkillID = s.SkillID,
                                   Name = s.Name,
@@ -84,7 +122,7 @@ namespace DevCube.Controllers
             var programmerSkills = programmerData.Skills.Select(s => s.SkillID).ToList();
 
             var skills = (from s in SkillData.SelectAllSkills()
-                          select new SkillViewModel()
+                          select new CreateSkillViewModel()
                           {
                               SkillID = s.SkillID,
                               Name = s.Name,
@@ -142,7 +180,7 @@ namespace DevCube.Controllers
                 };
 
                 var allSkills = (from s in SkillData.SelectAllSkills()
-                                 select new SkillViewModel()
+                                 select new CreateSkillViewModel()
                                  {
                                      SkillID = s.SkillID,
                                      Name = s.Name,
@@ -172,5 +210,5 @@ namespace DevCube.Controllers
 
             return Json("");
         }
-    }
+    } 
 }

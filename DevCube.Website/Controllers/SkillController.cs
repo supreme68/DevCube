@@ -36,10 +36,10 @@ namespace DevCube.Controllers
         [HttpGet]
         public ActionResult CreateSkill()
         {
-            var skillModelInstance = (new SkillViewModel()
+            var skillModelInstance = (new CreateSkillViewModel()
             {
                 Programmers = (from p in ProgrammerData.SelectAllProgrammers()
-                               select new ProgrammerViewModel()
+                               select new CreateProgrammerViewModel()
                                {
                                    ProgrammerID = p.ProgrammerID,
                                    FirstName = p.FirstName,
@@ -51,7 +51,7 @@ namespace DevCube.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateSkill(SkillViewModel skill, List<int> programmerIDs)
+        public ActionResult CreateSkill(CreateSkillViewModel skill, List<int> programmerIDs)
         {
             if (ModelState.IsValid)
             {
@@ -61,10 +61,10 @@ namespace DevCube.Controllers
             }
             else
             {
-                var skillModelInstance = (new SkillViewModel()
+                var skillModelInstance = (new CreateSkillViewModel()
                 {
                     Programmers = (from p in ProgrammerData.SelectAllProgrammers()
-                                   select new ProgrammerViewModel()
+                                   select new CreateProgrammerViewModel()
                                    {
                                        ProgrammerID = p.ProgrammerID,
                                        FirstName = p.FirstName,
@@ -86,7 +86,7 @@ namespace DevCube.Controllers
             var programmerSkills = skillData.Programmers.Select(p => p.ProgrammerID).ToList();
 
             var programmers = (from p in ProgrammerData.SelectAllProgrammers()
-                               select new ProgrammerViewModel()
+                               select new CreateProgrammerViewModel()
                                {
                                    ProgrammerID = p.ProgrammerID,
                                    FirstName = p.FirstName,
@@ -137,7 +137,7 @@ namespace DevCube.Controllers
                 var programmerSkills = skillData.Programmers.Select(p => p.ProgrammerID).ToList();
 
                 var programmers = (from p in ProgrammerData.SelectAllProgrammers()
-                                   select new ProgrammerViewModel()
+                                   select new CreateProgrammerViewModel()
                                    {
                                        ProgrammerID = p.ProgrammerID,
                                        FirstName = p.FirstName,

@@ -42,38 +42,29 @@ namespace DevCube.Data
         //Selects all Programmers by their  Skills and can filter Programmers and 
         public static List<ProgrammerModel> SelectAllProgrammers(string name = "", string skillName = "")
         {
+            if (name.Length == 0)
+            {
+                name = null;
+            }
+
+            if (skillName.Length == 0)
+            {
+                skillName = null;
+            }
+
             using (var db = new Entities())
             {
-                if (skillName != "")
+                int? skillID = null;
+
+                if (skillName != null)
                 {
-                    var skillId = (from s in db.Skills
-                                   where s.Name.ToLower().Contains(skillName.ToLower())
-                                   select s.SkillID).FirstOrDefault();
-
-                    var filteredProgrammersBySkillName = (from p in db.Programmers
-                                                          join ps in db.Programmers_Skills on p.ProgrammerID equals ps.ProgrammerID
-                                                          where name != "" ? skillId == ps.SkillID && p.FirstName.ToLower().Contains(name.ToLower()) : skillId == ps.SkillID
-                                                          select new ProgrammerModel
-                                                          {
-                                                              FirstName = p.FirstName,
-                                                              LastName = p.LastName,
-                                                              ProgrammerID = p.ProgrammerID,
-
-                                                              Skills = (from s in db.Skills
-                                                                        join ps in db.Programmers_Skills on s.SkillID equals ps.SkillID
-                                                                        where ps.ProgrammerID == p.ProgrammerID
-                                                                        orderby s.Name
-                                                                        select new SkillModel()
-                                                                        {
-                                                                            SkillID = s.SkillID,
-                                                                            Name = s.Name
-                                                                        }).ToList()
-                                                          }).ToList();
-
-                    return filteredProgrammersBySkillName;
+                    skillID = (from s in db.Skills
+                               where s.Name.ToLower().Contains(skillName.ToLower())
+                               select s.SkillID).FirstOrDefault();
                 }
 
                 var programmers = (from p in db.Programmers
+                                   where (name == null || p.FirstName.Contains(name)) && (skillID == null || p.Programmers_Skills.Where(ps => ps.SkillID == skillID).Any())
                                    select new ProgrammerModel
                                    {
                                        FirstName = p.FirstName,
@@ -90,11 +81,6 @@ namespace DevCube.Data
                                                      Name = s.Name
                                                  }).ToList()
                                    });
-
-                if (name != "")
-                {
-                    programmers = programmers.Where(p => p.FirstName.ToLower().Contains(name.ToLower()));
-                }
 
                 return programmers.ToList();
             }

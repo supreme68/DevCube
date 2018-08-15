@@ -1,5 +1,4 @@
-﻿@model List<ProgrammerModel>
-
+﻿@model List<IndexProgrammerViewModel>
 
 @{
     ViewBag.Title = "Programmers";
@@ -13,7 +12,7 @@
     @Html.ActionLink("Get back", "IndexProgrammer", "Programmer", null, new { @id = "button", @class = "btn btn-lg" })
 </div>
 
-<!--Search Field-->
+<!--Search Fields-->
 @using (Html.BeginForm())
 {
     <div id="search-form">
@@ -24,7 +23,7 @@
                         <label for="search-form_input_name"><strong>Search by Name</strong></label>
                     </div>
                     <div class="col-7">
-                        <input id="search-form_input_name" class="form-control" type="text" name="name" placeholder="Search..." />
+                        <input id="search-form_input_name" class="form-control" type="text" name="name" value="@ViewData["programmerNameSearchField"]" placeholder="Search..." />
                     </div>
                 </div>
             </div>
@@ -36,7 +35,7 @@
                         <label for="search-form_input"><strong>Search by Skill</strong></label>
                     </div>
                     <div class="col-7">
-                        <input id="search-form_input_ame" class="form-control" type="text" name="skillName" placeholder="Search..." />
+                        <input id="search-form_input_ame" class="form-control" type="text" name="skillName" value="@ViewData["skillNameSearchField"]" placeholder="Search..." />
                     </div>
                 </div>
             </div>
@@ -44,6 +43,7 @@
         <input id="search-form_submitButton" class="btn btn-md" type="submit" />
     </div>
 }
+
 <!--Title-->
 <h2>Programmers</h2>
 
@@ -129,6 +129,16 @@
     </table>
 </div>
 
+<!--Pagination-->
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+    </ul>
+</nav>
 
 <!--Modal-->
 <div class="modal fade" id="Modal" aria-hidden="true">

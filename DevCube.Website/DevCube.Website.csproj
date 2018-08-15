@@ -159,9 +159,11 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Validators\DuplicateNameValidator.cs" />
-    <Compile Include="ViewModels\ProgrammerViewModel.cs" />
+    <Compile Include="ViewModels\CreateProgrammerViewModel.cs" />
+    <Compile Include="ViewModels\IndexProgrammerViewModel.cs" />
+    <Compile Include="ViewModels\IndexSkillViewModel.cs" />
     <Compile Include="ViewModels\UpdateProgrammerViewModel.cs" />
-    <Compile Include="ViewModels\SkillViewModel.cs" />
+    <Compile Include="ViewModels\CreateSkillViewModel.cs" />
     <Compile Include="ViewModels\UpdateSkillViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
