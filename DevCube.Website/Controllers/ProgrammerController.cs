@@ -4,9 +4,12 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Diagnostics;
+using X.PagedList;
+using X.PagedList.Mvc;
 using DevCube.Data;
 using DevCube.Models;
 using DevCube.Website.ViewModels;
+
 
 namespace DevCube.Controllers
 {
@@ -14,29 +17,25 @@ namespace DevCube.Controllers
     {
         //INDEX
         [HttpGet]
-        public ActionResult IndexProgrammer()
+        public ActionResult IndexProgrammer(int? page)
         {
             var programmers = ProgrammerData.SelectAllProgrammers()
-                .OrderBy(x => x.FirstName).ToList();
+                .OrderBy(x => x.FirstName);
 
             var programmerViewModelInstance = (from p in programmers
-                                               select new IndexProgrammerViewModel()
+                                               select new ProgrammerModel()
                                                {
                                                    ProgrammerID = p.ProgrammerID,
                                                    FirstName = p.FirstName,
                                                    LastName = p.LastName,
 
                                                    Skills = (from s in p.Skills
-                                                             select new IndexSkillViewModel()
+                                                             select new SkillModel()
                                                              {
                                                                  SkillID = s.SkillID,
                                                                  Name = s.Name
                                                              }).ToList()
-                                               }).ToList();
-
-            ViewData["programmerNameSearchField"] = null;
-
-            ViewData["skillNameSearchField"] = null;
+                                               }).ToPagedList(page ?? 1, 10);
 
             return View(programmerViewModelInstance);
         }
@@ -45,22 +44,22 @@ namespace DevCube.Controllers
         public ActionResult IndexProgrammer(string name, string skillName)
         {
             var programmers = ProgrammerData.SelectAllProgrammers(name, skillName)
-                   .OrderBy(x => x.FirstName).ToList();
+                   .OrderBy(x => x.FirstName);
 
             var programmerViewModelInstance = (from p in programmers
-                                               select new IndexProgrammerViewModel()
+                                               select new ProgrammerModel()
                                                {
                                                    ProgrammerID = p.ProgrammerID,
                                                    FirstName = p.FirstName,
                                                    LastName = p.LastName,
 
                                                    Skills = (from s in p.Skills
-                                                             select new IndexSkillViewModel()
+                                                             select new SkillModel()
                                                              {
                                                                  SkillID = s.SkillID,
                                                                  Name = s.Name
                                                              }).ToList()
-                                               }).ToList();
+                                               }).ToPagedList(1, 10);
 
             ViewData["programmerNameSearchField"] = name;
 
@@ -210,5 +209,5 @@ namespace DevCube.Controllers
 
             return Json("");
         }
-    } 
+    }
 }

@@ -1,4 +1,4 @@
-﻿@model List<IndexProgrammerViewModel>
+﻿@model IPagedList<ProgrammerModel>
 
 @{
     ViewBag.Title = "Programmers";
@@ -55,7 +55,7 @@
 <div class="table-responsive">
     <table class="table table-dark  table-hover">
         <thead class="thead-dark">
-            @if (Model.Count != 0)
+            @if (Model.Count() != 0)
             {
                 <tr>
                     <th>
@@ -109,18 +109,19 @@
 
                         string skillName = String.Concat(skill.Name, ", ");
 
-                        if (i == item.Skills.Count)
+                        if (i == item.Skills.Count())
                         {
                             skillName = skill.Name;
                         }
 
                         @skillName
+
                     }
 
                 </td>
 
                 <td>
-                    @Html.ActionLink("Update", "UpdateProgrammer", new { id = item.ProgrammerID }) |
+                    @Html.ActionLink("Update", "UpdateProgrammer", new { id = item.ProgrammerID, pageNumber = Model.PageNumber}) |
                     <a data-id="@item.ProgrammerID" class="delete-link" href="#" data-toggle="modal" data-target="#Modal">Delete</a>
                 </td>
 
@@ -130,15 +131,7 @@
 </div>
 
 <!--Pagination-->
-<nav aria-label="Page navigation example">
-    <ul class="pagination">
-        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item"><a class="page-link" href="#">Next</a></li>
-    </ul>
-</nav>
+@Html.PagedListPager(Model, page => Url.Action("IndexProgrammer", new { page }), Bootstrap4PagedListRenderOptions.ClassicPlusFirstAndLast)
 
 <!--Modal-->
 <div class="modal fade" id="Modal" aria-hidden="true">

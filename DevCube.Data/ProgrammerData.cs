@@ -21,7 +21,6 @@ namespace DevCube.Data
                                   {
                                       FirstName = p.FirstName,
                                       LastName = p.LastName,
-                                      //IsChecked = false,
                                       ProgrammerID = p.ProgrammerID,
 
                                       Skills = (from s in db.Skills
@@ -80,9 +79,9 @@ namespace DevCube.Data
                                                      SkillID = s.SkillID,
                                                      Name = s.Name
                                                  }).ToList()
-                                   });
+                                   }).ToList();
 
-                return programmers.ToList();
+                return programmers;
             }
         }
 
